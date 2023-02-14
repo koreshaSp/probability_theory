@@ -1,0 +1,128 @@
+\documentclass[a4paper,14pt]{extarticle}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage{systeme,mathtools}
+\usepackage{indentfirst}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{breqn}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{transparent}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\pgfplotsset{compat=1.16}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usetikzlibrary{patterns}
+\usetikzlibrary{babel}
+\usetikzlibrary{cd}
+
+\newcommand{\incfig}[2][1]{%
+ \def\svgwidth{#1\columnwidth}
+ \import{./figures/}{#2.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+% counters and theorems
+\newcounter{theoremCnt}
+
+% numbered theorems
+\theoremstyle{definition}
+\newtheorem{df}[theoremCnt]{Определение}
+\theoremstyle{plain}
+\newtheorem{thm}[theoremCnt]{Теорема}
+\theoremstyle{plain}
+\newtheorem{lm}[theoremCnt]{Лемма}
+\theoremstyle{plain}
+\newtheorem{crly}[theoremCnt]{Следствие}
+\theoremstyle{plain}
+\newtheorem{prop}[theoremCnt]{Предложение}
+\theoremstyle{definition}
+\newtheorem{exmpl}[theoremCnt]{Пример}
+\theoremstyle{definition}
+\newtheorem{remrk}[theoremCnt]{Замечание}
+\theoremstyle{definition}
+\newtheorem{claim}[theoremCnt]{Утверждение}
+\theoremstyle{definition}
+\newtheorem{algorithm}[theoremCnt]{Алгоритм}
+\theoremstyle{definition}
+\newtheorem{problem}[theoremCnt]{Задача}
+
+% non-numbered theorems
+\theoremstyle{definition}
+\newtheorem*{df*}{Определение}
+\theoremstyle{plain}
+\newtheorem*{thm*}{Теорема}
+\theoremstyle{plain}
+\newtheorem*{lm*}{Лемма}
+\theoremstyle{plain}
+\newtheorem*{crly*}{Следствие}
+\theoremstyle{plain}
+\newtheorem*{prop*}{Предложение}
+\theoremstyle{definition}
+\newtheorem*{exmpl*}{Пример}
+\theoremstyle{definition}
+\newtheorem*{remrk*}{Замечание}
+\theoremstyle{definition}
+\newtheorem*{claim*}{Утверждение}
+\theoremstyle{definition}
+\newtheorem*{algorithm*}{Алгоритм}
+\theoremstyle{definition}
+\newtheorem*{problem*}{Задача}
+
+% small caps "proof" label
+\addto\captionsrussian{\renewcommand\proofname{\normalfont\textsc{Доказательство}}}
+
+% some aliases
+\newcommand{\R}{\ensuremath \mathbb{R}}
+\newcommand{\Q}{\ensuremath \mathbb{Q}}
+\newcommand{\CC}{\ensuremath \mathbb{C}}
+\newcommand{\Z}{\ensuremath \mathbb{Z}}
+\newcommand{\N}{\ensuremath \mathbb{N}}
+\newcommand{\eps}{\ensuremath \varepsilon}
+\newcommand{\then}{\ensuremath \implies}
+\newcommand{\OO}{\ensuremath \mathcal{O}}
+\newcommand{\Mid}{\ensuremath \;\middle|\;}
+
+\title{Теория вероятностей \\
+  (4 семестр СП, набор 2021). \\
+  Конспект лекций}
+\author{Усачев Данила}
+
+\begin{document}
+\maketitle
+
+Конспект лекций по математическому анализу во втором курсе СПбГУ МКН <<Современное программирование>> (набор 2021 года).
+\subsubsection*{Лектор}
+Храбров Александр Игоревич.
+\subsubsection*{Как читать}
+Последнюю версию конспекта можно найти в Releases.
+\subsubsection*{Как контрибьютить}
+Об опечатках и ошибках можно сообщать, создав новую Issue на GitHub.
+Добавить в/улучшить конспект можно через Pull Request: нужно создать ветку/форк, внести правки, а затем создать Pull Request в ветку main.
+Можно ревьювить Pull Request'ы, отмечая ошибки.
+\newpage
+\tableofcontents
+\newpage
+
+\import{lectures/}{01.tex}
+
+\end{document}

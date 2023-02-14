@@ -1,0 +1,13 @@
+main.pdf
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.synctex
+*.toc
+*.upa
+*.upb
+*.aux
+*.synctex(busy)
+*.out
+.DS_Store

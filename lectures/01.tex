@@ -1,0 +1,229 @@
+\section{Элементарная теория вероятностей.}
+\subsection{Классическая модель теории вероятностей.}
+
+\begin{df*}
+ Пусть $\Omega = \left\{ \omega_1, \ldots, \omega_n \right\}$ --- конечное множество, называемое \textit{пространством элементарных исходов,} если
+ \begin{itemize}
+  \item $\omega_i$ равновозможны;
+  \item $\omega_i$ не совместны;
+  \item одно из $\omega_i$ всегда реализуется.
+ \end{itemize}
+\end{df*}
+\begin{exmpl*}
+ Игральный кубик. Честная монетка.
+\end{exmpl*}
+
+\begin{df}
+ \textit{Случайное событие}  --- это произвольное подмножество $A \subset \Omega$. \textit{Вероятностью} случайного события $A$ называется число
+
+ \begin{align*}
+  P(A) = \frac{\# A}{\# \Omega}
+ ,\end{align*} где $\# B$ --- количество элементов в конечном множестве $B$.
+\end{df}
+
+\begin{prop*}
+ Свойства вероятности:
+ \begin{enumerate}
+  \item $P(\varnothing) = 0$; $P(\Omega) = 1$; $0 \leqslant P(A) \leqslant 1$.
+  \item Если $A \subset B$, то $P(A) \leqslant P(B)$.
+  \item Если $A \cap B = \varnothing$ (события \textit{не совместны}), то
+   \begin{align}
+    \label{equation:finite_additivity_of_classic_probability}
+    P(A \sqcup B) = P(A) + P(B)
+   .\end{align} 
+  \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
+ \end{enumerate}
+\end{prop*}
+Оказывается, что из \eqref{equation:finite_additivity_of_classic_probability} следует всё остальное. Действительно, для пункта 2:
+\begin{align*}
+ P(B) = P(B \setminus A) + P(A) \geqslant 0 + P(A),
+\end{align*}  а для пункта 3:
+
+\begin{crly*}
+ $P(A \cup B) \leqslant P(A) + P(B)$.
+\end{crly*}
+
+\begin{df*}
+ $\overline A = \Omega \setminus A$.
+\end{df*}
+\begin{prop*}
+ $\overline A = 1 - P(A)$.
+\end{prop*}
+
+\begin{prop}[формула включений-исключений]
+ \label{proposition:inclusion_exclusion_formula}
+ \begin{align*}
+  P(A_1 \cup A_2 \cup \ldots \cup A_m) &= \sum_{i=1}^{m} P(A_i) - \sum_{i < j} P(A_i \cap A_j) + \sum_{i < j < k}  P(A_i \cap A_j \cap A_k) + \ldots \\
+  &\ldots + (-1)^{m - 1} P(A_1 \cap \ldots \cap A_m)
+ .\end{align*} 
+\end{prop}
+\begin{proof}
+ По индукции. База ($m=1$) очевидно. Переход $m \to m + 1$. Обозначим $B = A_1 \cup \ldots \cup A_m$. Тогда
+ \begin{align*}
+  P(B \cup A_{m+1}) = \underbrace{P(B)}_{\text{по предположению инд.}} + P(A_{m+1}) - P(B \cap A_{m+1})
+ .\end{align*} $P(B)$ раскроем по предположению индукции. Обозначим $B_k = A_k \cap A_{m+1}$. Тогда  $B \cap A_{m+1} = B_1 \cup \ldots B_k$ . Снова по предположению индукции. Получаем:
+ \begin{align*}
+  &= \sum_{i=1}^{m} P(A_i) - \sum_{i < j \leqslant m} P(A_i \cap A_k) + \ldots + P(A_{m+1}) -\\&- ( \sum_{k=1}^{m} P(A_k \cap A_{m+1}) - \\
+  - \sum_{i < j \leqslant m} P(A_i \cap A_j \cap A_{m+1}) + \ldots )
+ \end{align*} Получаем ровно то, что нужно.
+\end{proof}
+
+
+\begin{df}
+ \textit{Условная вероятность:} если $A \neq \varnothing$, то
+ \begin{align*}
+  P(B \mid A) = \frac{\# (A \cap B)}{\# A}
+ \end{align*} --- \textit{вероятность события $B$ при условии события $A$}. Можно её записать так:
+ \begin{align*}
+  P(B \mid A) = \frac{P(A \cap B)}{P(A)}
+ \end{align*} при условии $P(A) > 0$.
+\end{df}
+\begin{prop*}\
+ \begin{enumerate}
+  \item Если $B \supset A$, то $P(B \mid A) = 1$.
+  \item $P(\varnothing \mid A) = 0$.
+  \item Если $B_1 \cap B_2 = 0$, то $P(B_1 \sqcup B_2 \mid A) = P(B_1 \mid A) + P(B_2 \mid A) $.
+
+   Рассмотреть события $A \cap B_1$ и $A \cap B_2$ и применить аддитивность.
+  \item $P(B \mid A) + P(\overline B \mid A) = 1$.
+ \end{enumerate} 
+ \begin{remrk*}
+  $P(B \mid A) + P(B \mid \overline A) \neq 1$. Например: $B = \Omega$, $A$ --- любое непустое. Тогда левая часть равна $2$.
+ \end{remrk*}
+\end{prop*}
+
+\begin{prop}[формула полной вероятности]
+ Пусть $\Omega = \bigsqcup_{k=1}^{m} A_k$, причём $P(A_k) > 0$. Тогда
+ \begin{align}
+  \label{equation:total_probability_formula}
+  P(B) = \sum_{k=1}^{m} P(B \mid A_k) \cdot P(A_k)
+ .\end{align} 
+\end{prop}
+\begin{proof} По конечной аддитивности:
+ \begin{align*}
+  P(B) = \sum_{k=1}^{m} P(B \cap A_k) = \sum_{k=1}^{m} \frac{P(B \cap A_k) \cdot P(A_k)}{P(A_k)} = \sum_{k=1}^{m} P(B \mid A_k) \cdot P(A_k).
+ \end{align*} 
+\end{proof}
+\begin{exmpl*}
+ Есть две урны. В первой урне есть $3$ белых и $5$ чёрных шаров, а во второй --- $5$ белых и $5$ чёрных. Из первой урны мы не глядя достаём два шара и перекладываем во вторую. Затем достаём один шар из второй урны. Какова вероятность того, что он белый?
+
+ Если сейчас заняться формальным определением, то всё будет очень неприятно. Но можно просто применить формулу \eqref{equation:total_probability_formula} полной вероятности.
+
+ Пусть $B$ --- событие <<вынули белый шар>>. Пусть $A_i$ --- событие <<$i$ белых шаров переложили из первой урны во вторую>>. Соответственно, $\Omega = A_0 \sqcup A_1 \sqcup A_2$. Тогда:
+ \begin{align*}
+  P(B) &= P(B \mid A_0) P(A_0) + P(B \mid A_1) P(A_1) + P(B \mid A_2) P(A_2).
+ \end{align*} При этом 
+ \begin{align*}
+  P(A_0) &= \frac{\binom 5 2}{\binom 8 2} = \frac{5 \cdot 4}{8 \cdot 7} = \frac{5}{14}, \\
+  P(A_1) &= \frac{3 \cdot 5}{\binom 8 2} = \frac{15}{28}, \\
+  P(A_2) &= \frac{\binom 3 2}{\binom 8 2} = \frac{3 \cdot 2}{8 \cdot 7} = \frac{3}{28}.
+ \end{align*} Далее,
+ \begin{align*}
+  P(B \mid A_0) = \frac{5}{12}, & &P(B \mid A_1) = \frac{6}{12} = \frac{1}{2}, & &P(B \mid A_2) = \frac{7}{12}
+ .\end{align*} Ответ:
+ \begin{align*}
+  P(B)  = \frac{5}{12} \cdot \frac{5}{14} + \frac{1}{2} \cdot \frac{15}{28} + \frac{7}{12} \cdot \frac{3}{28} = \frac{23}{48}.
+ \end{align*} 
+
+\end{exmpl*}
+
+\begin{prop}[формула Байеса]
+ Пусть $P(A) > 0$ и  $P(B) > 0$. Тогда
+ \begin{align}
+  \label{equation:bayes_formula}
+  P(A \mid B) = \frac{P(B \mid A)P(A)}{P(B)}.
+ \end{align} 
+\end{prop}
+\begin{proof} Подставить $ P(B \mid A) = \frac{P(A \cap B)}{P(A)} $ в правую часть.
+\end{proof}
+\begin{exmpl*}
+ Одно из первых приложений формулы Байеса --- медицинский тест на болезнь. Пусть $A$ --- это <<человек болен>>, а $B$ --- это <<тест положителен>>. При этом могут быть как и false positive, так и false negative. Оказывается, что если болезнь весьма редкая, а тестов много, то почти все тесты будут ложно положительными (это забыли во время коронавируса).
+\end{exmpl*}
+
+Скрестим формулы \eqref{equation:total_probability_formula} и \eqref{equation:bayes_formula}.
+
+\begin{thm}[Байеса]
+ Пусть $\Omega = \bigsqcup_{k=1}^{m} A_k$, $P(A_k) > 0$ и $P(B) > 0$. Тогда
+ \begin{align*}
+  P(A_k \mid B) = \frac{P(B \mid A_k)P(A_k)}{\sum_{j=1}^{m} P(B \mid A_j)P(A_j)}
+ .\end{align*} 
+\end{thm}
+
+\begin{exmpl*}
+ Пусть есть две монеты: одна из них симметричная, а вторая с вероятностью $1 / 3$ выдаёт решку, а с $2 / 3$ --- орёл. Мы взяли случайную монету, подбросили, и выпал орёл. Найти вероятность того, что монета симметричная.
+
+ Пусть $A$ --- <<монета симметричная>>, $B$ --- выпал орёл. Тогда
+ \begin{align*}
+  P(A \mid B) = \frac{P(B\mid A)P(A)}{P(B \mid A)P(A) + P(B \mid \overline A) P(\overline A)}
+ .\end{align*} $P(A) = P(\overline A) = 1 / 2$.  $P(B \mid A) = 1 / 2$.  $P(B \mid \overline A) = 2 / 3$. Тогда
+ \begin{align*}
+  P(A \mid B) = \frac{1 / 2}{1 / 2 + 2 / 3} = \frac{1 / 2}{7 / 6} = \frac{3}{7}
+ .\end{align*} 
+
+\end{exmpl*}
+
+Независимые события. Событие $B$ \textit{не зависит} от $A$, если $P(B) = P(B \mid A)$. Но
+\begin{align*}
+ P(B \mid A) = \frac{P(A\cap B)}{P(A)}
+.\end{align*} Поэтому удобнее определять через произведение вероятностей.
+
+\begin{df}
+ $A$ и $B$ --- \textit{независимые события}, если $P(A \cap B) = P(A)P(B)$.
+\end{df}
+\begin{df}
+ События $A_1, A_2, \ldots, A_m$ \textit{независимы в совокупности}, если
+ \begin{align*}
+  P(A_{i_1} \cap A_{i_2} \cap \ldots \cap A_{i_k}) = P(A_{i_1}) P(A_{i_2}) \ldots P(A_{i_k})
+ \end{align*} для любых наборов различных индексов $i_1, i_2, \ldots, i_k$.
+\end{df}
+Соглашение: по умолчанию \textit{независимость} означает <<независимость в совокупности>>.
+\begin{remrk*}
+ Независимость в совокупности --- это не то же самое, что и попарная независимость (хотя из первого следует второе).
+\end{remrk*}
+\begin{exmpl*}
+ Подбросили дважды игральный кубик. Пусть $A$ --- <<при первом броске выпал чёт>>, $B$ --- <<при втором броске выпал чёт>>. Пусть $C$ --- <<выпала чётная сумма>>. $\Omega = \left\{ (i,j) \mid 1 \leqslant i,j \leqslant 6 \right\}$.
+ \begin{align*}
+  P(A) = P(B) = P(C) = \frac{1}{2} \\
+  P(A \cap B) = \frac{1}{4} = P(A) P(B) \\
+  P(A \cap C) = P(B \cap C) = P(A \cap B) = \frac{1}{4}
+ .\end{align*} Попарная независимость есть. Но
+ \begin{align*}
+  P(A \cap B \cap C) = \frac{1}{4} \neq P(A)P(B)P(C)
+ .\end{align*} Независимости в совокупности нет!
+\end{exmpl*}
+
+\begin{thm}[Эрдёша-Мозера]
+ Есть одно-круговой турнир, где играют $n$ волейбольных команд. Каждая сыграла с каждой. Пусть $k$ --- наибольшее число, для которого заведомо можно найти такие команды  $A_1, \ldots, A_k$, что $A_i$ выиграла у $A_j$ если $i < j$.
+
+ Тогда $k \leqslant 1 + \left\lfloor 2 \log_2 n  \right\rfloor$.
+\end{thm}
+\begin{proof}
+ Вероятностный метод. Рассмотрим случайный турнир (всего турниров $2^{\binom n 2}$).
+ \begin{align*}
+  P(A \text{ выиграла у } B) = 1 / 2
+ .\end{align*} 
+ \begin{align*}
+  P(\text{команды } A_1, \ldots, A_k \text{ подходят}) &= \frac{1}{2^{\binom k 2}} \\
+  P(\text{какие-то $k$ команд подходят}) &\leqslant \sum_{\text{набор из $k$ команд}} P(A_1, \ldots, A_k \text{ подходят }) = \\
+  &= \binom n k \cdot k!  \cdot \frac{1}{2^{k(k-1) / 2}}
+ .\end{align*} Предположим, что $k \geqslant 2 + \left\lfloor 2 \log_2 n \right\rfloor $. Тогда
+ \begin{align*}
+  \leqslant \frac{n (n-1) \ldots (n-k+1)}{2^{k(k-1) / 2}} < \frac{n^{k}}{\left(2^{\frac{k-1}{2}}\right)^{k}} = (\frac{n}{2^{\frac{k-1}{2}}})^{k} < 1
+ .\end{align*} Тогда
+ \begin{align*}
+  P(\text{никакие $k$ команд не подходят}) > 0
+ .\end{align*} Следовательно, существует турнир, в котором никакие $k$ команд не подходят.
+\end{proof}
+
+\begin{df*}
+ 
+Небольшое обобщение модели: пусть $\Omega = \left\{ \omega_1, \ldots, \omega_n \right\}$, и $P(\omega_j) = p_j \in (0,1]$, причём $p_1 + \ldots + p_n = 1$. Тогда определим
+\begin{align*}
+ P(A) = \sum_{\omega_j \in A} p_j
+.\end{align*}
+\end{df*}
+
+Чтобы все свойства были верными, нужно проверить лишь конечную аддитивность:
+\begin{align*}
+ P(A \sqcup B) = P(A) + P(B)
+,\end{align*} что очевидно.
