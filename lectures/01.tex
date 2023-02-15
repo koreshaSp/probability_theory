@@ -61,7 +61,7 @@
  По индукции. База ($m=1$) очевидно. Переход $m \to m + 1$. Обозначим $B = A_1 \cup \ldots \cup A_m$. Тогда
  \begin{align*}
   P(B \cup A_{m+1}) = \underbrace{P(B)}_{\text{по предположению инд.}} + P(A_{m+1}) - P(B \cap A_{m+1})
- .\end{align*} $P(B)$ раскроем по предположению индукции. Обозначим $B_k = A_k \cap A_{m+1}$. Тогда  $B \cap A_{m+1} = B_1 \cup \ldots B_k$ . Снова по предположению индукции. Получаем:
+ .\end{align*} $P(B)$ раскроем по предположению индукции. Обозначим $B_k = A_k \cap A_{m+1}$. Тогда  $B \cap A_{m+1} = B_1 \cup \ldots \cup B_k$ . Снова по предположению индукции. Получаем:
  \begin{align*}
   &= \sum_{i=1}^{m} P(A_i) - \sum_{i < j \leqslant m} P(A_i \cap A_k) + \ldots + P(A_{m+1}) -\\&- ( \sum_{k=1}^{m} P(A_k \cap A_{m+1}) - \\
   - \sum_{i < j \leqslant m} P(A_i \cap A_j \cap A_{m+1}) + \ldots )
