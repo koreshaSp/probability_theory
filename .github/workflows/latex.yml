@@ -20,7 +20,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
-          args: -jobname=matan2 -output-format=pdf
+          args: -jobname=probability_theory -output-format=pdf
 
       - name: Delete
         uses: ame-yu/action-delete-latest-release@v2
@@ -45,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./matan2.pdf
-          asset_name: matan2.pdf
+          asset_path: ./probability_theory.pdf
+          asset_name: probability_theory.pdf
           asset_content_type: pdf
