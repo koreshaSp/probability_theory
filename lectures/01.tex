@@ -43,13 +43,23 @@
  $P(A \cup B) \leqslant P(A) + P(B)$.
 \end{crly*}
 
+\begin{proof}
+	\[
+		P(A \cup B) = P((A \cup B) \setminus B) + P(B) = P(A \setminus B) + P(B) \ge P(A) + P(B)
+	\]
+\end{proof}
+
 \begin{df*}
  $\overline A = \Omega \setminus A$.
 \end{df*}
 \begin{prop*}
- $\overline A = 1 - P(A)$.
+ $P(\overline A) = 1 - P(A)$.
 \end{prop*}
 
+\begin{proof}
+	$P(A) + P(\overline A) = \frac{\#A}{\#\Omega} + \frac{\#\overline A}{\#\Omega} = 1$     
+\end{proof}
+	
 \begin{prop}[формула включений-исключений]
  \label{proposition:inclusion_exclusion_formula}
  \begin{align*}
@@ -60,12 +70,15 @@
 \begin{proof}
  По индукции. База ($m=1$) очевидно. Переход $m \to m + 1$. Обозначим $B = A_1 \cup \ldots \cup A_m$. Тогда
  \begin{align*}
-  P(B \cup A_{m+1}) = \underbrace{P(B)}_{\text{по предположению инд.}} + P(A_{m+1}) - P(B \cap A_{m+1})
+ P(B \cup A_{m+1}) \underbrace{=}_{\text{по предположению инд.}} P(B)+ P(A_{m+1}) - P(B \cap A_{m+1})
  .\end{align*} $P(B)$ раскроем по предположению индукции. Обозначим $B_k = A_k \cap A_{m+1}$. Тогда  $B \cap A_{m+1} = B_1 \cup \ldots \cup B_k$ . Снова по предположению индукции. Получаем:
  \begin{align*}
-  &= \sum_{i=1}^{m} P(A_i) - \sum_{i < j \leqslant m} P(A_i \cap A_k) + \ldots + P(A_{m+1}) -\\&- ( \sum_{k=1}^{m} P(A_k \cap A_{m+1}) - \\
-  - \sum_{i < j \leqslant m} P(A_i \cap A_j \cap A_{m+1}) + \ldots )
- \end{align*} Получаем ровно то, что нужно.
+	&= \underbrace{\sum_{i=1}^{m} P(A_i) - \sum_{i < j \leqslant m} P(A_i \cap A_k) + \ldots}_{P(B)}
+	+\\&+ P(A_{m+1})
+	- \underbrace{\left( \sum_{k=1}^{m} P(A_k \cap A_{m+1})
+	- \sum_{i < j \leqslant m} P(A_i \cap A_j \cap A_{m+1}) + \ldots \right)}_{P(B \cap A_{m + 1})}
+	=\\&=\sum_{i = 1}^{m + 1} P(A_i) - \sum_{i < j \le m + 1} P(A_i \cap A_j) + \ldots + (-1)^m P(A_1 \cap \ldots \cap A_{m + 1})
+ \end{align*} 
 \end{proof}
 
 
@@ -134,13 +147,11 @@
   P(A \mid B) = \frac{P(B \mid A)P(A)}{P(B)}.
  \end{align} 
 \end{prop}
-\begin{proof} Подставить $ P(B \mid A) = \frac{P(A \cap B)}{P(A)} $ в правую часть.
+\begin{proof} $\frac{P(B \mid A)P(A)}{P(B)} = \frac{\frac{P(A \cap B)}{P(A)}P(A)}{P(B)} = \frac{P(A \cap B)}{P(B)} = P(A \mid B)$
 \end{proof}
 \begin{exmpl*}
  Одно из первых приложений формулы Байеса --- медицинский тест на болезнь. Пусть $A$ --- это <<человек болен>>, а $B$ --- это <<тест положителен>>. При этом могут быть как и false positive, так и false negative. Оказывается, что если болезнь весьма редкая, а тестов много, то почти все тесты будут ложно положительными (это забыли во время коронавируса).
 \end{exmpl*}
-
-Скрестим формулы \eqref{equation:total_probability_formula} и \eqref{equation:bayes_formula}.
 
 \begin{thm}[Байеса]
  Пусть $\Omega = \bigsqcup_{k=1}^{m} A_k$, $P(A_k) > 0$ и $P(B) > 0$. Тогда
@@ -148,6 +159,15 @@
   P(A_k \mid B) = \frac{P(B \mid A_k)P(A_k)}{\sum_{j=1}^{m} P(B \mid A_j)P(A_j)}
  .\end{align*} 
 \end{thm}
+
+\begin{proof}
+	Распишем $P(A_k \mid B)$ по формуле Байеса \eqref{equation:bayes_formula}, а затем распишем $P(B)$ в знаменателе по формуле полной вероятности \eqref{equation:total_probability_formula}
+
+	\[
+		P(A_K \mid B) = \frac{P(B \mid A_k)P(A_k)}{P(B)} = \frac{P(B \mid A_k)P(A_k)}{\sum_{j = 1}^m P(B \mid A_j)P(A_j)}
+	\]  
+
+\end{proof}
 
 \begin{exmpl*}
  Пусть есть две монеты: одна из них симметричная, а вторая с вероятностью $1 / 3$ выдаёт решку, а с $2 / 3$ --- орёл. Мы взяли случайную монету, подбросили, и выпал орёл. Найти вероятность того, что монета симметричная.
@@ -181,7 +201,7 @@
  Независимость в совокупности --- это не то же самое, что и попарная независимость (хотя из первого следует второе).
 \end{remrk*}
 \begin{exmpl*}
- Подбросили дважды игральный кубик. Пусть $A$ --- <<при первом броске выпал чёт>>, $B$ --- <<при втором броске выпал чёт>>. Пусть $C$ --- <<выпала чётная сумма>>. $\Omega = \left\{ (i,j) \mid 1 \leqslant i,j \leqslant 6 \right\}$.
+ Подбросили дважды игральный кубик. Пусть $A$ --- <<при первом броске выпало чётное число>>, $B$ --- <<при втором броске выпало чётное число>>. Пусть $C$ --- <<выпала чётная сумма>>. $\Omega = \left\{ (i,j) \mid 1 \leqslant i,j \leqslant 6 \right\}$.
  \begin{align*}
   P(A) = P(B) = P(C) = \frac{1}{2} \\
   P(A \cap B) = \frac{1}{4} = P(A) P(B) \\
@@ -206,10 +226,13 @@
   P(\text{команды } A_1, \ldots, A_k \text{ подходят}) &= \frac{1}{2^{\binom k 2}} \\
   P(\text{какие-то $k$ команд подходят}) &\leqslant \sum_{\text{набор из $k$ команд}} P(A_1, \ldots, A_k \text{ подходят }) = \\
   &= \binom n k \cdot k!  \cdot \frac{1}{2^{k(k-1) / 2}}
- .\end{align*} Предположим, что $k \geqslant 2 + \left\lfloor 2 \log_2 n \right\rfloor $. Тогда
+.\end{align*} Предположим, что $k \geqslant 2 + \left\lfloor 2 \log_2 n \right\rfloor $. Тогда 
  \begin{align*}
-  \leqslant \frac{n (n-1) \ldots (n-k+1)}{2^{k(k-1) / 2}} < \frac{n^{k}}{\left(2^{\frac{k-1}{2}}\right)^{k}} = (\frac{n}{2^{\frac{k-1}{2}}})^{k} < 1
- .\end{align*} Тогда
+  \leqslant \frac{n (n-1) \ldots (n-k+1)}{2^{k(k-1) / 2}} < \frac{n^{k}}{\left(2^{\frac{k-1}{2}}\right)^{k}} = \left(\frac{n}{2^{\frac{k-1}{2}}}\right)^{k} \le 1	
+	\\ 	(\text{так как } 2^{\frac{k - 1}{2}} \ge 2^{\frac{1 + \left\lfloor 2 \log_2 n \right\rfloor}{2}} \ge 2^{\frac{2 \log_2 n}{2}} = 2^{\log_2 n} = n) 
+ .\end{align*} 
+	
+ Тогда
  \begin{align*}
   P(\text{никакие $k$ команд не подходят}) > 0
  .\end{align*} Следовательно, существует турнир, в котором никакие $k$ команд не подходят.
