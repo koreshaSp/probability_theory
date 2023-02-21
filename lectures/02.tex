@@ -1,0 +1,256 @@
+% 2023.02.21: lecture 02
+
+\subsubsection*{Схемы Бернулли и полиномиальные схемы}
+
+\begin{df*}[схема Бернулли]
+ Есть число $p \in [0,1]$ и $q = 1 - p$. Есть нечестная монетка, которая с вероятностью $p$ выдаёт орёл (он же успех, он же $1$ --- единица), а с вероятностью $q$ выпадает решка (она же неудача, она же $0$ --- нуль). Эксперимент: подбросим такую монету $n$ раз.
+
+ Формально, элементарным исходом называется последовательность результатов $\omega = (x_1, \ldots, x_n)$, $x_i \in \left\{ 0,1 \right\}$. Пространство элементарных исходов --- это набор таких результатов:
+ \begin{align*}
+  \Omega = \left\{ \omega = (x_1, \ldots, x_n) \mid x_i \in \left\{ 0,1 \right\} \right\}.
+ \end{align*} Вероятность элементарного исхода $\omega = (x_1, \ldots, x_n)$ по определению равна
+ \begin{align*}
+  P(\left\{ \omega \right\}) = p^{\# \left\{ i \mid x_i = 1 \right\}} q^{\# \left\{ i \mid x_i = 0 \right\}} = p^{\sum_{i=1}^{n} x_i} q^{n - \sum_{i=1}^{n} x_i}
+ .\end{align*} 
+\end{df*}
+
+\begin{prop*}
+ В схеме Бернулли события вида $\left\{ x_i = 0 \right\}$ по всем различным $i \in [n]$ независимы в совокупности. Аналогично, события вида $\left\{ x_i = 1 \right\}$  независимы в совокупности. Это проверяется топорно.
+\end{prop*}
+
+\begin{prop*}
+ В схеме Бернулли вероятность того, что случилось ровно $k$ успехов, она же вероятность события $x_1 + \ldots + x_n = k$, равна
+ \begin{align*}
+  P(\text{ровно $k$ успехов}) = \binom n k p^{k} q^{n-k}
+ .\end{align*} 
+\end{prop*}
+Такая штука называется \textit{биномиальным распределением}.
+
+Рассмотрим более общую конструкцию --- \textit{полиномиальную схему}.
+\begin{df*}[полиномиальная схема]
+ Пусть есть вероятности $p_1, \ldots, p_m \in [0,1]$, $p_1 + \ldots + p_m = 1$. Пространство элементарных исходов:
+ \begin{align*}
+  \Omega = \left\{ \omega = (x_1, \ldots, x_n) \mid x_i \in [m] \right\}.
+ \end{align*} Вероятность элементарного исхода равна
+ \begin{align*}
+  P(\omega) = p_1^{\# \left\{ i \mid x_i = 1 \right\}} p_2^{\# \left\{ i \mid x_i = 2 \right\}} \ldots p_m^{\# \left\{ i \mid x_i = m \right\}}
+ \end{align*} 
+\end{df*}
+
+\begin{prop*}
+ Точно также есть независимость в совокупности событий вида $\left\{ x_i = k_i \right\}$  по различным $i \in [n]$. 
+\end{prop*}
+
+\begin{prop*}
+ Кроме того,
+ \begin{align*}
+  P(\text{ровно $k_1$ раз выпала $1$, \ldots, ровно $k_m$ раз выпало $m$}) = \\
+  = \binom n {k_1,\ldots,k_m} p_1^{k_1} p_2^{k_2} \ldots p_m^{k_m} = \frac{n!}{k_1! \ldots k_m!} p_1^{k_1} \ldots p_2^{k_2}
+ \end{align*} Такая штука называется \textit{полиномиальным распределением}.
+\end{prop*}
+
+
+\subsection{Предельные теоремы для схем Бернулли}
+
+\begin{notatn*}
+ Через $S_n$ обозначим количество успехов в схеме Бернулли с $n$ испытаниями. Так,
+ \begin{align*}
+  P(S_n = k) = \binom n k p^{k} q^{n-k}.
+ \end{align*} 
+\end{notatn*}
+
+\begin{exmpl*}
+ Что больше, $P(S_{1000} = 220)$ при $p = 1 / 5$ или $P(S_{2000} = 360)$ при $p = 1 / 6$.
+
+ Честно считать это неприятно. Численные ответы:
+ \begin{align*}
+  P(S_{1000} = 220) \text{ при $p = \frac{1}{5}$ } \approx 0.008984\ldots > 0.006625 \approx P(S_{2000} = 360) \text{ при $p = \frac{1}{6}$}
+ .\end{align*}
+\end{exmpl*}
+
+\begin{thm}[%
+ Пуассона]
+ \label{theorem:poisson}
+ Рассмотрим последовательность схем Бернулли $B_1, B_2, \ldots$ У схемы Бернулли $B_n$ ровно $n$ испытаний и вероятность успеха $p_n$. При этом,
+ \begin{align*}
+  \lim_{n \to \infty} np_n = \lambda > 0 
+ .\end{align*} Тогда при фиксированном $k$
+ \begin{align*}
+  P(S_n = k) = \binom n k p_n^{k} (1-p_n)^{n-k} \to \frac{\lambda^{k}}{k!} e^{-\lambda}
+ \end{align*} при $n \to \infty$.
+\end{thm}
+\begin{proof}
+ \begin{align*}
+  \binom n k p_n^{k}(1-p_n)^{n-k} &= \frac{n(n-1)\ldots(n-k+1)}{k!} p_n^{k} \left(1 - \frac{\lambda}{n} + o (1 / n)\right)^{n-k} \sim \\
+  & \sim \frac{1}{k!}(np_n)^{k} \left( 1 - \frac{\lambda}{n} + o(1 / n) \right)^{n} \sim \frac{\lambda^{k}}{k!} \left( 1 - \frac{\lambda}{n} + o(1 / n) \right)^{n}
+ .\end{align*}  Последний множитель стремится к $e^{-\lambda}$:
+ \begin{align*}
+  \log \left( 1 - \frac{\lambda}{n} + o(1 / n) \right)^{n} = n \log \left( 1 - \frac{\lambda}{n} + o(1 / n) \right) \sim n \left( - \frac{\lambda}{n} + o(1 / n) \right) \sim -\lambda
+ .\end{align*} 
+\end{proof}
+
+\begin{remrk*}
+ Если $np_n = \lambda$, то теорема верна и при $k = o(\sqrt{n})$.
+\end{remrk*}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ \begin{align*}
+  \binom n k p_n^{k} (1-p_n)^{n-k} \sim \frac{n(n-1)\ldots(n-k+1)}{k!} \left( \frac{\lambda}{n} \right)^{k}\left(1 - \frac{\lambda}{n}\right)^{n} \left( 1 - \frac{\lambda}{n} \right)^{-k} \sim \\
+  \sim \frac{\lambda^{k}e^{-\lambda}}{k!} \left( 1 - \frac{1}{n} \right) \ldots \left(1 - \frac{k - 1}{n}\right) \left( 1 - \frac{\lambda}{n} \right)^{-k}
+ .\end{align*} Последний множитель стремится к $1$:
+ \begin{align*}
+  \log \left( 1 - \frac{\lambda}{n} \right)^{-k} = -k \log \left( 1 - \frac{\lambda}{n} \right) \sim \frac{\lambda k}{n} \to 0
+ .\end{align*} Произведение скобочек тоже стремится к $1$:
+ \begin{align*}
+  1 \geqslant \left( 1 - \frac{1}{n} \right) \ldots \left( 1 - \frac{k-1}{n} \right) \geqslant 1 - \frac{1}{n} - \frac{2}{n} - \ldots - \frac{k - 1}{n} = 1- \frac{k(k-1)}{2n} \to 1
+ .\end{align*} Действительно, более общее неравенство (упражнение). Если $0 \leqslant x_i \leqslant 1$. Доказать, что
+ \begin{align*}
+  (1 - x_1)(1 - x_2) \ldots (1-x_n) \geqslant 1 - x_1 - x_2 - \ldots - x_n
+ .\end{align*} 
+\end{proof}
+
+Есть оценка на скорости сходимости в теореме Пуассона.
+
+\begin{thm}[%
+ Прохорова]
+ Пусть $np_n = \lambda$. Тогда
+ \begin{align*}
+  \sum_{k=0}^{\infty} \left| P(S_n = k) - \frac{\lambda^{k}e^{-\lambda}}{k!}\right| \leqslant \frac{2\lambda}{n} \min \left\{ 2, \lambda \right\}.
+ \end{align*} 
+\end{thm}
+
+Теорема \ref{theorem:poisson} Пуассона описывает случай, когда вероятности успеха очень маленькие, но испытаний очень много.
+
+\begin{exmpl*}
+ Есть честная рулетка. $p = \frac{1}{37}$ --- вероятность выпадения конкретного числа (или зеро). Допустим, мы играем в рулетку $111$ раз, каждый раз ставим одну монетку (допустим на случайное число). Какова вероятность того, что за $111$ испытаний мы вернули то, что поставили? Точное вычисление:
+ \begin{align*}
+  P(S_{111} = 3) = \binom {111} 3 \left( 1 / 37 \right)^{3} \left( \frac{36}{37} \right)^{108} \approx 0.227127\ldots
+ \end{align*} Приближённое вычисление по теореме \ref{theorem:poisson} Пуассона:
+ \begin{align*}
+  P(S_{111} = 3) \approx \frac{\lambda^{3}}{3!}e^{-\lambda} = \frac{3^{3}}{3!} e^{-3} = \frac{4.5}{e^{3}} \approx 0.224041\ldots
+ \end{align*} Два знака после запятой совпали.
+
+ Теперь оценим вероятность выиграть:
+ \begin{align*}
+  P(\text{выигрыш}) = P(S_{111} \geqslant 4) = 1 - P(S_{111} = 0) - \ldots - P(S_{111} = 3)
+ .\end{align*} Если считать точно, то получится около $0.352768\ldots$, а если по теореме \ref{theorem:poisson} Пуассона, то
+ \begin{align*}
+  \approx 1 - \frac{3^{0}}{0!}e^{-3} - \frac{3^{1}}{1!}e^{-3} - \frac{3^{2}}{2!}e^{-3} + \frac{3^{3}}{3!}e^{-3} = 1 - \frac{13}{e^{3}} \approx 0.352754\ldots
+ \end{align*} 
+\end{exmpl*}
+
+Теорема \ref{theorem:poisson} Пуассона осмысленна, когда $p$ маленькое. Иной случай обрабатывается следующей теоремой.
+\begin{thm}[%
+ локальная теорема Муавра-Лапласа]
+ \label{theorem:local_theorem_muavr_laplas}
+ Пусть есть фиксированное число $0 < p < 1$, $q = 1 - p$. Пусть $n \to \infty$. Обозначим
+ \begin{align*}
+  x =\frac{k - np}{\sqrt{npq}}
+ \end{align*} Рассмотрим схему Бернулли с $n$ испытаниями и вероятностью успеха $p$.  Пусть $k$ меняется так, что $\left| x \right| \leqslant T$, где $T$ --- фиксированная константа.
+
+ Тогда
+ \begin{align*}
+  P(S_n = k) \sim \frac{1}{\sqrt{2\pi npq }}e^{-x^{2} / 2}
+ \end{align*} при $n \to \infty$. При этом, эквивалентность равномерная по $k$ (точнее сказать по $x$). 
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Заметим, что
+ \begin{align*}
+  k = np + x \sqrt{npq} \geqslant np - T \sqrt{npq} \to +\infty.
+ \end{align*} Аналогично,
+ \begin{align*}
+  n - k = nq - x \sqrt{npq} \geqslant nq - T \sqrt{npq} \to +\infty
+ .\end{align*} Обозначим
+ \begin{align*}
+  \alpha = \frac{k}{n} = p + x\sqrt{\frac{pq}{n}} \to p
+ .\end{align*} Соответственно,
+ \begin{align*}
+  1 - \alpha = \frac{n - k}{n} = q - x \sqrt{\frac{pq}{n}} \to q.
+ \end{align*} Запишем
+ \begin{align*}
+  P(S_n = k) &= \binom n k p^{k}q^{n-k} = \frac{n!}{k!(n-k)!} p^{k}q^{n-k}.
+ \end{align*} Все $n$, $k$, $n - k$ стремятся к  $+\infty$, поэтому запишем формулу Стирлинга:
+ \begin{align*}
+  P(S_n = k) &\sim \frac{n^{n}e^{-n}\sqrt{2\pi n} \cdot p^{k}q^{n-k}}{k^{k}e^{-k}\sqrt{2\pi k}(n-k)^{n-k}e^{-n+k}\sqrt{2\pi (n-k)}} = \\
+  &= \frac{n^{n}\sqrt{n} \cdot p^{k}q^{n-k}}{k^{k}\sqrt{2\pi k}(n-k)^{n-k} \sqrt{n-k}} = \\
+  &= \frac{p^{k}q^{n-k}}{\alpha^{k}(1 - \alpha)^{n-k}} \cdot \frac{1}{\sqrt{2 \pi \frac{k}{n} \cdot \frac{n-k}{n} \cdot n}} \sim \\
+  &\sim \left(\frac{p}{\alpha}\right)^{k} \left( \frac{q}{1 - \alpha} \right)^{n-k} \cdot \frac{1}{\sqrt{2 \pi npq}}
+ .\end{align*} Осталось доказать, что
+ \begin{align*}
+  k \log \frac{\alpha}{p} + (n-k) \log \frac{1 - \alpha}{q} \sim \frac{x^{2}}{2}
+ .\end{align*} Левая часть равна
+ \begin{align*}
+  k \log\left(1 + x \sqrt{\frac{q}{pn}}\right) + (n-k)\log \left( 1 - x \sqrt{\frac{p}{qn}} \right).
+ \end{align*} Запишем формулу Тейлора $\log(1 + t) = t - \frac{t^{2}}{2} + O(t^{3})$:
+ \begin{align*}
+  &= k \left(x \sqrt{\frac{q}{pn}} - \frac{x^{2}}{2} \frac{q}{pn} + O\left(\frac{1}{n^{\frac{3}{2}}}\right)\right) + (n-k) \left( -x \sqrt{\frac{p}{qn}}  - \frac{x^{2}}{2} \frac{p}{qn} + O \left( \frac{1}{n^{\frac{3}{2}}} \right) \right) = \\
+  &= n\alpha x \sqrt{\frac{q}{pn}} - n\alpha \frac{x^{2}}{2}\frac{q}{pn} - n(1-\alpha)x \sqrt{\frac{p}{qn}} - n(1-\alpha)\frac{x^{2}}{2} \frac{p}{qn} + O\left(\frac{1}{\sqrt{n}}\right) \sim \\
+  &\sim \ldots - \frac{x^{2}}{2}q - \frac{x^{2}}{2}p + O\left(\frac{1}{\sqrt{n}}\right) = \\
+  &= -\frac{x^{2}}{2} + \left( np + x\sqrt{npq} \right)x \sqrt{\frac{q}{pn}} - (qn - x\sqrt{npq})x\sqrt{\frac{p}{qn}} + O \left( \frac{1}{\sqrt{n}} \right) = \\
+  &= -\frac{x^{2}}{2} + x\sqrt{npq} + x^{2}q - x\sqrt{npq} + x^{2}p + O \left( \frac{1}{\sqrt{n}} \right) = \\
+  &= \frac{x^{2}}{2} + O \left( \frac{1}{\sqrt{n}} \right)
+ \end{align*} 
+\end{proof}
+
+\begin{remrk}
+ Если $\varphi(n) = o((npq)^{\frac{2}{3}})$ и $\left| k-np \right| \leqslant \varphi(n)$, то верен тот же вывод из теоремы \ref{theorem:local_theorem_muavr_laplas}.
+\end{remrk}
+
+\begin{thm}[%
+ интегральная теорема Муавра-Лапласа]
+ \label{theorem:intergram_theorem_muavr_laplas}
+ Пусть есть $0 < p < 1$. Тогда
+ \begin{align*}
+  P\left(a < \frac{S_n - np}{\sqrt{npq}} \leqslant b\right) \to \frac{1}{\sqrt{2\pi}} \int\limits_{a}^{b} e^{-\frac{x^{2}}{2}}\,dx
+ ,\end{align*} причём сходимость равномерная по $a, b \in \R$.
+\end{thm}
+
+Мы не будем доказывать, потому что это будет тривиальным частным случаем другой теоремы.
+
+Есть оценка на скорость сходимости.
+
+\begin{thm}[%
+ Берри-Эссеена]
+ \begin{align*}
+  \sup_{x \in \R} \left| P \left( \frac{S_n - np}{\sqrt{npq}} \leqslant x \right) - \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{x} e^{-\frac{t^{2}}{2}}\, dt \right| \leqslant \frac{p^{2}+q^{2}}{\sqrt{npq}} \cdot \frac{1}{2}
+ .\end{align*}
+\end{thm}
+
+\begin{remrk*}
+ Константу $\frac{1}{2}$ можно заменить на $0.469$.
+\end{remrk*}
+
+\begin{remrk*}
+ Показатель степени $n$ (то есть $\frac{1}{2}$) нельзя улучшить.
+\end{remrk*}
+
+\begin{notatn*}
+ Есть стандартное обозначение
+ \begin{align*}
+  \Phi(x) = \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{x} e^{-\frac{t^{2}}{2}}\,dt
+ .\end{align*} 
+\end{notatn*}
+
+\begin{exmpl*}
+ Пусть $p = q = 1 / 2$ и  $2n$ испытаний. Чему равна
+ \begin{align*}
+  P(S_{2n} = n) = \binom {2n} n \left( \frac{1}{2} \right)^{2n} \sim \frac{4^{n}}{\sqrt{\pi n}} \left( \frac{1}{2} \right)^{2n} = \frac{1}{\sqrt{\pi n}}
+ \end{align*} 
+
+ А какая вероятность
+ \begin{align*}
+  P(S_{2n} \leqslant n) &= P(S_{2n} < n) + P(S_{2n} = n) = P(S_{2n} > n) + P(S_{2n} = n) = \\
+  &= \frac{1 + P(S_{2n} = n)}{2} = \frac{1}{2} + \frac{1}{\sqrt{\pi n}} + o \left( \frac{1}{\sqrt{n}} \right)
+ \end{align*} По теореме \ref{theorem:intergram_theorem_muavr_laplas}
+ \begin{align*}
+  P\left(\frac{S_{2n} - \frac{1}{2} \cdot 2n}{\sqrt{2n \cdot \frac{1}{2} \cdot \frac{1}{2}}} \leqslant 0\right) \to \Phi(0) = \frac{1}{2}.
+ \end{align*} 
+\end{exmpl*}
+
+\begin{remrk*}
+ \begin{align*}
+  P(S_n \leqslant y) = P\left(\frac{S_n - np}{\sqrt{npq}} \leqslant \underbrace{\frac{y - np}{\sqrt{npq}}}_{x}\right) \approx \Phi(x)
+ .\end{align*} $S_n$ --- это дискретная штука. Если  $y \in \Z$, то
+ \begin{align*}
+  P(S_n \leqslant y) = P\left(S_n \leqslant y + \frac{1}{2}\right) \approx \Phi \left( \frac{y + \frac{1}{2} - np}{\sqrt{npq}} \right)
+ \end{align*} --- более точная формула.
+\end{remrk*}
