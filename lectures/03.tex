@@ -1,0 +1,275 @@
+\begin{exmpl}[задача о театре]
+ Есть театр, в который имеется два входа. В театре $n=1600$ мест. У каждого входа есть гардероб. Зрители заходят через один из входов, и идут оставлять вещи в соответствующий гардероб. Мы хотим сделать так, чтобы не чаще, чем раз в месяц переполнялся хотя бы один из гардеробов.
+
+ Есть схема Бернулли, $p = \frac{1}{2}$. Пусть $C \geqslant 0$ --- это сколько дополнительно мест нужно. Нет переполнения тогда и только тогда, когда
+ $800 - C S_n \leqslant 800 + C$. Нам нужно, чтобы
+ \begin{align*}
+  P(800 - C \leqslant S_n \leqslant 800 + C) \geqslant \frac{29}{30}
+ \end{align*} и минимизировать при этом $C$. По теореме \ref{theorem:intergram_theorem_muavr_laplas} вероятность равна
+ \begin{align*}
+  P\left(-\frac{C}{\sqrt{npq}} \leqslant \frac{S_n - np}{\sqrt{npq}} \leqslant \frac{C}{\sqrt{npq}}\right) = P \left( -\frac{C}{20} \leqslant \frac{S_n - np}{\sqrt{npq}} \leqslant \frac{C}{20} \right) \approx \\
+  \approx \frac{1}{\sqrt{2\pi}} \int\limits_{-C / 20}^{C / 20}  e^{-t^{2} / 2} \, dt.
+ \end{align*} Мы хотим, чтобы
+ \begin{align*}
+  \frac{1}{\sqrt{2\pi}}\int\limits_{0}^{C / 20} e^{-t^{2} / 2} \, dt \geqslant \frac{29}{60}
+ .\end{align*} По табличке, нужно, чтобы $\frac{C}{20} \approx 2.13$. Тогда
+ \begin{align*}
+  C = 20 \cdot 2.13 \implies C = 43 \text{ достаточно.}
+ \end{align*} 
+\end{exmpl}
+
+\begin{exmpl}[случайное блуждание по целым точкам]
+ Частица перемещается по целым точкам $\Z$ на прямой. С вероятностью $p$ идём в положительную сторону, а с вероятностью $q$ --- в отрицательную. Стартуем в нуле. Интересует, как будет ходить частица.
+
+ Обозначим $a_n$ --- позиция частицы на шаге $n$ ($a_0 = 0$). Тогда
+ \begin{align*}
+  a_{n+1} = \begin{cases}
+   a_n + 1, \text{ с вероятностью } p,  \\
+   a_n - 1, \text{ с вероятностью } q.
+  \end{cases}
+ \end{align*} Удобнее с вероятностью $p$ прибавлять $2$, и всегда вычитать $1$. Тогда
+ \begin{align*}
+  a_n = 2S_n - n.
+ \end{align*} Тогда вероятность оказаться в точке $k$ через $n$ шагов равна
+ \begin{align*}
+  P(a_n = k) = \begin{cases}
+   0, \text{ если } k \not \equiv n \pmod 2;  \\
+   P(S_n = \frac{n+k}{2}) = \binom {\frac{n+k}{2}} n p^{\frac{n+k}{2}} q^{\frac{n-k}{2}}, \text{ иначе. }
+  \end{cases} 
+ \end{align*} 
+\end{exmpl}
+
+\begin{exmpl}[числа Рамсея]
+ Число Рамсея $R(n,k)$  --- это такое наименьшее $m$, что в графе на $m$ вершинах либо есть полный подграф на $n$ вершинах, либо пустой подграф на $k$ вершинах.
+\end{exmpl}
+\begin{thm}[Эрдёша]
+ Если $\binom m k \cdot 2^{1 - \frac{k(k-1)}{2}} < 1$, то $R(k,k) > m$. В частности, $R(k,k) > 2^{k / 2}$.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Рассмотрим случайный граф на $m$  вершинах: для каждой из $\frac{m(m-1)}{2}$  возьмём соответствующее ребро с вероятностью $\frac{1}{2}$. Тогда
+ \begin{align*}
+  P(\text{вершины }a_1, \ldots, a_k\text{ подходят}) = 2^{1-\frac{k(k-1)}{2}}
+ \end{align*} Теперь оценим
+ \begin{align*}
+  P(k \text{ вершин подходят}) = P \left( \bigcup_{a_1, \ldots, a_k} a_1, \ldots, a_k \text{ подходят} \right) \leqslant \\
+  \leqslant \sum_{a_1, \ldots, a_k}  P(a_1, \ldots, a_k \text{ подходят}) = \binom m k \cdot 2^{1 - \frac{k(k-1)}{2}} < 1.
+ \end{align*} Значит,
+ \begin{align*}
+  P(\text{никакие $k$ вершин не подходят}) > 0.
+ \end{align*} Следовательно, существует граф, в котором никакие  $k$  вершин не подходят.
+
+ Теперь разберёмся с <<в частности>>: подставим $m \leqslant 2^{k / 2}$:
+ \begin{align*}
+  \binom m k \cdot 2^{1 - \frac{k(k-1)}{2}} &\leqslant \frac{2^{k / 2} \ldots (2^{k / 2} - k + 1)}{k!}2^{1 - \frac{k(k-1)}{2}} = \begin{bmatrix}
+  k! > \left( \frac{k}{e} \right)^{k} \iff e^{k} > \frac{k^{k}}{k!} \end{bmatrix} < \\
+  &< \frac{m^{k}}{k^{k}}e^{k} \cdot 2^{1-\frac{k(k-1)}{2}} \leqslant {\color{red}\ldots} \leqslant 2 \left( \frac{e}{k} \cdot \frac{1}{\sqrt{2}} \right)^{k} < 1.
+ \end{align*} Неравенство получилось верным при $k \geqslant 3$.
+\end{proof}
+
+\newpage
+\section{Общая теория вероятностей}
+\subsection{Колмогоровская модель теории вероятностей}
+
+\begin{df}
+ $(\Omega, \mathcal F, P)$ --- \textit{вероятностное пространство}, если
+ \begin{itemize}
+  \item $\Omega$ --- \textit{пространство элементарных исходов};
+  \item $\mathcal F$ --- $\sigma$-алгебра подмножеств $\Omega$ (\textit{пространство событий});
+  \item $P$ --- вероятностная мера на $\mathcal F$ (то есть $P(\Omega) = 1$).
+ \end{itemize}
+
+ Элементы $\mathcal F$ называются \textit{случайными событиями}.
+\end{df}
+\begin{remrk}
+ Если $\Omega$ не более, чем счётно, то всегда можно взять $\F = 2^{\Omega}$.
+\end{remrk}
+
+\begin{df}[условная вероятность]
+ \begin{align*}
+  P(B \mid A) = \frac{P(A\cap B)}{P(A)},
+ \end{align*} если $P(A) > 0$ и $A,B \in \F$.
+\end{df}
+\begin{df}[независимые события]
+ События $A, B \in \F$ \textit{независимы}, если $P(A \cap B) = P(A) P(B)$.
+\end{df}
+\begin{df}[независимость в совокупности]
+ События $A_1, \ldots, A_n \in \F$ \textit{независимы в совокупности}, если для любых различных индексов $i_1, \ldots, i_k$ верно
+ \begin{align*}
+  P(A_{i_1}\cap \ldots \cap A_{i_k}) = P(A_{i_1}) \ldots P(A_{i_k}).
+ \end{align*} 
+\end{df}
+\begin{remrk}
+ \label{remark:independed_complement}
+ $A_1, \ldots, A_n$ независимы в совокупности тогда и только тогда, когда для всех наборов событий $\left\{ B_k \right\}_{k=1}^{n}$
+ \begin{align*}
+  P(B_1 \cap \ldots \cap B_n) = P(B_1) \ldots P(B_n),
+ \end{align*} где $B_k = A_k$ или $B_k = \overline {A_k}$.
+\end{remrk}
+\begin{remrk*}
+ Независимость бесконечного числа событий означает, что любой конечный набор независим в совокупности. Иными словами, для любого конечного набора верна <<мультипликативность>>.
+\end{remrk*}
+\begin{remrk}
+ Если события $B_1, B_2, \ldots$  независимы, то
+ \begin{align*}
+  P \left( \bigcap_{k=1}^{\infty} B_k \right) = \prod_{k=1}^{\infty} P(B_k).
+ \end{align*} 
+\end{remrk}
+\begin{proof}
+ Для любого конечного $n$ есть
+ \begin{align*}
+  P \left( \bigcap_{k=1}^{n} B_k \right) = \prod_{k=1}^{n} P(B_k)
+ .\end{align*} При $n \to \infty$ правая часть стремится к бесконечному произведению, а левая часть (по непрерывности меры снизу) к тому, что надо. 
+\end{proof}
+\begin{lm}[%
+Бореля-Кантелли]
+ Пусть $A_1, A_2, \ldots$  --- события, а 
+ \begin{align*}
+  B = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} A_k
+ \end{align*} --- случилось бесконечное количество событий из $A_k$.
+\begin{enumerate}
+ \item Если ряд
+  \begin{align*}
+   \sum_{k=1}^{\infty} P(A_k) < \infty,
+  \end{align*} то $P(B) = 0$ .
+ \item Если события $A_k$  независимы и ряд расходится:
+  \begin{align*}
+   \sum_{k=1}^{\infty} P(A_k) = \infty
+  ,\end{align*} то $P(B) = 1$.
+\end{enumerate} 
+\end{lm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Пункт 1 был на матане.
+
+ Пункт 2: обозначим $B_k = \overline {A_k}$. Тогда $B_k$ независимы (замечание \ref{remark:independed_complement}). Тогда
+ \begin{align*}
+  P \left( \bigcap_{k=m}^{\infty} B_k \right) = \prod_{k=m}^{\infty} P(B_k) = \prod_{k=m}^{\infty} (1 - P(A_k)).
+ \end{align*} Прологарифмируем:
+ \begin{align*}
+  \log \left( P \left( \bigcap_{k=m}^{\infty} B_k \right) \right) = \sum_{k=m}^{\infty} \log (1 - P(A_k))
+ .\end{align*} Пользуясь $\log(1 + t) \leqslant t$ , получаем
+ \begin{align*}
+  \leqslant - \sum_{k=m}^{\infty} P(A_k)
+ \end{align*} --- хвост расходящегося ряда. Значит,
+ \begin{align*}
+  P \left( \bigcap_{k=m}^{\infty} B_k \right) = 0 \implies P \left( \overline { \bigcap_{k=m}^{\infty} B_k } \right) = 1 \implies P \left( \bigcup_{k=m}^{\infty} A_k \right) = 1.
+ \end{align*} Кроме того, множества $\bigcup_{k=m}^{\infty} A_k$  убывают, поэтому по непрерывности меры снизу имеем
+ \begin{align*}
+  P(B) = P \left( \bigcap_{m=1}^{\infty} \bigcup_{k=1}^{m} A_k \right) = \lim_{m \to \infty} P \left( \bigcup_{k=m}^{\infty} A_k \right) = 1.
+ \end{align*}
+\end{proof}
+\begin{crly}[закон нулей и единиц]
+ Пусть события $A_1, A_2, \ldots$ независимы. Тогда вероятность того, что случилось бесконечное число из них равна либо нулю, либо единице. 
+\end{crly}
+
+\subsection{Случайные величины}
+
+\begin{df}[%
+случайная величина]
+ Пусть $(\Omega, \F, P)$ --- вероятностное пространство. $\xi \colon\, \Omega \to \R$ --- \textit{случайная величина}, если $\xi$ --- измеримая функция.
+\end{df}
+\begin{df}[%
+]
+ \textit{Распределение случайной величины} $\xi$ --- это мера на борелевских подмножествах $\R$, определённая так:
+ \begin{align*}
+  P_{\xi}(A) = P[\xi \in A] = P(\xi^{-1}(A)).
+ \end{align*} 
+\end{df}
+\begin{df}
+ Случайные величины $\xi$, $\eta$ \textit{одинаково распределены}, если их распределения совпадают (как меры): $P_{\xi} = P_{\eta}$. При этом мы допускаем, что величины заданы на разных вероятностных пространствах.
+\end{df}
+\begin{remrk}
+ Из единственности стандартного продолжения меры, равенство $P_{\xi} = P_{\eta}$  достаточно проверять на ячейках:
+ \begin{align*}
+  P_{\xi} \left(a, b\right]   = P_{\eta} \left(a, b\right]  = P[\eta \leqslant b] - P[\eta \leqslant a]
+ .\end{align*} Необходимо и достаточно, чтобы для всех $a \in \R$ выполнялось
+ \begin{align*}
+  P[\xi \leqslant a] = P[\eta \leqslant a].
+ \end{align*} 
+\end{remrk}
+\begin{df}[%
+функция распределения]
+\textit{Функцией распределения} случайной величины $\xi$ называется функция $F_{\xi} \colon\, \R \to \R$, определённая так:
+ \begin{align*}
+  F_{\xi}(x) = P[\xi \leqslant x].
+ \end{align*} 
+\end{df}
+\begin{prop*}[cвойства функций распределения]\
+ \begin{enumerate}
+  \item $0 \leqslant F_{\xi} \leqslant 1$ .
+  \item $F_{\eps}$  нестрого возрастает.
+  \item $\lim\limits_{x \to +\infty} F_{\xi}(x) = 1$  и $\lim\limits_{x \to -\infty} F_{\xi}(x) = 0$ .
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Непрерывность меры снизу (стремимся к $\varnothing$) и сверху (стремимся к $\Omega$).
+   \end{proof}
+  \item $F_{\xi}$  непрерывна справа.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+     Берём убывающую последовательность точек $y_n \to x$, $y_n > x$. Тогда
+     \begin{align*}
+     F_{\xi}(y_n) = P[\xi \leqslant y_n] = P[A_n]
+    .\end{align*} $A_n$ убывают, по непрерывности меры снизу,
+     \begin{align*}
+      F_{\xi}(y_n) \to P \left[ \bigcap_{n=1}^{\infty} A_n \right] = P[\xi \leqslant x].
+    \end{align*} 
+   \end{proof}
+  \item $F_{\xi + c}(x) = F_{\xi}(x - c)$.
+  \item Если $c > 0$, то $F_{c\xi}(x) = F_{\xi}(x / c)$.
+  \item $P[\xi < x] = \lim\limits_{y \to x-} F_{\xi}(y)$.
+ \end{enumerate}
+\end{prop*}
+\begin{remrk}
+ Любая функция, удовлетворяющая свойствам 2,3,4 --- это функция распределения некоторой случайной величины.
+\end{remrk}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Пусть $F$ --- такая функция. Тогда $\nu \left(a, b\right] = F(b) - F(a) $ --- мера на ячейках. Вероятностное пространство $(\R, \mathfrak{A}_{\lambda_1}, \nu)$. Случайная величина $\xi(\omega) = \omega$.
+\end{proof}
+
+\begin{df}[%
+]
+ Случайная величина имеет \textit{дискретное распределение}, если её область значений не более, чем счётная. Тогда случайная величина называется \textit{дискретной}.
+\end{df}
+\begin{prop*}
+ Пусть $\xi \colon\, \Omega \to \left\{ y_1, y_2, \ldots \right\}$ --- дискретная случайная величина. Тогда $P_{\xi}(\left\{ x \right\}) = 0$, если $x \neq y_k$. Тогда
+ \begin{align*}
+  P_{\xi}(A) = \sum_{k : y_k \in A}  P[\xi = y_k]
+ .\end{align*} Всё определяется однозначно по наборам вероятностей $P[\xi = y_k]$.
+
+ Тогда функция распреледения
+ \begin{align*}
+  F_{\xi}(x) = \sum_{k : y_k \leqslant x} P[\xi = y_k]
+ \end{align*} 
+\end{prop*}
+
+\begin{df}[непрерывное распределение]
+ Случайная величина $\xi$ \textit{имеет непрерывное распределение}, если $P[\xi = x] = 0$ для всех $x \in \R$.
+\end{df}
+
+\begin{remrk}
+ Это $\iff$ $F_{\xi}$ --- непрерывная функция.
+\end{remrk}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ \begin{align*}
+  \lim_{y \to x-} F_{\xi}(y) = P(\xi < x) = P(\xi \leqslant x) - P(\xi = x) = F_{\xi}(x) - P[\xi = x] \implies P[\xi = x] = 0.
+ \end{align*} 
+\end{proof}
+
+\begin{df}[абсолютно непрерывное распределение]
+ Случайная величина $\xi$ \textit{обладает абсолютно непрерывным распределением}, если существует измеримая функция $p_{\xi} \colon\, \R \to [0, +\infty)$  такая, что
+ \begin{align*}
+  F_{\xi}(x) = \int\limits_{-\infty}^{x} p_{\xi}(t)\,dt
+ .\end{align*} Функция $p_{\xi}$ называется \textit{плотностью} распределения $F_{\xi}$.
+\end{df}
+\begin{prop}\
+ \begin{enumerate}
+  \item \begin{align*}
+    P[\xi \in A] = \int\limits_{A} p_{\xi} (t) \, dt.
+  \end{align*} 
+ \item 
+  \begin{align*}
+   \int\limits_{\R}  p_{\xi}(t) \, dt = 1.
+  \end{align*} 
+ \item
+  \begin{align*}
+   F'_{\xi(t)} = p_{\xi}(t)
+  \end{align*} при почти всех $t \in \R$. Тут точки Лебега.
+ \end{enumerate}
+\end{prop}

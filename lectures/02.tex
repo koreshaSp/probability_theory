@@ -90,47 +90,40 @@
 \end{proof}
 
 \begin{remrk*}
- Если $np_n = \lambda$, то теорема верна и при $k = o(\sqrt{n})$.
+ Если $np_n = \lambda$, то теорема \label{theorem:poisson} верна и при $k = o(\sqrt{n})$.
 \end{remrk*}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  \begin{align*}
-  \binom n k p_n^{k} (1-p_n)^{n-k} \sim \frac{n(n-1)\ldots(n-k+1)}{k!} \left( \frac{\lambda}{n} \right)^{k}\left(1 - \frac{\lambda}{n}\right)^{n} \left( 1 - \frac{\lambda}{n} \right)^{-k} \sim \\
-  \sim \frac{\lambda^{k}e^{-\lambda}}{k!} \left( 1 - \frac{1}{n} \right) \ldots \left(1 - \frac{k - 1}{n}\right) \left( 1 - \frac{\lambda}{n} \right)^{-k}
+  \binom n k p_n^{k} (1-p_n)^{n-k} &= \frac{n(n-1)\ldots(n-k+1)}{k!} \left( \frac{\lambda}{n} \right)^{k}\left(1 - \frac{\lambda}{n}\right)^{n} \left( 1 - \frac{\lambda}{n} \right)^{-k} = \\
+  &=  \frac{\lambda^{k}}{k!} \cdot \frac{n}{n} \cdot \frac{n-1}{n} \cdot \ldots \cdot \frac{n-k+1}{n} \cdot \left( 1 - \frac{\lambda}{n} \right)^{n} \left( 1 - \frac{\lambda}{n} \right)^{-k} \sim \\
+  &\sim \frac{\lambda^{k}e^{-\lambda}}{k!} \left( 1 - \frac{1}{n} \right) \ldots \left(1 - \frac{k - 1}{n}\right) \left( 1 - \frac{\lambda}{n} \right)^{-k}
  .\end{align*} Последний множитель стремится к $1$:
  \begin{align*}
   \log \left( 1 - \frac{\lambda}{n} \right)^{-k} = -k \log \left( 1 - \frac{\lambda}{n} \right) \sim \frac{\lambda k}{n} \to 0
  .\end{align*} Произведение скобочек тоже стремится к $1$:
  \begin{align*}
   1 \geqslant \left( 1 - \frac{1}{n} \right) \ldots \left( 1 - \frac{k-1}{n} \right) \geqslant 1 - \frac{1}{n} - \frac{2}{n} - \ldots - \frac{k - 1}{n} = 1- \frac{k(k-1)}{2n} \to 1
- .\end{align*} Действительно, более общее неравенство (упражнение, док-во ниже). Если $0 \leqslant x_i \leqslant 1$. Доказать, что
- \begin{align*}
-  (1 - x_1)(1 - x_2) \ldots (1-x_n) \geqslant 1 - x_1 - x_2 - \ldots - x_n
- .\end{align*} 
+  .\end{align*} Действительно, верно даже более общее неравенство
+  \begin{align}
+   \label{equation:induction_braces_inequality}
+  (1-x_1)(1-x_2)\ldots(1-x_n) \geqslant 1 - x_1 - x_2 - \ldots - x_n
+ \end{align}  при $0 \leqslant x_i \leqslant 1$.
 \end{proof}
 
-\begin{remrk*}
-	Доказательство более общего неравенства:
+\begin{proof}[\normalfont\textsc{Доказательство неравенства \eqref{equation:induction_braces_inequality}}]
+ По индукции:
 
-	\begin{align*}
-		(1 - x_1)(1 - x_2) \ldots (1-x_n) \geqslant 1 - x_1 - x_2 - \ldots - x_n
-	\end{align*}$0 \leq x_i \leq 1$
+ Б.И. $n = 1 \Rightarrow 1 - x_1 \geq 1 - x_1$ 
 
-\end{remrk*}
+ $n = 2 \Rightarrow (1 - x_1)(1 - x_2) = 1 - x_2 - x_1 + x_1 \cdot x_2 \geq 1 - x_1 - x_2$
 
-\begin{proof}
-	По индукции:
+ П.И. $(1 - x_1)(1 - x_2) \dots (1 - x_n) \geq 1 - x_1 - x_2 - \dots - x_n$
 
-	Б.И. $n = 1 \Rightarrow 1 - x_1 \geq 1 - x_1$ 
+ Переход: $n \to n + 1$:
 
-	$n = 2 \Rightarrow (1 - x_1)(1 - x_2) = 1 - x_2 - x_1 + x_1 \cdot x_2 \geq 1 - x_1 - x_2$
-
-	П.И. $(1 - x_1)(1 - x_2) \dots (1 - x_n) \geq 1 - x_1 - x_2 - \dots - x_n$
-
-	Переход: $n \to n + 1$:
-
-	\begin{align*}
-		\underbrace{(1 - x_1)(1 - x_2) \dots (1 - x_n)}_{y}(1-x_{n + 1}) = y - y \cdot x_{n+1} \geq \\ \geq(1 - x_1 - x_2 - \dots - x_n) - \underbrace{y \cdot x_{n + 1}}_{\leq x_{n + 1}} \geq 1 - x_1 - x_2 - \dots - x_n - x_{n + 1}
-	\end{align*}
+ \begin{align*}
+  \underbrace{(1 - x_1)(1 - x_2) \dots (1 - x_n)}_{y}(1-x_{n + 1}) = y - y \cdot x_{n+1} \geq \\ \geq(1 - x_1 - x_2 - \dots - x_n) - \underbrace{y \cdot x_{n + 1}}_{\leq x_{n + 1}} \geq 1 - x_1 - x_2 - \dots - x_n - x_{n + 1}
+ \end{align*}
 \end{proof}
 
 Есть оценка на скорость сходимости в теореме Пуассона.
