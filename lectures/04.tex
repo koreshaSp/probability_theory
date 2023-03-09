@@ -154,30 +154,35 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
   F_{\vec\xi} = \int\limits_{-\infty}^{x_1}  \ldots \int\limits_{-\infty}^{x_n} p_{\vec\xi}(\vec t) dt_n \ldots dt_1.
  \end{align*} 
 \end{df}
-\begin{сrly}
+\begin{crly}
  $ \xi_1, \ldots, \xi_n $ независ. $ \iff $ $ F_{\vec\xi} = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) $.
-\end{сrly}
+\end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Будем проверять $ P_{\vec\xi} = P_{\xi_1} \times \ldots \times P_{\xi_n} \iff F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) $.
 
- $ \implies $  банально: нужно подставить множества $ \left(-\infty, x_1\right] x \ldots x (-\infty, x_n]   $.
+ $ \implies $  банально: нужно подставить множества $ \left(-\infty, x_1\right] \times \ldots \times (-\infty, x_n]   $.
 
  $ \impliedby $ : картинка $ n=2 $. Надо показать на ячейках. 
  \begin{align*}
-  P_{\xi} (a,b] = F_{\xi}(b) - F_{\xi}(a)
-  P_{\eta} (c,d] = F_{\eta}(d) - F_{\eta}(c).
+  P_{\xi} (a_1,b_1] = F_{\xi}(b_1) - F_{\xi}(a_1) \\
+  P_{\eta} (c,d] = F_{\eta}(b_2) - F_{\eta}(a_2).
  \end{align*} Тогда
  \begin{align*}
-  P_{\xi} \left(a, b\right] \times P_{\eta}  \left(c, d\right] = F_{\xi}(b) F_{\eta}(d) - F_{\xi}(a) F_{\eta}(d) - F_{\xi}(b) F_{\eta}(c) + F_{\xi}(a) F_{\eta}(c) = \xi
-  &= F_{}
+	 P_{\xi, \eta} \left( (a_1, b_1] \times (a_2, b_2] \right) 
+	 = F_{\xi, \eta} (b_1, b_2) + F_{\xi, \eta} (a_1, a_2) - F_{\xi, \eta} (a_1, b_2) - F_{\xi, \eta}(a_2, b_1) = \\ 
+	 = F_{\xi} (b_1) F_{\eta} (b_2) + F_{\xi}(a_1) F_{\eta} (b_2) - F_{\xi}(a_1) F_{\eta} (b_2) - F_{\xi} (a_2) F_{\eta} (b_1) = \\
+	 = \left(F_{\xi} (b_1) - F_{\xi} (a_1) \right) \left( F_{\eta} (b_2) - F_{\eta} (a_2) \right) = \\
+	 = P_\xi (a_1, b_1] P_\eta (a_2, b_2]
  \end{align*}
 
+ При $n > 2$ формулы будут сложнее, но идейно то же самое.
+
 \end{proof}
-\begin{сrly}
+\begin{crly}
  Если $ \xi_1, \ldots, x_n $ абс. непр. то они независ $ \iff P_{\vec\xi}(\vec t) = p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $.
 
  В частности, если $ \xi_1, \ldots, \xi_n $ независ. то $ \vec\xi $ абс. непр.
-\end{сrly}
+\end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Проверим, что
  \begin{align*}
@@ -186,7 +191,7 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
  $ \implies $ Покажем, что $ p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $ подходит под определение плотности.
  \begin{align*}
   F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) = \int\limits_{-\infty}^{x_1} p_{\xi_1}(t_1)\,dt_1 \ldots \int\limits_{-\infty}^{x_n} p_{\xi_n}(t_n)\,dt_n = \\
-  &= \int\limits_{-\infty}^{x_1} \ldots \int\limits_{-\infty}^{x_n} p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n)\,dt_n\ldots dt_1
+  = \int\limits_{-\infty}^{x_1} \ldots \int\limits_{-\infty}^{x_n} p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n)\,dt_n\ldots dt_1
  \end{align*} Это и есть плотность. В обратную сторону то же самое.
 \end{proof}
 
@@ -200,7 +205,6 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
 Свойства:
 \begin{enumerate}
  \item $ \mu \ast \nu(A) = \int_{\R^{2}} \chi_{A}(x + y) \, d\mu(x)\, d\nu(y)   $
-\end{enumerate}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Мы знаем, что
  \begin{align*}
@@ -208,7 +212,11 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
  \int\limits_{\R^{2}}  \chi_A(x+y)\,d\mu(x)\,d\nu(y).
  \end{align*} 
 \end{proof}
-\begin{enumerate}
+
+\begin{remrk*}
+	Почти все последующие свйтсва являются тривиальными следствиями 1-го свойтсва.
+\end{remrk*}
+
  \item Есть коммутативность $ \mu \times \nu = \nu \times \mu $.
  \item 
 \begin{align*}
@@ -217,13 +225,20 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
 \item Ассоциативность.
 \item $ (c\mu) \ast \nu = c \cdot \mu \ast \nu $.
 \item $ (\mu_1 + \mu_2) \ast \nu = \mu_1 \ast \nu + \mu \ast \nu $. Линейность.
-\item $ \mu \ast \delta_0 = \mu $, где
+\item $ \mu \ast \delta_0 = \mu $, где $\delta_0$~--- мера с единичной нагрузкой в нуле.
+
 \end{enumerate}
 \begin{df}
- $ \delta_x  $ --- единичная нагрузка в точке $ x $.
+	$ \delta_x(A) = \begin{cases} 1 & x \in A \\ 0 & x \notin A \end{cases} $~--- мера с единичной нагрузкой в точке $ x $.
 \end{df}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- $ \mu \ast \delta_0(A) = \int_{\R} \mu(A-x)\,d\delta_0(x) = \mu(A).  $
+		
+	\begin{align*}
+	\mu \ast \delta_0(A) = \delta_0 \ast \mu (A) = \int\limits_{\R} \delta_0(A - x) d \mu (x) = \\ 
+	= \left[ \delta_0(A - x) = 1 \Leftrightarrow 0 \in A - x \Leftrightarrow x \in A \right] = \\ 
+	= \int\limits_{\R} \chi_A(x) d \mu (x) = \mu (A)
+	\end{align*}
+	
 \end{proof}
 
 А что будет, если эти меры будут с плотностями?
@@ -243,6 +258,8 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
  Если $ \xi $ и $ \eta $ независимы, то $ P_{\xi + \eta} = P_\xi \ast P_\eta $.
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
+	$B := \{(x, y) \mid x + y \in A \}$ 
+
  \begin{align*}
   P_{\xi+\eta}(A) &= P[\xi + \eta \in A] = P[(\xi,\eta)\in B] = P_{(\xi,\eta)}(B) = \\
   &= \int\limits_{\R^{2}} \chi_B(x,y) \,dP_{(\xi,\eta)}(x,y) = \\
