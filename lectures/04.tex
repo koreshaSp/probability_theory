@@ -21,7 +21,7 @@
   \item По линейности верно для простых неотрицательных функций $ f $.
   \item Пусть $ f $ неотрицательна и измерима. По теореме об аппроксимации можно взять последовательных простых неотрицательных функций $ f_n \geqslant 0 $, которые поточечно возрастают к $ f $. Тогда
    \begin{align*}
-    \int\limits_{X} f_n \,d\nu = \int\limits_{X} f_n w.  
+    \int\limits_{X} f_n \,d\nu = \int\limits_{X} f_n w \,d\mu.  
    \end{align*} По теореме Леви левая часть стремится к $ \int_{X} f\,d\nu  $, а правая --- к $ \int_{X} fw\,d\mu $, ведь функции $ f_nw $ тоже неотрциательные и возрастают к $ fw $.
  \end{itemize}
 \end{proof}
@@ -67,7 +67,7 @@ $ \xi \colon \Omega \to \left\{ 1,2,3, \ldots \right\} $, $ \xi \sim \mathrm{Geo
 нормальное распределение]
 $ \xi \colon\,\Omega \to \R $, $ \xi \sim N(a,\sigma^{2}) $, где $ a \in \R $, $ \sigma > 0 $. Здесь
 \begin{align*}
- p_{\xi}(t) = \frac{1}{\sqrt{2\pi}\sigma}e^{-(t-a)^{2} / (2\sigma)^{2}}
+	p_{\xi}(t) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{t-a} {\sigma}\right)^2}
 .\end{align*} $ N(0,1) $ называется \textit{cтандартным} нормальным распределением.
 \end{exmpl}
 \begin{exmpl}[%
@@ -149,28 +149,29 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
 \end{prop}
 
 \begin{df}
- Совместная плотность распределения $ P_{\vec\xi} \geqslant 0 $  измерим.
+ Совместная(многомерная) плотность распределения $ p_{\vec\xi}(\vec t) \geqslant 0 $  измеримая, такая что:
  \begin{align*}
-  F_{\vec\xi} = \int\limits_{-\infty}^{x_1}  \ldots \int\limits_{-\infty}^{x_n} p_{\vec\xi}(\vec t) dt_n \ldots dt_1.
+  F_{\vec\xi}(\vec x) = \int\limits_{-\infty}^{x_1}  \ldots \int\limits_{-\infty}^{x_n} p_{\vec\xi}(\vec t) dt_n \ldots dt_1.
  \end{align*} 
+ $\vec \xi$ имеет абсолютно непрерывное распределение если у него есть плотность.
 \end{df}
 \begin{crly}
- $ \xi_1, \ldots, \xi_n $ независ. $ \iff $ $ F_{\vec\xi} = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) $.
+	$ \xi_1, \ldots, \xi_n $ независ. $ \iff $ $ F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n), \, \forall \vec x \in \R^n $.
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Будем проверять $ P_{\vec\xi} = P_{\xi_1} \times \ldots \times P_{\xi_n} \iff F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) $.
 
- $ \implies $  банально: нужно подставить множества $ \left(-\infty, x_1\right] \times \ldots \times (-\infty, x_n]   $.
+ $ \implies F_{\vec \xi}(\vec x) = P_{\vec \xi}((-\infty, \vec x]) = P_{\xi_1}((-\infty, x_1]) \dots P_{\xi_n}((-\infty, x_n]) = F_{\xi_1}(x_1) \dots F_{\xo_n}(x_n)$.
 
  $ \impliedby $ : картинка $ n=2 $. Надо показать на ячейках. 
  \begin{align*}
   P_{\xi} (a_1,b_1] = F_{\xi}(b_1) - F_{\xi}(a_1) \\
-  P_{\eta} (c,d] = F_{\eta}(b_2) - F_{\eta}(a_2).
+  P_{\eta} (a_2,b_2] = F_{\eta}(b_2) - F_{\eta}(a_2).
  \end{align*} Тогда
  \begin{align*}
 	 P_{\xi, \eta} \left( (a_1, b_1] \times (a_2, b_2] \right) 
 	 = F_{\xi, \eta} (b_1, b_2) + F_{\xi, \eta} (a_1, a_2) - F_{\xi, \eta} (a_1, b_2) - F_{\xi, \eta}(a_2, b_1) = \\ 
-	 = F_{\xi} (b_1) F_{\eta} (b_2) + F_{\xi}(a_1) F_{\eta} (b_2) - F_{\xi}(a_1) F_{\eta} (b_2) - F_{\xi} (a_2) F_{\eta} (b_1) = \\
+	 = F_{\xi} (b_1) F_{\eta} (b_2) + F_{\xi}(a_1) F_{\eta} (a_2) - F_{\xi}(a_1) F_{\eta} (b_2) - F_{\xi} (a_2) F_{\eta} (b_1) = \\
 	 = \left(F_{\xi} (b_1) - F_{\xi} (a_1) \right) \left( F_{\eta} (b_2) - F_{\eta} (a_2) \right) = \\
 	 = P_\xi (a_1, b_1] P_\eta (a_2, b_2]
  \end{align*}
@@ -179,14 +180,14 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
 
 \end{proof}
 \begin{crly}
- Если $ \xi_1, \ldots, x_n $ абс. непр. то они независ $ \iff P_{\vec\xi}(\vec t) = p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $.
+ Если $ \xi_1, \ldots, \xi_n $ абс. непр. то они независимы $ \iff p_{\vec\xi}(\vec t) = p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $.
 
- В частности, если $ \xi_1, \ldots, \xi_n $ независ. то $ \vec\xi $ абс. непр.
+ В частности, если $ \xi_1, \ldots, \xi_n $ независимы, то $ \vec\xi $ абс. непр.
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Проверим, что
  \begin{align*}
-  F_{\vec\xi}(\vec x) = F_{\xi_1} \ldots F_{\xi_n} \iff p_{\vec\xi}(\vec t) = P_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n)
+  F_{\vec\xi}(\vec x) = F_{\xi_1} \ldots F_{\xi_n} \iff p_{\vec\xi}(\vec t) = p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n)
  \end{align*}
  $ \implies $ Покажем, что $ p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $ подходит под определение плотности.
  \begin{align*}
@@ -202,6 +203,8 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
  \mu \ast \nu(A) := \int\limits_{-\infty}^{+\infty} \mu(A-x)\,d\nu(x)
 \end{align*}
 
+где $A - x := \{ a - x \ \vert \ a \in A \}$
+
 Свойства:
 \begin{enumerate}
  \item $ \mu \ast \nu(A) = \int_{\R^{2}} \chi_{A}(x + y) \, d\mu(x)\, d\nu(y)   $
@@ -209,12 +212,13 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
  Мы знаем, что
  \begin{align*}
  \mu \ast \nu(A) = \int\limits_{\R} \mu(A-y) \,d\nu(y) = \int\limits_{\R} \int\limits_{\R} \chi_{A-y}(x)\,d\mu(x)\,d\nu(y) = \\
- \int\limits_{\R^{2}}  \chi_A(x+y)\,d\mu(x)\,d\nu(y).
+ =\int\limits_{\R} \int\limits_{\R}  \chi_A(x+y)\,d\mu(x)\,d\nu(y)
+ =\int\limits_{\R^{2}}  \chi_A(x+y)\,d\mu(x)\,d\nu(y).
  \end{align*} 
 \end{proof}
 
 \begin{remrk*}
-	Почти все последующие свйтсва являются тривиальными следствиями 1-го свойтсва.
+	Почти все последующие свойства являются тривиальными следствиями 1-го свойства.
 \end{remrk*}
 
  \item Есть коммутативность $ \mu \times \nu = \nu \times \mu $.
@@ -222,9 +226,9 @@ $ \xi \colon\,\Omega\to[0,+\infty) $, $ \xi \sim \mathrm{Exp}(\lambda) $, $ \lam
 \begin{align*}
  \mu_1 \ast \ldots \ast \mu_n (A) = \int\limits_{\R^{n}}\chi_A(x_1 + x_2 + \ldots + x_n)\,d\mu_1(x_1) \ldots d\mu_n(x_n).   
 \end{align*}
-\item Ассоциативность.
+\item Ассоциативность: $(\mu_1 \ast \mu_2) \ast \mu_3 = \mu_1 \ast (\mu_2 \ast \mu_3)$ .
 \item $ (c\mu) \ast \nu = c \cdot \mu \ast \nu $.
-\item $ (\mu_1 + \mu_2) \ast \nu = \mu_1 \ast \nu + \mu \ast \nu $. Линейность.
+\item Линейность: $ (\mu_1 + \mu_2) \ast \nu = \mu_1 \ast \nu + \mu \ast \nu $.
 \item $ \mu \ast \delta_0 = \mu $, где $\delta_0$~--- мера с единичной нагрузкой в нуле.
 
 \end{enumerate}
