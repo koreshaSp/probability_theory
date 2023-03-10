@@ -43,12 +43,17 @@
 
 % counters and theorems
 \newcounter{theoremCnt}
+\counterwithin{theoremCnt}{section}
+\counterwithin{equation}{section}
+\counterwithin{figure}{section}
+
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
 
 % numbered theorems
 \theoremstyle{definition}
 \newtheorem{df}[theoremCnt]{Определение}
-\theoremstyle{definition}
-\newtheorem*{notatn*}{Обозначение}
 \theoremstyle{plain}
 \newtheorem{thm}[theoremCnt]{Теорема}
 \theoremstyle{plain}
@@ -71,6 +76,10 @@
 % non-numbered theorems
 \theoremstyle{definition}
 \newtheorem*{df*}{Определение}
+\theoremstyle{definition}
+\newtheorem*{notatn*}{Обозначение}
+\theoremstyle{definition}
+\newtheorem*{conventn*}{Соглашение}
 \theoremstyle{plain}
 \newtheorem*{thm*}{Теорема}
 \theoremstyle{plain}
@@ -135,5 +144,6 @@
 \import{lectures/}{01.tex}
 \import{lectures/}{02.tex}
 \import{lectures/}{03.tex}
+\import{lectures/}{04.tex}
 
 \end{document}
