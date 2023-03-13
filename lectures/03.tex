@@ -210,7 +210,7 @@
  распределение случайной величины]
  \textit{Распределением случайной величины} $\xi$ называется мера $ P_{\xi} \colon\, \mathcal B_1 \to [0, 1] $ на борелевских подмножествах $\R$, заданная формулой
  \begin{align*}
-  P_{\xi}(A) = P[\xi \in A] = P(\xi^{-1}(A)).
+  P_{\xi}(A) = P(\xi \in A) = P(\xi^{-1}(A)).
  \end{align*} 
 \end{df}
 \begin{remrk*}
@@ -219,22 +219,26 @@
 \begin{df*}
  Говорят, что случайные величины $\xi$, $\eta$ \textit{одинаково распределены}, если их распределения совпадают (как меры): $P_{\xi} = P_{\eta}$. При этом мы допускаем, что величины могут быть заданы на разных вероятностных пространствах.
 \end{df*}
-\begin{remrk*}
+\begin{remrk}
+ \label{remark:_distribution_eq}
  Из единственности стандартного продолжения меры (теорема Каратеодори), равенство распределений $P_{\xi} = P_{\eta}$  достаточно проверять на ячейках:
  \begin{align*}
-  P_{\xi} \left(a, b\right] = P_{\eta} \left(a, b\right]  \iff P[\xi \leqslant b] - P[\xi \leqslant a] =  P[\eta \leqslant b] - P[\eta \leqslant a]
+  P_{\xi} \left(a, b\right] = P_{\eta} \left(a, b\right]  \iff P(\xi \leqslant b) - P(\xi \leqslant a) =  P(\eta \leqslant b) - P(\eta \leqslant a)
  .\end{align*} Более того, достаточно, чтобы для всех $a \in \R$ выполнялось
  \begin{align*}
-  P[\xi \leqslant a] = P[\eta \leqslant a].
+  P(\xi \leqslant a) = P(\eta \leqslant a).
  \end{align*} 
-\end{remrk*}
+\end{remrk}
 \begin{df}[%
  функция распределения]
- \textit{Функцией распределения} случайной величины $\xi \colon\, \Omega \to \R$ называется функция $F_{\xi} \colon\, \R \to \R$, определённая так:
+ \textit{Функцией распределения} случайной величины $\xi$ называется функция $F_{\xi} \colon\, \R \to \R$, определённая так:
  \begin{align*}
-  F_{\xi}(x) = P[\xi \leqslant x].
+  F_{\xi}(x) = P(\xi \leqslant x).
  \end{align*} 
 \end{df}
+\begin{remrk*}
+ Как следует из замечания \ref{remark:_distribution_eq}, если случайные величины $ \xi $ и $ \eta $ имеют одинаковые функции распределения, то они одинаково распределены (сами их распределения равны).
+\end{remrk*}
 \begin{prop*}[cвойства функций распределения]\
  \begin{enumerate}
   \item $0 \leqslant F_{\xi} \leqslant 1$.
@@ -247,10 +251,10 @@
    \begin{proof}[\normalfont\textsc{Доказательство}]
     Возьмём любую убывающую последовательность точек $y_n \to x$, $y_n > x$. Тогда
     \begin{align*}
-     F_{\xi}(y_n) = P[\xi \leqslant y_n] = P(A_n)
+     F_{\xi}(y_n) = P(\xi \leqslant y_n) = P(A_n)
     .\end{align*} Множества $A_n$ убывают. По непрерывности меры снизу получаем
     \begin{align*}
-     F_{\xi}(y_n) \to P \left( \bigcap_{n=1}^{\infty} A_n \right) = P[\xi \leqslant x].
+     F_{\xi}(y_n) \to P \left( \bigcap_{n=1}^{\infty} A_n \right) = P(\xi \leqslant x).
     \end{align*} 
    \end{proof}
   \item $F_{\xi + c}(x) = F_{\xi}(x - c)$.
@@ -265,7 +269,7 @@
  Пусть $F$ --- такая функция. Рассмотрим функцию множества
 \begin{align*}
 \nu \left(a, b\right] = F(b) - F(a),
-\end{align*} заданную на полукольце ячеек $ \mathcal P_1 $. Функция $ \nu $ является неотрицательной (так как она возрастает по пункту \ref{enum2:prop:distribution_function}), а также счётно-аддитивной (так как она непрерывна справа по пункту \ref{enum3:prop:distribution_function}, но это требует доказательства). По теореме Каратеодори существует мера $ \nu $ --- её стандартное продолжение на некоторую $ \sigma $-алгебру $ \mathfrak A $ подмножеств $ \R $. При этом мера $ \nu $ --- вероятностная, так как по пункту \ref{enum4:prop:distribution_function}
+\end{align*} заданную на полукольце ячеек $ \mathcal P_1 $. Функция $ \nu $ является неотрицательной (так как $ F $ нестрого возрастает по пункту \ref{enum2:prop:distribution_function}), а также счётно-аддитивной (так как она непрерывна справа по пункту \ref{enum3:prop:distribution_function}, но это требует доказательства). По теореме Каратеодори существует мера $ \nu $ --- её стандартное продолжение на некоторую $ \sigma $-алгебру $ \mathfrak A $ подмножеств $ \R $. При этом мера $ \nu $ --- вероятностная, так как по пункту \ref{enum4:prop:distribution_function}
 \begin{align*}
  \nu(\R) = \lim_{x \to +\infty} \nu \left(-x, x\right] = \lim_{x \to +\infty} F(x) - \lim_{x \to -\infty} F(x) = 1. 
 \end{align*} Таким образом, мы получили вероятностное пространство $ (\R,\mathfrak A, \nu) $. Случайная величина $ \xi \colon\, \R \to \R $, $ \xi(\omega) = \omega $ как раз даёт нужное распределение $ F $.
@@ -278,17 +282,17 @@
 \begin{prop*}
  Пусть $\xi \colon\, \Omega \to \left\{ y_1, y_2, \ldots \right\}$ --- дискретная случайная величина. Тогда для любого борелевского множества $ A \subset \R $
  \begin{align*}
-  P_{\xi}(A) = \sum_{y_k \in A}  P[\xi = y_k]
- .\end{align*} Действительно, это следует из счётно-аддитивности функции распределения $ P_{\xi} $. Таким образом, дискретная случайная величина (при фиксированном множестве значений $ \left\{ y_1, y_2, \ldots \right\} $) однозначно определяется счётным набором вероятностей $ P[\xi = y_1], P[\xi = y_2], \ldots \in [0,1]$, $ P[\xi = y_1] + P[\xi = y_2] + \ldots = 1 $.
+  P_{\xi}(A) = \sum_{y_k \in A}  P(\xi = y_k)
+ .\end{align*} Действительно, это следует из счётно-аддитивности функции распределения $ P_{\xi} $. Таким образом, дискретная случайная величина (при фиксированном множестве значений $ \left\{ y_1, y_2, \ldots \right\} $) однозначно определяется счётным набором вероятностей $ p_1, p_2, \ldots \in [0,1] $, $ p_1 + p_2 + \ldots = 1 $, $ p_n = P(\xi = y_n) $.
 
  В частности, функцию распределения величины $ \xi $ можно выразить так:
  \begin{align*}
-  F_{\xi}(x) = \sum_{y_k \leqslant x} P[\xi = y_k].
+  F_{\xi}(x) = \sum_{y_k \leqslant x} P(\xi = y_k).
  \end{align*} 
 \end{prop*}
 
 \begin{df}[непрерывное распределение]
- Говорят, что случайная величина $\xi$ \textit{обладает непрерывным распределением}, если $P[\xi = x] = 0$ для всех $x \in \R$.
+ Говорят, что случайная величина $\xi$ \textit{обладает непрерывным распределением}, если $P(\xi = x) = 0$ для всех $x \in \R$.
 \end{df}
 
 \begin{remrk}
@@ -298,31 +302,35 @@
  Пусть $ \xi $ обладает непрерывным распределением. Непрерывность справа есть и так, поэтому достаточно проверить непрерывность слева в произвольной точке $ x \in \R $:
  \begin{align}
   \label{equation:remark:left_continous_of_distribution}
-  \lim_{y \to x-} F_{\xi}(y) &= P[\xi < x] = P[\xi \leqslant x] - P[\xi = x] = P[\xi \leqslant x] = F_{\xi}(x).
- \end{align} Наоборот, если функция распределения непрерывна, то верна цепочка \eqref{equation:remark:left_continous_of_distribution} для любой точки $ x \in \R $, из чего следует $ P[\xi = x] = 0 $.
+  \lim_{y \to x-} F_{\xi}(y) &= P(\xi < x) = P(\xi \leqslant x) - P(\xi = x) = P(\xi \leqslant x) = F_{\xi}(x).
+ \end{align} Наоборот, если функция распределения непрерывна, то верна цепочка \eqref{equation:remark:left_continous_of_distribution} для любой точки $ x \in \R $, из чего следует $ P(\xi = x) = 0 $.
 \end{proof}
 
-\begin{df}[абсолютно непрерывное распределение]
- Говорят, что  случайная величина $\xi$ \textit{обладает абсолютно непрерывным распределением}, если существует измеримая функция $p_{\xi} \colon\, \R \to [0, +\infty)$, называемая \textit{плотностью распределения} случайной величины $ \xi $,  такая, что для любой точки $ x \in \R $
- \begin{align*}
+Непрерывности распределения порой бывает недостаточно: удобнее работать с более частным случаем.
+
+\begin{df}
+ Говорят, что  случайная величина $\xi$ \textit{абсолютно непрерывна} (\textit{обладает абслютно непрерывным распределением}), если существует неотрицательная измеримая функция $p_{\xi} \colon\, \R \to [0, +\infty)$, называемая \textit{плотностью распределения} случайной величины $ \xi $,  такая, что для любой точки $ x \in \R $
+ \begin{align}
+  \label{equation:density_def}
   F_{\xi}(x) = \int\limits_{-\infty}^{x} p_{\xi}(t)\,dt
- .\end{align*}
+ .\end{align}
 \end{df}
 \begin{prop}
  Пусть случайная величина $ \xi $ обладает абсолютно непрерывным распределением; $ p_{\xi} $ --- её плотность распределения. Тогда
  \begin{enumerate}
   \item Для любого борелевского множества $ A \subset \R $ выполнено
-   \begin{align*}
-    P[\xi \in A] = \int\limits_{A} p_{\xi} (t) \, dt.
-   \end{align*} 
+   \begin{align}
+    \label{equation:value_of_absolute_continous_distribution}
+    P(\xi \in A) = \int\limits_{A} p_{\xi} (t) \, dt.
+   \end{align} 
   \item $ \int_{\R} p_{\xi}(t)\,dt = 1   $.
   \item При почти всех точках $ t \in \R $ выполнено $ F'_{\xi}(t) = p_{\xi}(t) $.
  \end{enumerate}
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]\
  \begin{enumerate}
-  \item 
-  \item 
+  \item Равенство \eqref{equation:value_of_absolute_continous_distribution} можно рассматривать как равенство двух мер: $ P_\xi(A) = \int_{A} p_\xi \, d\lambda_1  $. По теореме Каратеодори \eqref{equation:value_of_absolute_continous_distribution} достаточно проверять на ячейках, а это немедленно следует из \eqref{equation:density_def}.
+  \item Подставить $ A = \R $ в \eqref{equation:value_of_absolute_continous_distribution}.
   \item Теорема о точках Лебега.
  \end{enumerate}
 \end{proof}
