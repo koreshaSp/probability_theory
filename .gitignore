@@ -11,3 +11,4 @@ main.pdf
 *.synctex(busy)
 *.out
 .DS_Store
+lectures/*.pdf

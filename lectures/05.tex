@@ -1,13 +1,19 @@
-% 2023.03.14 lecture 5
+% 2023.03.14: lecture 05
+\documentclass[../main.tex]{subfiles}
+\begin{document}
 
 \newpage
 \section{Математическое ожидание и дисперсия}
-\begin{df}
+\begin{df}[математическое ожидание]
  Пусть $ \xi \colon \, \Omega \to \R$ --- случайная величина. Тогда \textit{математическим ожиданием} cлучайной величины $ \xi $ называется число
- \begin{align*}
-  \E \xi = \int\limits_{\Omega}  \xi(w)\,dP(\omega).
- \end{align*} 
+ \begin{align}
+  \label{equation:expected_value_def}
+  \E \xi = \int\limits_{\Omega}  \xi(w)\,dP(\omega),
+ \end{align} где интеграл берётся по мере $ P $ --- вероятности.
 \end{df}
+\begin{remrk*}
+ У случайной величины может не быть математического ожидания! Такое может быть в случае, когда интеграл \eqref{equation:expected_value_def} не существует (расходится).
+\end{remrk*}
 Обсудим свойства матожидания.
 \begin{prop}
  Матожидание линейно:
@@ -387,3 +393,5 @@
 \begin{exercs*}
  Пусть $ \rho(\xi,\eta) = \pm 1 $. Доказать, что тогда $ \xi = a\eta + b $, где $ a, b \in \R $ и $ \mathrm{sign}\;a = \mathrm{sign}\;\rho(\xi,\eta) $.
 \end{exercs*}
+
+\end{document}
