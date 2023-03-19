@@ -82,6 +82,10 @@
 
 Доказательство полностью аналогично.
 
+\begin{remrk}
+ Предложение \ref{proposition:independent_expected_product} не верно без независимости. Пусть $ \xi, \eta $ выдают $ \pm 1 $ с вероятностью $ \frac{1}{2} $. Тогда $ \E\xi = \E\eta = 0 $. Но если $ \xi = \eta $, то $ \E(\xi\eta) = \E(1) = 1 $!
+\end{remrk}
+
 \begin{prop}
  Если $ \xi \geqslant 0 $, то
  \begin{align*}
@@ -96,40 +100,38 @@
  \end{align*} 
 \end{proof}
 
-\begin{prop}
+\begin{prop}[Неравенство Гёльдера]
+	\label{proposition:gulder_inequality}
  Если $ p, q > 1 $ и $ \frac{1}{p}+\frac{1}{q} = 1 $, то
  \begin{align*}
-  \E(\xi\eta) \leqslant \left( \E \left| \xi \right|^{p} \right)^{\frac{1}{p}} \left( \E \left| \eta \right|^{q} \right)^{\frac{1}{q}}.
+  \E|\xi\eta| \leqslant \left( \E \left| \xi \right|^{p} \right)^{\frac{1}{p}} \left( \E \left| \eta \right|^{q} \right)^{\frac{1}{q}}.
  \end{align*} 
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Применить неравенство Гёльдера.
+ Применить неравенство Гёльдера для интегралов.
 \end{proof}
 
 \begin{prop}[неравенство Ляпунова]
  \label{proposition:Lyapunov_inequality}
- Если $ r < s $, то 
+ Если $ 0 < r < s $, то 
  \begin{align*}
   \left(\E \left| \xi \right|^{r} \right)^{\frac{1}{r}} \leqslant \left( \E \left| \xi \right|^{s} \right)^{\frac{1}{s}}.
  \end{align*} 
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Можно считать, что $ r = 1 $: рассмотрим величину $ \eta = \left| \xi \right|^{r} $. Тогда нужно будет доказать
- \begin{align*}
-  \left( \E \eta \right)^{\frac{1}{r}} \leqslant \left( \E\eta^{\frac{s}{r}} \right)^{\frac{s}{r}},
- \end{align*} возведём обе части в степень $ r $.
- Нужно проверить
- \begin{align*}
-  \E\xi \leqslant \left( \E \left| \xi \right|^{s} \right)^{\frac{1}{s}}.
- \end{align*} Это неравенство Гёльдера: $ \eta = 1 $, $ p = s $ и $ q= \frac{s}{s-1} $. Тогда
- \begin{align*}
-  \E(\xi \cdot 1) \leqslant \left( \E \left| \xi \right|^{s} \right)^{\frac{1}{s}} \cdot \left( \E 1^{q} \right)^{\frac{1}{q}}.
- \end{align*} 
+	Возведём обе части в степень $r$. Нужно проверить 
+	\begin{align*}
+		\E |\xi|^r \le (\E |\xi|^s)^{\frac{r}{s}}
+	\end{align*}
+
+	Воспользуемся неравенством Гёльдера \ref{proposition:gulder_inequality}. $p = \frac{s}{r} > 1, \frac{1}{q} = 1 - \frac{1}{p} = \frac{r - s}{s} \in (0, 1)$
+
+	\begin{align*}
+		\E |\xi|^r |1| \le ((\E |\xi|^r)^p)^{\frac{1}{p}} \cdot (\E 1^q)^{\frac{1}{q}} = (\E |\xi|^s)^{\frac{r}{s}}
+	\end{align*}
+	
 \end{proof}
 
-\begin{remrk}
- Предложение \ref{proposition:independent_expected_product} не верно без независимости неверно. Пусть $ \xi, \eta $ выдают $ \pm 1 $ с вероятностью $ \frac{1}{2} $. Тогда $ \E\xi = \E\eta = 0 $. Но если $ \xi = \eta $, то $ \E(\xi\eta) = \E(1) = 1 $!
-\end{remrk}
 
 \begin{prop}[неравенство Маркова]
  Пусть $ \xi \geqslant 0 $ и есть числа $ p,t > 0 $. Тогда
@@ -138,6 +140,11 @@
   P(\xi \geqslant t) \leqslant \frac{\E \xi^{p}}{t^{p}}.
  \end{align}  
 \end{prop}
+
+\begin{proof}
+	Было в теории меры и называлось неравенством Чебышева.
+
+\end{proof}
 
 Математическое ожидание --- среднее значение случайной величины. Посмотрим на другие характеристики случайной величины.
 
@@ -198,7 +205,10 @@
  \begin{align*}
   \mathbb D \xi = \E (\xi - \E\xi)^{2}
  \end{align*} --- второй центральный момент.
+
 \end{df}
+
+В англоязычной литературе есть альтернативное обозначение: $ \mathrm{Var} \;\xi $.
 
 Рассмотрим свойства дисперсии.
 \begin{prop}
@@ -206,7 +216,6 @@
   \D\xi = \E \xi^{2} - \left( \E \xi \right)^{2}.
  \end{align*} 
 
- В англоязычной литературе есть альтернативное обозначение: $ \mathrm{Var} \;\xi $.
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Пусть $a = \E\xi $. Тогда
