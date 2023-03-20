@@ -28,7 +28,7 @@
  Если $ \xi \geqslant \eta $ с вероятностью $ 1 $, то $ \E\xi \geqslant \E\eta $.
 \end{prop}
 \begin{prop}
- $ \E\xi = \int_{\R} x\,dP_\xi(x)  $.
+$ \E\xi = \int_{\R} x\,dP_{\vec \xi}(x)  $.
  Это будет частным случаем более общего свойства.
 \end{prop}
 \begin{prop}
@@ -47,7 +47,7 @@
   \item Пусть $ f \geqslant 0 $ измеримая. По теореме об аппроксимации берём простые неотрицательные функции $ f_1 \leqslant f_2 \leqslant \ldots $ такие, что $ f_n \to f $. По теореме Леви правая часть стремится к
    \begin{align*}
     \int\limits_{\R^{n}} f_k(\vec x)  \,dP_{\vec\xi}(\vec x) \to \int\limits_{\R^{n}} f(\vec x)\,dP_{\vec\xi} (\vec x),
-   \end{align*} а правая часть к
+   \end{align*} а левая часть к
    \begin{align*}
     \E f_k (\xi_1, \ldots, \xi_n) = \int\limits_{\Omega} f_k(\xi_1, \ldots, \xi_n) \,dP \to \int\limits_{\Omega} f(\xi_1, \ldots, \xi_n)\,dP = \E f(\xi_1, \ldots, \xi_n).
    \end{align*} 
@@ -124,10 +124,10 @@
 		\E |\xi|^r \le (\E |\xi|^s)^{\frac{r}{s}}
 	\end{align*}
 
-	Воспользуемся неравенством Гёльдера \ref{proposition:gulder_inequality}. $p = \frac{s}{r} > 1, \frac{1}{q} = 1 - \frac{1}{p} = \frac{r - s}{s} \in (0, 1)$
+	Воспользуемся неравенством Гёльдера \ref{proposition:gulder_inequality}. $p = \frac{s}{r} > 1, \frac{1}{q} = 1 - \frac{1}{p} = \frac{s - r}{s} \in (0, 1)$, взяв $\eta = 1$ и $\xi = |\xi|^{r}$  
 
 	\begin{align*}
-		\E |\xi|^r |1| \le ((\E |\xi|^r)^p)^{\frac{1}{p}} \cdot (\E 1^q)^{\frac{1}{q}} = (\E |\xi|^s)^{\frac{r}{s}}
+		\E ||\xi|^r \cdot 1| \le (\E |\xi|^{r \cdot p})^{\frac{1}{p}} \cdot (\E 1^q)^{\frac{1}{q}} = (\E |\xi|^s)^{\frac{r}{s}}
 	\end{align*}
 	
 \end{proof}
@@ -220,7 +220,7 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Пусть $a = \E\xi $. Тогда
  \begin{align*}
-  \D\xi = \E(\xi - a)^{2} = \E\xi^{2} - 2a \E\xi + a^{2} = \E\xi^{2} - a^{2}.
+  \D\xi = \E(\xi - a)^{2} = \E\xi^{2} - 2a \underbrace{\E\xi}_{a} + a^{2} = \E\xi^{2} - a^{2}.
  \end{align*} 
 \end{proof}
 
@@ -244,6 +244,12 @@
 
  В частности, $ \D(-\xi) = \D(\xi) $.
 \end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+  \begin{align*}
+    \D(c \cdot \xi) = \E (c \cdot \xi)^{2} - \left( \E c \cdot \xi \right)^{2} = c^2 \cdot (\E(\xi^2) - (\E \xi)^2) = c^2 \cdot \D\xi
+  \end{align*}
+\end{proof}
+
 \begin{prop}
  Если $ \xi  $ и $ \eta $ независимы, то $ \D(\xi + \eta) = \D\xi + \D\eta $.
 \end{prop}
@@ -251,6 +257,7 @@
  \begin{align*}
   \D(\xi + \eta) &= \E(\xi + \eta)^{2} - \left( \E(\xi+\eta) \right)^{2} = \\
   &= \E\xi^{2} + 2\E(\xi\eta) + \E\eta^{2} -  (\E\xi)^{2} - 2\E\xi \cdot \E\eta - (\E\eta)^{2} = \\
+  &=  \E\xi^{2} + \E\eta^{2} -  (\E\xi)^{2} - (\E\eta)^{2} = \\
   &=\D\xi+\D\eta.
  \end{align*} $ \E(\xi\eta) = \E\xi \cdot \E\eta $ по независимости.
 \end{proof}
@@ -259,7 +266,7 @@
  $ \E \left| \xi - \E\xi \right| \leqslant \sqrt{\D\xi} $.
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Это неравенство Ляпунова для $ 1 $ и $ 2 $.
+  Это неравенство Ляпунова \eqref{proposition:Lyapunov_inequality} для $ 1 $ и $ 2 $.
 \end{proof}
 
 \begin{prop}[неравенство Чебышева]
@@ -283,8 +290,8 @@
  $ \xi \sim U[0,1] $. Тогда
  \begin{align*}
   \E\xi &= \int\limits_{\R} x\,dP_\xi(x)  = \int\limits_{\R} x \cdot \Ind_{[0,1]}  (x)\,dx= \int\limits_{0}^{1} x\,dx = \left. \frac{x^{2}}{2} \right|_0^{1} = \frac{1}{2}; \\
-   \E\xi^{2} &= \int\limits_{0}^{1} x^{2}\,dx = \left. \frac{x^{3}}{3}\right|_0^{1} = \frac{1}{3}; \\
-    \D\xi &= \E\xi^{2} - \left( \E\xi \right)^{2} = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}.
+   \E\xi^{2} &= \int\limits_{\R} x^2\,dP_\xi(x) = \int\limits_{0}^{1} x^{2}\,dx = \left. \frac{x^{3}}{3}\right|_0^{1} = \frac{1}{3}; \\
+    \D\xi &=\E\xi^{2} - \left( \E\xi \right)^{2} = \frac{1}{3} - \left(\frac{1}{2}\right)^2 = \frac{1}{12}.
  \end{align*} 
 \end{exmpl}
 \begin{exmpl}
@@ -315,7 +322,7 @@
 \begin{align*}
  &F_\xi(x) = P(\xi \leqslant x) = P(\sigma\eta + \mu \leqslant x) = P\left(\eta \leqslant \frac{x-\mu}{\sigma}\right) = F_{\eta}\left( \frac{x-\mu}{\sigma} \right) = \\
  &= \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{\frac{x-\mu}{\sigma}} e^{-t^{2} / 2}\,dt. \\
- &p_\xi(x) = F'_\xi(x) = \frac{1}{\sqrt{2\pi}} = e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}} \left( \frac{x-\mu}{\sigma} \right)' = \frac{1}{\sigma\sqrt{2\pi}} = e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
+ &p_\xi(x) = F'_\xi(x) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}} \left( \frac{x-\mu}{\sigma} \right)' = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
 \end{align*} Тогда
 \begin{align*}
  &E\xi = \E(\sigma \eta + \mu)  = \sigma \E\eta + \mu = \mu.\\
@@ -334,6 +341,12 @@
   \cov(\xi,\eta) = \E(\xi\eta) - \E\xi \cdot \E\eta.
  \end{align*} 
 \end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+	Обозначим $\E \xi = a, \E \eta = b$ 
+	\begin{align*}
+		\cov(\xi, \eta) = \E((\xi - a)(\eta - b)) = \E(\xi \eta) - a\underbrace{\E\eta}_b -b\underbrace{\E\xi}_b + a \cdot b = \E(\xi \eta) - a \cdot b
+	\end{align*}
+\end{proof}
 \begin{prop}
  \begin{align*}
   \cov(\xi,\xi) = \D\xi.
@@ -377,7 +390,7 @@
 \begin{exmpl}
  Пусть $ \Omega = \left\{ 0,\frac{\pi}{2},\pi \right\} $ с одинаковыми вероятностями. Рассмотрим две случайной величины
  \begin{align*}
-  \xi(\omega) = \cos \omega, & &\eta(\omega) \sin \omega.
+  \xi(\omega) = \cos \omega, & &\eta(\omega) = \sin \omega.
  \end{align*} Тогда
  \begin{align*}
   \E\xi = \frac{1 + 0 + (-1)}{3} = 0,
@@ -387,15 +400,16 @@
  \end{align*} значит $ \E(\xi\eta) = 0 $. Следовательно, $ \cov(\xi,\eta) = 0 $, но нет независимости!
  
 \begin{align*}
- P(\xi = 1,\eta =1) = 0 \neq \frac{1}{3} \cdot \frac{1}{3} = P(\xi = 1) P(\eta = 1).
+ P(\xi = 1,\eta =1) = 0 \neq \frac{1}{3} \cdot \frac{1}{3} = P(\xi = 1) \cdot P(\eta = 1).
 \end{align*}
 \end{exmpl}
 
 \begin{df}[коэффициент корреляции]
  
-\begin{align*}
- \rho(\xi,\eta) = \frac{\cov(\xi,\eta)}{\sqrt{\D\xi} \cdot \sqrt{\D\eta}} \in [0,1].
-\end{align*} Если $ \rho(\xi,\eta) = 0 $, то величины $ \xi $ и $ \eta $ называются \textit{некоррелированными}.
+\begin{flalign*}
+&  \rho(\xi,\eta) = \frac{\cov(\xi,\eta)}{\sqrt{\D\xi} \cdot \sqrt{\D\eta}} \in [-1,1] &\\
+&  |\cov(\xi, \eta)| \leq \E (|\xi - \E \xi| \cdot |\eta - \E \eta|) \leq (\E |\xi - \E \xi|^2)^{\frac{1}{2}} \cdot (\E |\eta - \E \eta|^2)^{\frac{1}{2}} = \sqrt{\D\xi}\cdot\sqrt{\D\eta}. &
+\end{flalign*} Если $ \rho(\xi,\eta) = 0 $, то величины $ \xi $ и $ \eta $ называются \textit{некоррелированными}.
 
 \end{df}
 
