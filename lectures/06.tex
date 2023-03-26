@@ -91,14 +91,14 @@
   \D\xi = \sum_{p \in \mathbb P,\; p \leqslant M} \D\xi_p + 2 \sum_{p,q \in \mathbb P,p < q \leqslant M} \cov(\xi_p,\xi_q).
  \end{align*}
  \begin{align*}
-	 \D\xi_p = \underbrace{\E\xi_p^{2}}_{=\E \xi_p} - (\E\xi_p)^{2} = \frac{1}{p} + O \left( \frac{1}{n} \right) - \left(\frac{1}{p} + O(\frac{1}{n})\right)^{2} = \frac{1}{p} - \frac{1}{p^{2}} + O \left( \frac{1}{n} \right).
+	 \D\xi_p = \underbrace{\E\xi_p^{2}}_{=\E \xi_p} - (\E\xi_p)^{2} = \frac{1}{p} + O \left( \frac{1}{n} \right) - \left(\frac{1}{p} + O\left(\frac{1}{n}\right)\right)^{2} = \frac{1}{p} - \frac{1}{p^{2}} + O \left( \frac{1}{n} \right).
  \end{align*} Тогда
  \begin{align*}
   \sum_{p \in \mathbb P, p \leqslant M} \D\xi_p = \sum \frac{1}{p} - \sum \frac{1}{p^{2}} + \sum O \left( \frac{1}{n} \right) = \log\log n + O(1).
  \end{align*}
  \begin{align*}
 	 \cov(\xi_p, \xi_q) = \E(\xi_p \cdot \xi_q) - \E\xi_p \cdot \E\xi_q &= \\
-  = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \geqslant \frac{\frac{n}{p \cdot q} - 1}{n} - \frac{\frac{n}{p }}{n } \cdot \frac{\frac{n}{p }}{n} &\geqslant -\frac{1}{n}. \\
+  = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \geqslant \frac{\frac{n}{p \cdot q} - 1}{n} - \frac{\frac{n}{p }}{n } \cdot \frac{\frac{n}{p }}{n} &\geqslant -\frac{1}{n} \\
   = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \leqslant \frac{\frac{n}{p \cdot q}}{n} - \frac{\frac{n}{p} - 1}{n} \cdot \frac{\frac{n}{q} - 1}{n} &\leqslant \frac{1}{n} \left(\frac{1}{p} + \frac{1}{q}\right)
  \end{align*} 
   \begin{align*}
