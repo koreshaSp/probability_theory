@@ -2,7 +2,7 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-Геометрический смысл. Пусть $ \E \xi^{2} < +\infty $. Тогда
+Геометрический смысл $\cov$. Пусть $ \E \xi^{2} < +\infty $. Тогда
 \begin{align*}
  \cov(\xi,\eta) = \E((\xi - \E\xi)(\eta - \xi\eta))
 \end{align*} --- почти что скалярное произведение. $ \D\xi = 0 \implies \xi = c $ почти всюду.
@@ -62,11 +62,13 @@
  Рассмотрим $ M := \sqrt[10] n $. Пусть
  \begin{align*}
   \xi_p(k) = \begin{cases}
-   1, \text{ если } k \vdots p, \\
+   1, \text{ если } k \ \vdots \ p, \\
    0, \text{ иначе. }
   \end{cases} \\
   \xi = \sum_{p \in \mathbb P, p \leqslant M} \xi_p
- \end{align*} $ \xi(k) $ --- это все различные простые делители $ k $. Тогда $ \xi(k) \leqslant \nu(k) \leqslant \xi(k) + 10$. Будем смотреть теперь на $ \xi $.
+ \end{align*} $ \xi(k) $ --- это все различные простые делители $ k $ не превосходящие $M$.
+ 
+ Тогда $ \xi(k) \leqslant \nu(k) \leqslant \xi(k) + 10$. Будем смотреть теперь на $ \xi $.
  \begin{align*}
   \E\xi_p = \frac{\left\lfloor n / p \right\rfloor }{n} = \frac{1}{p} + O\left(\frac{1}{n}\right).
  \end{align*} Тогда
@@ -89,29 +91,27 @@
   \D\xi = \sum_{p \in \mathbb P,\; p \leqslant M} \D\xi_p + 2 \sum_{p,q \in \mathbb P,p < q \leqslant M} \cov(\xi_p,\xi_q).
  \end{align*}
  \begin{align*}
-  \D\xi_p = \E\xi_p^{2} - (\E\xi_p)^{2} = \frac{1}{p} + O \left( \frac{1}{n} \right) - (\frac{1}{p} + O(\frac{1}{n}))^{2} = \frac{1}{p} - \frac{1}{p^{2}} + O \left( \frac{1}{n} \right).
+	 \D\xi_p = \underbrace{\E\xi_p^{2}}_{=\E \xi_p} - (\E\xi_p)^{2} = \frac{1}{p} + O \left( \frac{1}{n} \right) - \left(\frac{1}{p} + O\left(\frac{1}{n}\right)\right)^{2} = \frac{1}{p} - \frac{1}{p^{2}} + O \left( \frac{1}{n} \right).
  \end{align*} Тогда
  \begin{align*}
   \sum_{p \in \mathbb P, p \leqslant M} \D\xi_p = \sum \frac{1}{p} - \sum \frac{1}{p^{2}} + \sum O \left( \frac{1}{n} \right) = \log\log n + O(1).
  \end{align*}
  \begin{align*}
-  \cov(\xi_p, \xi_q) &= \E(\xi_p \cdot \xi_q) - \E\xi_p \cdot \E\xi_q = \\
-  &= \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \geqslant -\frac{1}{n}.
+	 \cov(\xi_p, \xi_q) = \E(\xi_p \cdot \xi_q) - \E\xi_p \cdot \E\xi_q &= \\
+  = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \geqslant \frac{\frac{n}{p \cdot q} - 1}{n} - \frac{\frac{n}{p }}{n } \cdot \frac{\frac{n}{p }}{n} &\geqslant -\frac{1}{n} \\
+  = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \leqslant \frac{\frac{n}{p \cdot q}}{n} - \frac{\frac{n}{p} - 1}{n} \cdot \frac{\frac{n}{q} - 1}{n} &\leqslant \frac{1}{n} \left(\frac{1}{p} + \frac{1}{q}\right)
  \end{align*} 
-  \begin{align*}
-   \cov(\xi_p, \xi_q) \leqslant \frac{1}{n}\left(\frac{1}{p} + \frac{1}{q}\right).
-  \end{align*} 
   \begin{align*}
    \frac{M}{n} \sum_{i \in I} \geqslant \frac{1}{n} \cdot \sum (\frac{1}{p} + \frac{1}{q}) \geqslant \sum \cov(\xi_p, \xi_q) \geqslant -\frac{1}{n} \sum 1 \geqslant -\frac{M^{2}}{n} = O(1)
   \end{align*} 
   $ \D\xi = \log\log n + O(1) $.
 
-  Осталось что-то посчитать
+  Выполнено вложение:
   \begin{align*}
    \left\{\left| \nu(k) - \log\log n \right| > \omega(n) \sqrt{\log\log n} \right\} \subset \left\{ \left|\xi(k) - \E\xi \right| > \omega(n)\sqrt{\log\log n} - C \right\}.
-  \end{align*} Теперь рассмотрим
+  \end{align*} Воспользуемся неравенством Чебышёва:
   \begin{align*}
-   P( \left| \xi - \E\xi \right| &> \omega(n)\sqrt{\log\log n} - C) \leqslant \frac{\D\xi}{\left( \omega(n)\sqrt{\log \log n} - C \right)^{2}} = \\
+	P( \left| \xi - \E\xi \right| > \omega(n)\sqrt{\log\log n} - C) &\leqslant \frac{\D\xi}{\left( \omega(n)\sqrt{\log \log n} - C \right)^{2}} = \\
    &= \frac{\log\log n + O(1)}{(\omega(n)\sqrt{\log \log n} - C)^{2}} \to 0.
   \end{align*} 
 \end{proof}
@@ -119,7 +119,7 @@
  На самом деле верно
  \begin{align*}
   \lim_{n \to \infty} \frac{1}{n} \cdot \# \left\{ k \Mid a \leqslant \frac{\nu(k)- \log\log n}{\sqrt{\log \log n}} \leqslant b \right\} = \frac{1}{\sqrt{2\pi}} \int\limits_{a}^{b} e^{-t^{2} / 2}\,dt.
- \end{align*} Доказательство ровно такое же, нужно сослаться только не на Чебышева, а на ЦПТ.
+ \end{align*} Доказательство ровно такое же, нужно сослаться только не на Чебышёва, а на ЦПТ.
 \end{remrk}
 
 \begin{remrk*}[ещё геометрический комментарий]
@@ -134,24 +134,24 @@
 
 \section{Сходимость случайных величин.}
 
-Докажем техническую, но полезную саму по себе, теорему.
+Докажем техническую, но полезную саму по себе теорему.
 
 \begin{thm}
  Пусть $ \xi_1, \xi_2, \xi_3, \ldots $ --- независимые случайные величины. Пусть есть много функций $ f_i \colon\;\R^{n_i} \to \R $, измеримых по Борелю. Тогда случайные величины
  \begin{align*}
   f_1(\xi_1, \ldots, \xi_{n_1}),\; f_2(\xi_{n_1 + 1}, \ldots, \xi_{n_1 + n_2}),\; f_3(\xi_{n_1 + n_2 + 1}, \ldots, \xi_{n_1 + n_2 + n_3}),\; \ldots
- \end{align*} независимы.
+ \end{align*} должны быть независимы.
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Доказываем для $ \xi_1, \ldots, \xi_m, \eta_1, \ldots \eta_m $. Тогда
  \begin{align*}
   f(\xi_1, \ldots, \xi_m),\;g(\eta_1, \ldots, \eta_n)
- \end{align*}  независимы. Нужно доказать, что события $ f(\xi_1, \ldots,\xi_m) \in \tilde A $ и $ \left\{ g(\eta_1, \ldots, \eta_n) \in \tilde B \right\} $ независимы. Но левое событие, это $ \vec\xi \in f^{-1}(\tilde A) $, а правое событие --- это $ \vec\eta \in g^{-1}(\tilde B) $. Прообразы --- борелевские множества, поэтому достаточно доказать независимость событий $ \vec\xi \in A $ и $ \vec\eta \in B $ для любых борелевских множеств $ A \subset\R^{m} $ и $ B \subset \R^{n} $. На самом деле, достаточно ограничится ячейками: счётные дизъюнктные объединения ячеек порождают все борелевские множества. Нужно проверить
+\end{align*}  независимы. Нужно доказать, что события $ \left \{ f(\xi_1, \ldots,\xi_m) \in \tilde A \right \} $ и $ \left\{ g(\eta_1, \ldots, \eta_n) \in \tilde B \right\} $ независимы. Но левое событие, это $ \vec\xi \in f^{-1}(\tilde A) $, а правое событие --- это $ \vec\eta \in g^{-1}(\tilde B) $. Прообразы --- борелевские множества, поэтому достаточно доказать независимость событий $ \vec\xi \in A $ и $ \vec\eta \in B $ для любых борелевских множеств $ A \subset\R^{m} $ и $ B \subset \R^{n} $. На самом деле, достаточно ограничится ячейками: счётные дизъюнктные объединения ячеек порождают все борелевские множества. Нужно проверить
  \begin{align*}
   P(\vec\xi \in A) P(\vec\eta \in B) = P(\vec\xi \in A, \vec\eta \in B)
  \end{align*} можно суммировать по $ A $ и по $ B $. А на ячейках очевидно:
  \begin{align*}
-   P(\vec\xi \in \left(a, b\right]  ) = P(\xi_1 \in \left(a_1, b_1\right], \ldots, \xi_m \in \left(a_m, b_m\right]    ) = \prod_{i \in I}P
+	 P(\vec\xi \in \left(a, b\right]  ) = P(\xi_1 \in \left(a_1, b_1\right], \ldots, \xi_m \in \left(a_m, b_m\right]    ) = \prod_{i \in [m]}P(\xi_i \in (a_i, b_i])
  \end{align*} Все понятно.
 \end{proof}
 
@@ -159,9 +159,9 @@
  \begin{enumerate}
   \item $ \xi_n $ сходится к $ \xi $ почти наверное (с вероятностью $ 1 $), если
    \begin{align*}
-    P \left( \lim_{n \to \infty} \xi_n = \xi \right) = 1.
+    P \left( \omega \in \Omega : \lim_{n \to \infty} \xi_n(\omega) = \xi(\omega) \right) = 1.
    \end{align*} 
-  \item $ \xi_n $ сходится к $ \xi $ в среднем порядка $ r > 0 $, если
+  \item $ \xi_n $ сходится к $ \xi $ в среднем порядка $ r \geq 1 $, если
    \begin{align*}
     \E \left| \xi_n - \xi \right|^{r} \to 0.
    \end{align*} На самом деле, это сходимость в пространстве Лебега $ L^{r}(\Omega,P) $.
@@ -169,7 +169,7 @@
    \begin{align*}
     P(\left| \xi_n - \xi \right| > \eps) \to 0
    \end{align*} при $ n \to \infty $. Обозначение $ \xi_n \xrightarrow{P} \xi $.
-  \item $ \xi_n $ сходится к $ \xi $ по распределению, если
+  \item $ \xi_n : \Omega_n \to \R$ сходится к $ \xi : \Omega \to R$ по распределению, если
    \begin{align*}
     \lim_{n \to \infty} F_{\xi_n}(x) = F_\xi(x)
    \end{align*} для любой точки $ x $, в которой $ F_\xi $ непрерывна.
@@ -178,43 +178,49 @@
 
 Связь между сходимостями.
 
-$ 1 \implies 3 $ было в теории меры.
+\begin{itemize}
+	
 
-$ 2 \implies 3 $: тут просто.
+	\item $ 1 \implies 3 $ было в теории меры.
+
+	\item $ 2 \implies 3 $: тут просто.
 \begin{align*}
  P(\left| \xi_n - \xi \right| > \eps) \leqslant \frac{\E \left| \xi_n - \xi \right|^{r}}{\eps^{r}} \to 0.
-\end{align*} $ 1 \not \implies 2 $. (и тогда $ 3 \not \implies 2 $). Берём $ \Omega = [0,1] $ с мерой Лебега. $ \xi_n = n^{\frac{1}{r}} \Ind_{[0, \frac{1}{n}]} $. $ \xi_n \to 0 $ почти наверное. Но
+\end{align*}
+
+\item $ 1 \not \implies 2 $. (и тогда $ 3 \not \implies 2 $). Берём $ \Omega = [0,1] $ с мерой Лебега. $ \xi_n = n^{\frac{1}{r}} \Ind_{[0, \frac{1}{n}]} $. $ \xi_n \to 0 $ почти наверное. Но
 \begin{align*}
  \E \xi_n^{r} = n \E\Ind_{[0, \frac{1}{n}]} = 1 \not\rightarrow 0.
 \end{align*} 
 
-Нет $ 2 \not \implies 1 $ (и тогда нет $ 3 \not \implies 1 $).
+\item Нет $ 2 \not \implies 1 $ (и тогда нет $ 3 \not \implies 1 $).
 
 Берём $ \Omega = [0,1] $ с мерой Лебега. Берём $ \Ind_{[0, \frac{1}{2}]} $, $ \Ind_{[\frac{1}{2}, 1]} $, $ \Ind_{[0, \frac{1}{4}]} $, \ldots. Не стремится ни к чему почти наверное, но при это очевидно, что
 \begin{align*}
  \E \xi^{r}_n = \E \xi_n = \text{длина отрезка} \to 0.
 \end{align*}
 
-Зато есть стрелка из $ 3 \implies 4 $. Cобытие $ \left\{ \xi_n > x \right\} \supset \left\{ \xi > x + \eps \right\} \cap \left\{ \left| \xi_n - \xi \right| < \eps \right\}$. Тогда для отрицаний
+\item Зато есть стрелка из $ 3 \implies 4 $. Cобытие $ \left\{ \xi_n > x \right\} \supset \left\{ \xi > x + \eps \right\} \cap \left\{ \left| \xi_n - \xi \right| < \eps \right\}$. Тогда для отрицаний
 \begin{align*}
  \left\{ \xi_n \leqslant x \right\} \subset \left\{ \xi \leqslant x + \eps \right\} \cup \left\{ \left| \xi_n - \xi \right| \geqslant \eps \right\}.
 \end{align*} Пририсуем вероятности:
 \begin{align*}
  P(\xi_n \leqslant x) \leqslant P(\xi \leqslant x + \eps) + P(\left| x_n - \xi \right| \geqslant \eps).
-\end{align*} При $ \eps \to 0 $ и $ n \to \infty $ имеем $ \limsup\limits_{n \to \infty} P(\xi_n \leqslant x) \leqslant P(\xi \leqslant x)   $.
+\end{align*} При $ \eps \to 0 $ и $ n \to \infty $ имеем $ \varlimsup\limits_{n \to \infty} P(\xi_n \leqslant x) \leqslant P(\xi \leqslant x)   $.
 \begin{align*}
- \limsup\limits_{n \to \infty} F_{\xi_n} (x) \leqslant F_{\xi}(x)
+ \varlimsup\limits_{n \to \infty} F_{\xi_n} (x) \leqslant F_{\xi}(x)
 .\end{align*} В другую сторону:
 \begin{align*}
- \left\{ \xi_n \leqslant x \right\} \supset \left\{ \xi \leqslant x - \eps \right\} \cap \left\{ \left| \xi_n - \xi \right| < \eps \right\} \\
- \left\{ \xi_n > x \right\} \subset \left\{ \xi > x - \eps \right\} \cup \left\{ \left| \xi_n-\xi \right| \geqslant \eps \right\} \\
- P(\xi_n > x) \leqslant P(\xi > x - \eps) + P(\left| \xi_n - \xi \right| \geqslant \eps) \\
- 1 - F_{\xi_n}(x) \leqslant 1 - F_{\xi}(x - \eps) + P(\left| \xi_n - \xi \right| \geqslant \eps) \\
- F_{\xi_n}(x) \geqslant F_\xi(x - \eps) - P(\left|  \xi_n - \xi \right| \geqslant \eps) \\
- \liminf_{n \to \infty} F_{\xi_n}(x) \geqslant F_{\xi}(x - \eps)
+	\left\{ \xi_n \leqslant x \right\} &\supset \left\{ \xi \leqslant x - \eps \right\} \cap \left\{ \left| \xi_n - \xi \right| < \eps \right\} \\
+	\left\{ \xi_n > x \right\} &\subset \left\{ \xi > x - \eps \right\} \cup \left\{ \left| \xi_n-\xi \right| \geqslant \eps \right\} \\
+	P(\xi_n > x) &\leqslant P(\xi > x - \eps) + P(\left| \xi_n - \xi \right| \geqslant \eps) \\
+	1 - F_{\xi_n}(x) &\leqslant 1 - F_{\xi}(x - \eps) + P(\left| \xi_n - \xi \right| \geqslant \eps) \\
+	F_{\xi_n}(x) &\geqslant F_\xi(x - \eps) - P(\left|  \xi_n - \xi \right| \geqslant \eps) \\
+	\varliminf_{n \to \infty} F_{\xi_n}(x) &\geqslant F_{\xi}(x - \eps)
 \end{align*} Получаем $ \lim_{n \to \infty} F_{\xi_n}(x) = F_{\xi}(x) $, если устремить $ \eps \to 0 $.
 
-$ 4 \not \implies 3 $ --- неправильная постановка вопроса, но можно придумать пример на одном пространстве (упражнение).
+\item $ 4 \not \implies 3 $ --- неправильная постановка вопроса, но можно придумать пример на одном пространстве (упражнение).
 
+\end{itemize}
 \end{document}
 
