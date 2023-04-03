@@ -203,7 +203,7 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Возьмём такое $ a \in \CC $, $ \left| a \right| = 1 $, что $ \left| \E \xi \right| = a \cdot \E \xi = \E(a\xi) $. Но
  \begin{align*}
-  \left| \E\xi \right| = \E(a\xi) = \E(\real(a\xi)) + \underbrace{i\E(\Imaginary(a\xi))}_{0} = \E(\Real(a\xi)) \leqslant \E \left| \Real(a\xi) \right| \leqslant \E \left| a\xi \right| = \E \left| \xi \right|.
+  \left| \E\xi \right| = \E(a\xi) = \E(\Real(a\xi)) + \underbrace{i\E(\Imaginary(a\xi))}_{0} = \E(\Real(a\xi)) \leqslant \E \left| \Real(a\xi) \right| \leqslant \E \left| a\xi \right| = \E \left| \xi \right|.
  \end{align*} По сути мы воспользовались основной оценкой интеграла для комплекснозначных функций.
 \end{proof}
 
@@ -231,7 +231,7 @@
    \begin{proof}[\normalfont\textsc{Доказательство}]
     $ \varphi_{\xi+\eta}(t) = \E e^{it(\xi + \eta)} = \E (e^{it\xi} \cdot e^{it\eta}) = \E(e^{it\xi}) \cdot \E(e^{it\eta})$ 
    \end{proof}
-  \item Если $ \xi_1, \ldots, \xi_k $ независимы, то $ \varphi_{\xi_1 + \ldots + \xi_k}(t) = \varphi_{\xi_1}(t) \cdot \ldots \cdot \varphi_{\xi_k(t)} $.
+\item Если $ \xi_1, \ldots, \xi_k $ независимы, то $ \varphi_{\xi_1 + \ldots + \xi_k}(t) = \varphi_{\xi_1}(t) \cdot \ldots \cdot \varphi_{\xi}_k(t) $.
   \item $ \overline{\varphi_\xi(t)} = \varphi_\xi(-t) $
    \begin{proof}[\normalfont\textsc{Доказательство}]
 	   $\overline{\varphi_\xi (t)} = \overline{\E e^{it\xi}} = \E e^{-it\xi} = \varphi_\xi(-t)$ 
