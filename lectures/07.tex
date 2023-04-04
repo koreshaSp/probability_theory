@@ -90,8 +90,8 @@
  Пусть $ \xi_1, \xi_2, \ldots $  независимы и одинаково распределены. Пусть $ S_n  = \xi_1 + \xi_2 + \ldots + \xi_n $. Тогда $ \frac{S_n}{n} \to a $ тогда и только тогда, когда $ a = \E \xi_1 $.
 \end{thm}
 
-\begin{exmpl}
- Метод Монте-Карло. Есть ограниченная фигура $ \Phi $ на плоскости. Пусть про любую конкретную точку мы можем ответить, принадлежит ли данная точка фигуре. Мы хотим примерно вычислить её площадь.
+\begin{exmpl}[Метод Монте-Карло]
+Есть ограниченная фигура $ \Phi $ на плоскости. Пусть про любую конкретную точку мы можем ответить, принадлежит ли данная точка фигуре. Мы хотим примерно вычислить её площадь.
 
  Давайте кидать случайную точку в прямоугольник. $ \xi_k = 1 $, если точка попала, и $ \xi_k = 0 $, если не попала. Это схема Бернулли с вероятностью $ p = \frac{S(\Phi)}{S(\Pi)} $, где $ \Pi $ --- прямоугольник. Тогда по УЗБЧ  $ \frac{S_n}{n} \to p $  почти наверное. Поэтому, почти наверное наша последовательность $ \frac{S_n}{n} $ стремится к $ p $.
 
@@ -112,6 +112,11 @@
  \begin{enumerate}
   \item $G_\xi(t) = \E t^{\xi}$
   \item $ G_\xi(1) = 1 $, и ряд сходится при $ \left| t \right| \leqslant 1 $.
+	  \begin{proof}[\normalfont\textsc{Доказательство}]
+	  	\begin{align*}
+			\left| \sum_{n = 0}^\infty P(\xi = n) \cdot t^{n} \right| = \sum_{n = 0}^\infty P(\xi = n) \cdot \underbrace{|t^{n}|}_{\leq 1} \leqslant \sum_{n = 0}^\infty P(\xi = n) = 1
+	  	\end{align*}
+	  \end{proof}
   \item $ G'_\xi(1) = \E \xi $. Действительно,
    \begin{align*}
     \E \xi = \sum_{n=1}^{\infty} n P(\xi = n) \\
@@ -170,7 +175,7 @@
   \frac{1}{(1-t)^{3}} = \sum_{n=0}^{\infty} \binom {n+2} n \cdot t^{n}.
  \end{align*} Тогда
  \begin{align*}
-  =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
+  G_{\xi}(t) =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
  \end{align*} Значит, коэффициент при $ t^{10} $ это
  \begin{align*}
   \frac{1}{6^{3}} \left( \binom 9 7 - 3 \binom 3 2 \right) = \frac{1}{6^{3}} \left( 36 - 9 \right) = \frac{27}{6^{3}} = \frac{1}{8}.
@@ -198,7 +203,7 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Возьмём такое $ a \in \CC $, $ \left| a \right| = 1 $, что $ \left| \E \xi \right| = a \cdot \E \xi = \E(a\xi) $. Но
  \begin{align*}
-  \left| \E\xi \right| = \E(a\xi) = \E(\real(a\xi)) + \underbrace{i\E(\Imaginary(a\xi))}_{0} = \E(\Real(a\xi)) \leqslant \E \left| \Real(a\xi) \right| \leqslant \E \left| a\xi \right| = \E \left| \xi \right|.
+  \left| \E\xi \right| = \E(a\xi) = \E(\Real(a\xi)) + \underbrace{i\E(\Imaginary(a\xi))}_{0} = \E(\Real(a\xi)) \leqslant \E \left| \Real(a\xi) \right| \leqslant \E \left| a\xi \right| = \E \left| \xi \right|.
  \end{align*} По сути мы воспользовались основной оценкой интеграла для комплекснозначных функций.
 \end{proof}
 
@@ -207,7 +212,7 @@
 \end{df}
 
 \begin{df}[характеристическая функция]
- \textit{Характеристической функцией} вещественнозначной случайной величины $ \xi $ называется функция $ \varphi_\xi \colon\, \R \to \CC $
+ \textit{Характеристической функцией} вещественнозначной случайной величины $ \xi : \Omega \to \R $ называется функция $ \varphi_\xi \colon\, \R \to \CC $
  \begin{align*}
   \varphi_\xi(t) = \E ( e^{it\xi} ).
  \end{align*}, где $ t \in \R $.
@@ -223,12 +228,15 @@
     \end{align*}
    \end{proof}
   \item Если $ \xi $ и $ \eta $ независимы, то $ \varphi_{\xi + \eta}(t) = \varphi_\xi(t) \cdot \varphi_\eta(t) $.
-  \item Если $ \xi_1, \ldots, \xi_k $ независимы, то $ \varphi_{\xi_1 + \ldots + \xi_k}(t) = \varphi_{\xi_1}(t) \cdot \ldots \cdot \varphi_{\xi_k(t)} $.
    \begin{proof}[\normalfont\textsc{Доказательство}]
-    $ \varphi_{\xi+\eta}(t) = \E e^{it(\xi + \eta)} = \E (e^{it\xi} \cdot e^{it\eta}) = \ldots$ 
+    $ \varphi_{\xi+\eta}(t) = \E e^{it(\xi + \eta)} = \E (e^{it\xi} \cdot e^{it\eta}) = \E(e^{it\xi}) \cdot \E(e^{it\eta})$ 
    \end{proof}
+\item Если $ \xi_1, \ldots, \xi_k $ независимы, то $ \varphi_{\xi_1 + \ldots + \xi_k}(t) = \varphi_{\xi_1}(t) \cdot \ldots \cdot \varphi_{\xi}_k(t) $.
   \item $ \overline{\varphi_\xi(t)} = \varphi_\xi(-t) $
-  \item $ \varphi_\xi(t) $ равномерно непрерывна.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+	   $\overline{\varphi_\xi (t)} = \overline{\E e^{it\xi}} = \E e^{-it\xi} = \varphi_\xi(-t)$ 
+   \end{proof}
+  \item $ \varphi_\xi(t) $ равномерно непрерывна на $\R$ .
    \begin{proof}[\normalfont\textsc{Доказательство}]
     \begin{align*}
      \left| \varphi_\xi(t + h) - \varphi_\xi(t) \right| &= \left|\E e^{i(t+h)\xi} - \E e^{it\xi} \right| = \left| \E (e^{i(t+h)\xi} - e^{it\xi}) \right| \leqslant \\
