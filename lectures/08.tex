@@ -59,7 +59,7 @@
   \left| \frac{e^{ihx}-1}{h} \right| \leqslant \frac{2}{\left| h \right|} \leqslant 2 \left| x \right|.
  \end{align*} Если же $ \left| h \right| \leqslant \frac{1}{\left| x \right|} $, то
  \begin{align*}
-  \left| \frac{e^{ihx}-1}{hx} \right| \cdot \left| x \right| \leqslant C \left| x \right|.
+	 \left| \frac{e^{ihx}-1}{h} \right| = \left| \frac{1 + O(ihx) - 1}{h} \right| = O(x) \leqslant C \left| x \right|.
  \end{align*} так как функция непрерывна от $ hx $, задана на компакте. Так или иначе
  \begin{align*}
   \left| (ix)^{k}e^{itx}\frac{e^{ihx}-1}{h} \right| \leqslant C \left| x \right|^{k+1}. 
@@ -144,17 +144,21 @@
   \lim_{T \to \infty} \int\limits_{\R} \Phi_T(x)\,dP_\xi(x) = \int\limits_{\R} \lim_{T \to +\infty}   \Phi_T(x)\,dP_\xi(x)
  \end{align*} Тогда
  \begin{align*}
-  \lim_{T \to +\infty}  \Phi_T(x) = \lim_{T \to +\infty} \int\limits_{T(x-1)}^{T(x+1)}  \frac{2\sin v}{v}\,dv = \begin{cases}
-   0, \text{ если } x > 1, x < -1  \\
-   \pi, \text{ если } x = 1, x = -1 \\
-   2\pi, \text{ если } -1 < x < 1
-  \end{cases}  = 2\pi \cdot \Ind_{[-1,1]}(x)
- \end{align*} почти всюду.
- \begin{align*}
-  \int\limits_{0}^{+\infty} \frac{\sin x}{x} = \frac{\pi}{2}.
- \end{align*}
+  \lim_{T \to +\infty}  \Phi_T(x) = \lim_{T \to +\infty} \int\limits_{T(x-1)}^{T(x+1)}  \frac{2\sin v}{v}\,dv 
+ \end{align*} 
 
- Тогда
+ \begin{itemize}
+	\item $x > 1 \implies T(x + 1), T(x - 1) \to +\infty$, а так как интеграл сходящийся, то стремление может быть только к нулю. 
+	\item $-1 < x < 1 \implies \int_{T(x - 1)}^{T(x + 1)} \frac{\sin v}{dv} \, dv \to \int_{-\infty}^{+\infty} \frac{2 \sin v}{v}\,dv = 4 \int_0^{+\infty} \frac{\sin v}{v} \, dv = 2\pi$ 
+	\item $x = 1  \implies \int_{T(X - 1)}^{T(X + 1)} \frac{2 \sin v}{v}\,dv \to \int_0^{+\infty} \frac{2 \sin v}{v} \, dv = \pi$
+	\item $x < -1 $ и $x = -1$  аналогично. 
+ \end{itemize}
+	
+ \begin{align*}
+ 	= \begin{cases}    0, \text{ если } x > 1, x < -1  \\    \pi, \text{ если } x = 1, x = -1 \\    2\pi, \text{ если } -1 < x < 1   \end{cases}
+ 	= 2\pi \cdot \Ind_{[-1,1]}(x) 
+ \end{align*} почти всюду, т. к. $P_{\xi}(\{a\}) = P_{\xi}(\{b\}) = 0$. Тогда
+
  \begin{align*}
   = \int\limits_{\R} 2\pi \Ind_{[-1,1]} (x)\,dP_\xi(x) = 2\pi \cdot P_\xi [-1, 1].
  \end{align*} Осталось обосновать перестановку предела и интеграла. Теорема Лебега о мажорируемой сходимости. Мажоранта:
@@ -170,13 +174,18 @@
   \end{align*} Значит,
   \begin{align*}
    P(a \leqslant \xi \leqslant b) &= P(-1 \leqslant \eta \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\varphi_\eta(t)\,dt = \\
-   & \overset{?}{=} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it}\varphi_\xi(t)\,dt = \int\limits_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it}e^{i \frac{a+b}{2} t} \cdot \varphi_\eta \left( \frac{b-a}{2}t \right)\,dt = \\
-   &= \int\limits_{-T}^{T} \frac{e^{i \frac{b-a}{2}t} -e^{-i \frac{b-a}{2} t}}{it} \varphi_\eta \left( \frac{b-a}{2}t \right)dt = [s = \frac{b - a}{2} t] = \\
-   &= \int\limits_{- \frac{b-a}{2}T}^{\frac{b-a}{2}T} \frac{e^{is}-e^{-is}}{is}\varphi_\eta(s)\,ds = \text{ то же самое }
-  \end{align*} Кроме того,
-  \begin{align*}
-   \varphi_\xi(t) = e^{i \frac{a+b}{2}t}\varphi_\eta\left(\frac{b-a}{2}t\right).
+	 & \overset{?}{=} \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it}\varphi_\xi(t)\,dt 
   \end{align*}
+
+	Покажем, что на месте $\overset{?}{=}$ действительно есть равенство. Для этого раскроем $\varphi_{\xi} $ по правилу $\varphi_\xi(t) = e^{i \frac{a+b}{2}t}\varphi_\eta\left(\frac{b-a}{2}t\right)$ и выплнем преобразования:	
+
+	\begin{align*}
+		\int\limits_{-T}^{T} \frac{e^{-iat} - e^{ibt}}{it} \varphi_{\xi}(t)\,dt &= \int\limits_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it}e^{i \frac{a+b}{2} t} \cdot \varphi_\eta \left( \frac{b-a}{2}t \right)\,dt = \\
+   &= \int\limits_{-T}^{T} \frac{e^{i \frac{b-a}{2}t} -e^{-i \frac{b-a}{2} t}}{it} \varphi_\eta \left( \frac{b-a}{2}t \right)dt = \\
+   &= \left[s = \frac{b - a}{2} t\right] = \\
+   &= \int\limits_{- \frac{b-a}{2}T}^{\frac{b-a}{2}T} \frac{e^{is}-e^{-is}}{is}\varphi_\eta(s)\,ds 
+	\end{align*}
+	Устремляем $T$ в бесконечность и получаем, что равенство $\overset{?}{=}$ верно.
 \end{proof}
 
 Сделаем выводы из <<первой навороченной теоремы про характеристические функции>>.
@@ -188,7 +197,7 @@
  Обозначим
  \begin{align*}
  A = \left\{ x \in \R \Mid P_\xi(\left\{ x \right\}) > 0 \right\}
- \end{align*} Тогда множество $ A $ не более, чем счётное. Значит, почти все точки хорошие. Мы знаем, что $ \varphi_\xi $ однозначно определяет вероятности
+\end{align*} Тогда множество $ A $ не более, чем счётное (счётное объединение конечных множеств $\{x \in \R \mid P_{\xi}(\{x\}) > \frac{1}{n}\}$). Значит, почти все точки хорошие. Мы знаем, что $ \varphi_\xi $ однозначно определяет вероятности
  \begin{align*}
   P_\xi([a,b]) = P_\eta( \left[a, b\right)),
  \end{align*} если $ a,b \notin A $.
@@ -217,7 +226,7 @@
  \end{align*} Это преобразование Фурье функции $\varphi_\xi$ .
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Из абсолютной сходимости интеграла $ \int_{\R} \left| \varphi_\xi(t) \right|\,dt  $ следует 
+ Из абсолютной сходимости интеграла $ \int_{\R} \left| \varphi_\xi(t) \right|\,dt  $ следует что
  \begin{align*}
  \int\limits_{\R} \underbrace{\frac{e^{-iat}-e^{-ibt}}{it}}_{\text{огр.}} \varphi_\xi(t)\,dt
  \end{align*} абсолютно сходится. Тогда
@@ -248,7 +257,7 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Посчитаем хар. функцию $ \xi $:
  \begin{align*}
-  \varphi_\xi(t) = \varphi_{a_0 + \sum_{k=1}^{n}c_k\xi_k}(t) = e^{ia_0 t} \prod_{k=1}^{n}\varphi_{\xi_k}(c_k t) = e^{ia_0t}\prod_{k=1}^{n} e^{-c_k^{2}\sigma_k^{2} t^{2} / 2} \cdot e^{ic_ka_k t} = \text{ ОК }
+  \varphi_\xi(t) = \varphi_{a_0 + \sum_{k=1}^{n}c_k\xi_k}(t) = e^{ia_0 t} \prod_{k=1}^{n}\varphi_{\xi_k}(c_k t) = e^{ia_0t}\prod_{k=1}^{n} e^{-c_k^{2}\sigma_k^{2} t^{2} / 2} \cdot e^{ic_ka_k t} \implies \text{ ОК }
  \end{align*}
 \end{proof}
 
