@@ -11,7 +11,7 @@
 \end{remrk}
 \begin{proof}[\normalfont\textsc{Доказательство}]
   \begin{align*}
-    P_{\xi+\eta}(\left\{ a \right\}) = P_\xi \ast P_\eta(\left\{ a \right\}) = \int\limits_{\R} P_{\eta}(\left\{ a \right\} - x) dP_\xi(x) = 0.
+		P_{\xi+\eta}(\left\{ a \right\}) = P_\xi \ast P_\eta(\left\{ a \right\}) = \int\limits_{\R} \underbrace{P_{\eta}(\left\{ a \right\} - x)}_{= 0 \text{ по непр. } \eta} dP_\xi(x) = 0.
    \end{align*}
   \end{proof}
 \begin{remrk}
@@ -30,7 +30,7 @@
  Пусть $ F_n $ и $ F $ --- функции распределения такие, что для любых $ a, b \in \R $
  \begin{align*}
   \lim_{n \to \infty} (F_n(b) - F_n(a)) = F(b)  - F(a).
- \end{align*} Тогда просто $ \forall x \in \R \colon\; \lim_{n \to \infty}  F_n(x) = F(x)$.
+ \end{align*} Тогда $ \forall x \in \R \colon\; \lim_{n \to \infty}  F_n(x) = F(x)$.
 \end{remrk}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Нужна лишь ограниченность и существование предела на бесконечностях.
@@ -67,11 +67,11 @@
   \item $ \xi_n $ сходится к $ \xi $ по распределению.
   \item Для любого открытого множества $ U \subset \R $
    \begin{align*}
-    \liminf_{n \to \infty} P(\xi \in U) \geqslant P(\xi \in U).
+    \varliminf_{n \to \infty} P(\xi \in U) \geqslant P(\xi \in U).
    \end{align*}
   \item Для любого замкнутого множества $ A \subset \R $
    \begin{align*}
-    \limsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
+    \varlimsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
    \end{align*}
   \item Для любого регулярного (относительно $ P_\xi $) борелевского множества $ B \subset \R$
    \begin{align*}
@@ -94,7 +94,7 @@
   P(\xi_n \in A) = 1 - P(\xi_n \in U).
  \end{align*} Тогда
  \begin{align*}
-  \limsup_{n \to \infty} P(\xi_n \in A) = 1 - \liminf_{n \to \infty} P(\xi_n \in U).
+  \varlimsup_{n \to \infty} P(\xi_n \in A) = 1 - \varliminf_{n \to \infty} P(\xi_n \in U).
  \end{align*} Тогда 
  \begin{align*}
   \leqslant P(\xi \in A) = 1 - P(\xi \in U) \geqslant 
@@ -105,8 +105,8 @@
   P(\xi_n \in U) \leqslant P(\xi_n \in B) \leqslant P(\xi_n \in A).
  \end{align*} Пририсуем пределы:
  \begin{align*}
-  P(\xi \in U) &\leqslant \liminf_{n \to \infty} P(\xi_n \in U) \leqslant \liminf_{n \to \infty} P(\xi_n \in B) \leqslant \\
-  &\leqslant \limsup_{n \to \infty} P(\xi_n \in B) \leqslant \limsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
+  P(\xi \in U) &\leqslant \varliminf_{n \to \infty} P(\xi_n \in U) \leqslant \varliminf_{n \to \infty} P(\xi_n \in B) \leqslant \\
+  &\leqslant \varlimsup_{n \to \infty} P(\xi_n \in B) \leqslant \varlimsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
  \end{align*} Но так как множество $ B $ регулярное, то $ P(\xi \in U) = P(\xi \in A) = P(\xi \in B) $. Значит, это всё равенство, верхний предел равен нижнему, и он равен $ P(\xi \in B) $.
 
  $ 4 \iff 5 $.
@@ -135,10 +135,10 @@
   \sum_{k=1}^{m}(F(b_k)-F(a_k)) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  )
  \end{align*} Пририсуем пределы:
  \begin{align*}
-  \liminf_{n \to \infty} P(\xi \in U) \geqslant \liminf_{n \to \infty} P(\xi_n \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ).
+  \varliminf_{n \to \infty} P(\xi \in U) \geqslant \varliminf_{n \to \infty} P(\xi_n \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ).
  \end{align*} Значит
  \begin{align*}
-  \liminf_{n \to \infty} P(\xi_n \in U) \geqslant \lim_{m \to \infty} P(\xi \in \bigsqcup_{k=1}^{m} \left(a_k, b_k\right]  ) = P(\xi \in U),
+  \varliminf_{n \to \infty} P(\xi_n \in U) \geqslant \varliminf_{m \to \infty} P(\xi \in \bigsqcup_{k=1}^{m} \left(a_k, b_k\right]  ) = P(\xi \in U),
  \end{align*} по непрерывности меры сверху.
 
  $ 5 \implies 6 $. Возьмём $ D = \left\{ x \in \R \mid P(f(\xi) = x) > 0 \right\} $. Множество $ D $ не более, чем счётно, так как сумма
