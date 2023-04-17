@@ -27,6 +27,7 @@
 \end{proof}
 
 \begin{remrk}
+	\label{remrk:lim_f_n_using_f_n_a_minnus_f_n_b}
  Пусть $ F_n $ и $ F $ --- функции распределения такие, что для любых $ a, b \in \R $
  \begin{align*}
   \lim_{n \to \infty} (F_n(b) - F_n(a)) = F(b)  - F(a).
@@ -176,25 +177,25 @@
  $ 7 \implies 1 $. Воспользуемся формулой обращения:
  \begin{align*}
   P(\xi \in (a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it} \varphi_\xi(t)\,dt,
- \end{align*} если $ P(\xi = a) = P(\xi = b) = 0 $. Здесь проблема в том, что интеграл не настоящий, а в смысле главного значения. Решать проблему будем так: изменим случайную величину, так чтобы не сильно поменялись значения, на характеристическая функция улучшилась бы. Возьмём случайную величину $ \eta $, не зависящую от всех $ \xi, \xi_1, \xi_2, \ldots $ такую, что $ \eta \sim \Norm(0, \sigma^{2}) $ (формально это очень занудно). Тогда мы знаем, что
+ \end{align*} если $ P(\xi = a) = P(\xi = b) = 0 $. Здесь проблема в том, что интеграл не настоящий, а в смысле главного значения. Решать проблему будем так: изменим случайную величину, так чтобы не сильно поменялись значения, но характеристическая функция улучшилась бы. Возьмём случайную величину $ \eta $, не зависящую от всех $ \xi, \xi_1, \xi_2, \ldots $ такую, что $ \eta \sim \Norm(0, \sigma^{2}) $ (формально это очень занудно). Тогда мы знаем, что
  \begin{align*}
   \varphi_{\xi_n + \eta}(t) = \varphi_{\xi_n}(t) \cdot \varphi_\eta(t) = \varphi_{\xi_n}(t) e^{-\sigma^{2}t^{2} / 2} \to \varphi_\xi(t) e^{-\sigma^{2}t^{2} / 2} = \varphi_{\xi+\eta}(t)
  \end{align*} поточечно. Кроме того, случайные величины $ \xi_n + \eta $ и   $ \xi + \eta $ непрерывны. Поэтому не нужно оговорка. Тогда
    \begin{align*}
-    P(\xi_n + \eta \in [a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^T \frac{e^{-iat} - e^{-ibt}}{it} \varphi_{\xi_n}(t) e^{-\sigma^{2}t^{2} / 2} \,dt
- \end{align*} Но интеграл сходится! Поэтому можно убрать предел:
+		 P(\xi_n + \eta \in [a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^T \underbrace{\frac{e^{-iat} - e^{-ibt}}{it}}_{|\cdot| \leqslant const} \underbrace{\varphi_{\xi_n}(t)}_{|\cdot| \leqslant 1} e^{-\sigma^{2}t^{2} / 2} \,dt
+	 \end{align*} Но интеграл сходится, так как $\int_{-\infty}^{+\infty} e^{-\sigma^2t^2/2}\,dt$ сходится, а остальные сомножители под интегралом ограничены! Поэтому можно убрать предел:
  \begin{align*}
-  = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat} - e^{-ibt}}{it} e^{-\sigma^{2}t^{2} / 2}\varphi_n(t)\,dt.
- \end{align*} Устремим $ n \to \infty $. Хотим доказать
+	 = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat} - e^{-ibt}}{it} e^{-\sigma^{2}t^{2} / 2}\varphi_{\xi_n}(t)\,dt
+ \end{align*} Устремим $ n \to \infty $. По теореме Лебега с мажорантой $const \cdot e^{\sigma^2t^2/2}$ переходим к пределу под интегралом:  
  \begin{align*}
-   \to \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it}  e^{-\sigma^{2}t^{2} / 2}\varphi(t)\,dt.
- \end{align*} Теорема Лебега. Мажоранта есть. Но
+	 \to \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it}  e^{-\sigma^{2}t^{2} / 2}\varphi_{\xi}(t)\,dt
+ \end{align*} Но
  \begin{align*}
   = P(\xi+ \eta \in (a,b]).
- \end{align*} Пусть $ G_n $ и $ G $ --- функции распределения для $ \xi_n + \eta $ и $ \xi + \eta $ соответственно.
+ \end{align*} Пусть $ G_n $ и $ G $ --- функции распределения для $ \xi_n + \eta $ и $ \xi + \eta $ соответственно. Тогда мы только что показали, что
  \begin{align*}
   G_n(b) - G_n(a) \to G(b) - G(a)
- \end{align*} для любых $ a,b\in\R $. По замечанию такому-то $ G_n(x) \to G(x) $ для любого $ x \in \R $.
+ \end{align*} для любых $ a,b\in\R $. По замечанию \ref{remrk:lim_f_n_using_f_n_a_minnus_f_n_b} $ G_n(x) \to G(x) $ для любого $ x \in \R $.
 
  Осталось перейти от $ G $ к $ F $. Пусть $ x $ --- точка непрерывности $ F $. Зафиксируем $ \eps  > 0 $. Выберем $ \delta > 0 $ так, что 
  \begin{align*}
@@ -204,20 +205,24 @@
   \left\{ \xi+\eta \leqslant x  + \delta \right\} \subset \left\{ \xi \leqslant x + 2\delta \right\} \cup \left\{ \left| \eta \right| \geqslant \delta \right\}.
  \end{align*} Запишем неравенство на вероятности:
  \begin{align*}
-  G(x+\delta) \leqslant F(x+2\delta) + P(\left| \eta \right| \geqslant \delta) \leqslant F(x+2\delta) \leqslant \frac{\D \eta}{\delta^{2}} = \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*} Значит
+	 G(x+\delta) \leqslant F(x+2\delta) + P(\left| \eta \right| \geqslant \delta) \leqslant F(x+2\delta) + \frac{\D \eta}{\delta^{2}} = F(x + 2\delta) + \frac{\sigma^2}{\delta^2}. 
+ \end{align*} 
+ Тогда при больших $n$
  \begin{align*}
-  G(x+\delta) \leqslant F(x+2\delta) + \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*} Напишем похожую штуку в другую сторону:
+	 F_n(x) = P(\xi_n < x) &\leqslant P(\xi_n + \eta \leqslant x + \delta) + P(|\eta| \geqslant \delta) \\
+												 &\leqslant G_n(x+\delta) + \frac{\sigma^{2}}{\delta^{2}} \\
+												 &< G(x+\delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \\
+												 &\leqslant F(x+2\delta) + \eps + \frac{2\sigma^{2}}{\delta^{2}} \\
+												 &< F(x) + 2\eps + \frac{2\sigma^{2}}{\delta^{2}}.
+ \end{align*}
+
+ Напишем похожую штуку в другую сторону:
  \begin{align*}
   \left\{ \xi +\eta \leqslant x - \delta \right\} \supset \left\{ \xi \leqslant x - 2\delta \right\} \setminus \left\{ \left| \eta \right| \geqslant \delta \right\}.
  \end{align*} Для вероятностей:
  \begin{align*}
   G(x-\delta) \geqslant F(x - 2\delta) - \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*} Тогда
- \begin{align*}
-  F_n(x) \leqslant G_n(x+\delta) + \frac{\sigma^{2}}{\delta^{2}} < G(x+\delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \leqslant F(x+2\delta) + \eps \frac{2\sigma^{2}}{\delta^{2}} < F(x) + 2\eps + \frac{2\sigma^{2}}{\delta^{2}}.
- \end{align*} (доказывается также) при больших $ n $. Аналогично с другой стороны
+ \end{align*}  Аналогично получаем оценку снизу 
  \begin{align*}
   F_n(x) \geqslant G_n(x - \delta) - \frac{\sigma^{2}}{\delta^{2}} > G(x-\delta) - \eps - \frac{\sigma^{2}}{\delta^{2}} \geqslant F(x - 2\delta) - \eps - \frac{2\sigma^{2}}{\delta^{2}}  > F(x) - 2\eps - \frac{2\sigma^{2}}{\delta^{2}}.
  \end{align*}
@@ -326,7 +331,7 @@
   = \sum_{k=1}^{n} \left( (e^{it}-1)p_{nk} +O(p_{nk}^{2}) \right) = (e^{it} - 1) \sum_{k=1}^{n}p_{nk} + O(np_{nk} ^{ 2}).
  \end{align*} Оценим остаток:
  \begin{align*}
-  \sum_{k=1}^{n}p_{nk}^{2} \leqslant \sum_{k=1}^{n} p_{nk} \cdot \underbrace{\max}_{\to 0}.
+	 \sum_{k=1}^{n}p_{nk}^{2} \leqslant \sum_{k=1}^{n} p_{nk} \cdot \max p_{n k} \to \lambda \cdot \underbrace{\max p_{nk}}_{\to 0} \to 0.
  \end{align*} Мы поняли, что $ \varphi_{S_n}(t) \to \exp((e^{it}-1)\lambda) $. Тогда есть сходимость по распределению: $ S_n $ сходится по распределению к Пуассону. Так как сё дискретно, то условие <<точки непрерывности>> --- не проблема.
 \end{proof}
 \begin{remrk*}
@@ -420,10 +425,10 @@
 \begin{thm}[Хартмана-Винтнера, закон повторного логарифма]
  Пусть случайные величины $ \xi_1, \ldots $ независимы и одинаково распределены, $ \E \xi_i = 0 $, $ \sigma^{2} = \D \xi_i > 0 $. Тогда
  \begin{align*}
-  \limsup_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = \sigma,
+  \varlimsup_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = \sigma,
  \end{align*} и
  \begin{align*}
-  \liminf_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = -\sigma.
+  \varliminf_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = -\sigma.
  \end{align*}
 \end{thm}
 
