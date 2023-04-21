@@ -1,0 +1,223 @@
+% 2023.04.18 lecture 10
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\newpage
+\section{Оценки больших уклонений.}
+Мы уже знаем закон больших чисел в форме Чебышева: если есть независимые одинаково распределённые случайные величины $ \xi_1, \xi_2, \ldots $, $ a = \E\xi_1 $, $ \sigma^{2}=\D\xi_1 $, то
+\begin{align*}
+ \lim_{n \to \infty} P\left(\left|\frac{S_n}{n}  - a \right| \geqslant \eps\right) = 0.
+\end{align*} Более того, была оценка
+\begin{align*}
+ P \left( \left| \frac{S_n}{n}-a \right| \geqslant \eps \right) \leqslant \frac{\sigma^{2}}{n\eps}.
+\end{align*} Вопрос: что делать, если уклонение $ \eps $ большое? Хотим оценить $ P \left( \frac{S_n}{n} \geqslant r \right) $, где $ r > a $. Предыдущая оценка годится, если дисперсия конечная. Но оказывается, можно сделать лучше.
+
+\begin{df}
+ Случайная величина $ \xi $ \textit{удовлетворяет условию Крамера}, если при всех $ \lambda \in (0,\lambda_0) $
+ \begin{align*}
+  \E e^{\lambda\xi} < +\infty
+ \end{align*} для некоторого $ \lambda_0 > 0$.
+\end{df}
+Для таких случайных величин мы можем написать оценку лучше.
+
+\subsection{Оценка Чернова.}
+
+Нас интересует
+\begin{align*}
+ P \left( \frac{S_n}{n} \geqslant r \right) &= P ( S_n \geqslant nr) = P (\lambda S_n \geqslant \lambda n r) = P(e^{\lambda S_n} \geqslant e^{\lambda n r}).
+\end{align*} Далее по неравенству Маркова:
+\begin{align*}
+ &\leqslant \frac{\E e^{\lambda S_n}}{e^{\lambda n r}}.
+\end{align*} Но $ e^{\lambda S_n} = \prod_{k=1}^{n}e^{\lambda \xi_k}  $. Так как $ \xi $ независимы, то
+\begin{align*}
+ \E e^{\lambda S_n} = \prod_{k=1}^{n} \E e^{\lambda \xi_k} = \left( \E e^{\lambda \xi_1} \right)^{n},
+\end{align*} ведь $ \xi_k $ одинаково распределены. Тогда
+\begin{align*}
+ \leqslant \left( \frac{\E e ^{\lambda \xi_1}}{e^{\lambda r}} \right)^{n}.
+\end{align*} Изучим то, что под скобкой.
+\begin{align*}
+ \varphi(\lambda) := \log \left( \frac{\E e^{\lambda \xi_1}}{e^{\lambda r}} \right) = \log \E e^{\lambda \xi_1} - \lambda r.
+\end{align*} Справа тогда написано $ e^{n\varphi(\lambda)} $. Таким образом, нас интересует $ \inf_{0 < \lambda < \lambda_0} \varphi(\lambda) $. Обозначим
+\begin{align*}
+ I(r) =  \sup_{0 < \lambda < \lambda_0} \left\{ \lambda r - \log E e^{\lambda \xi_1} \right\}
+\end{align*} --- \textit{функция уклонения.} Получаем \textbf{неравенство Чернова}
+\begin{prop}[неравенство Чернова]
+ Пусть $ \xi_1, \xi_2, \ldots $ --- независимые и одинаково распределённые случайные величины, удовлетворяющие условию Крамера с $ \lambda_0 > 0 $. Тогда
+ \begin{align*}
+  P \left( \frac{S_n}{n} \geqslant r \right) \leqslant e^{-nI(r)},
+ \end{align*} где $ r > \E \xi_1 $ и
+ \begin{align*}
+  I(r) = \sup_{0 < \lambda < \lambda_0} \left\{ \lambda r - \log \E e^{\lambda\xi_1}  \right\}.
+ \end{align*}
+\end{prop}
+
+Вычислим функции уклонения для конкретных функций.
+
+\begin{exmpl}
+ Пусть $ \xi \sim \Norm(0, 1) $. $ \lambda_0 $ можно выбрать любое.
+  \begin{align*}
+  \E e^{\lambda \xi} = \frac{1}{\sqrt{2\pi}} \int\limits_{\R} e^{\lambda x}  e^{-x^{2} / 2}\,dx = \frac{1}{\sqrt{2\pi}} \int\limits_{\R} e^{-(x-\lambda)^{2} / 2}\,dx \cdot e^{\lambda^{2} / 2} = e^{\lambda^{2} / 2}.
+ \end{align*} Тогда
+ \begin{align*}
+  \lambda r - \log \E e^{\lambda \xi}  = \lambda r - \frac{\lambda^{2}}{2}.
+ \end{align*} Максимум будет в точке $ \lambda = r $, и равен  $ r^{2}  / 2$. Тогда
+ \begin{align*}
+  P \left( \frac{S_n}{n} \geqslant r \right) \leqslant e^{-nr^{2} / 2}.
+ \end{align*} при $ r > 0 $.
+\end{exmpl}
+\begin{exmpl}
+ Пусть $ \xi \sim \Exp(1) $. Условие Крамера выполняется при  $ \lambda_0 = 1 $. Тогда
+  \begin{align*}
+  \E e^{\lambda \xi} = \int\limits_{0}^{+\infty} e^{\lambda x}e^{-x}\,dx = \int\limits_{0}^{+\infty} e^{-(1 - \lambda)x}\,dx = \left. \frac{e^{-(1-\lambda)x}}{-(1-\lambda)} \right|_0^{+\infty} = \frac{1}{1 - \lambda}.
+ \end{align*} Тогда
+ \begin{align*}
+  \lambda r - \log \E e^{\lambda \xi} = \lambda r + \log (1 - \lambda) \longrightarrow \max, \qquad \lambda \in (0, 1).
+ \end{align*} Продифференцируем:
+ \begin{align*}
+  ()' = r - \frac{1}{1 - \lambda} = 0 \iff 1 - \lambda = \frac{1}{r} \iff \lambda = 1 - \frac{1}{r}.
+ \end{align*} При $ r > 1 $. Тогда
+  \begin{align*}
+  \pm I(r) = r\left(1 - \frac{1}{r}\right) + \log r = r - 1 + \log r.
+ \end{align*} Подставим:
+ \begin{align*}
+  P \left( \frac{S_n}{n} \geqslant r \right) \leqslant e^{-n(r - 1 + \log r)}
+ \end{align*}
+\end{exmpl}
+
+\begin{exercs*}
+ То же для бернуллевской случайной величины.
+\end{exercs*}
+
+Такого сорта оценки часто лезут во всяких вероятностных алгоритмах.
+
+\newpage
+\part{Дискретные случайные процессы.}
+\section{Условное математическое ожидание.}
+\begin{df}
+ Пусть $ (\Omega, \F, P) $ --- вероятностное пространство, $ \xi \colon \, \Omega \to \R $ --- случайная величина. Пусть $ \mathfrak A \subset \F $ --- некоторая $ \sigma $-алгебра. Тогда
+ \begin{align*}
+  \E(\xi \mid \mathfrak A) =: \eta,
+ \end{align*} --- случайная величина, обладающая следующими свойствами:
+ \begin{enumerate}
+  \item $ \eta $ измерима относительно $ \sigma $-алгебры $ \mathfrak A $.
+  \item Для любого $ A \in \A $ выполнено
+   \begin{align*}
+    \E(\xi \Ind_A) = \E(\eta \Ind_A).
+   \end{align*}
+ \end{enumerate}
+\end{df}
+\begin{thm}
+ Пусть $ \E \left| \xi \right| < +\infty $. Тогда $ \E(\xi\mid\A) $ существует и единственно с точностью до совпадения почти всюду.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Существование. Рассмотрим $ \xi_\pm = \max(0, \pm \xi) $.
+ \begin{align*}
+  \mu_\pm A = \E \left( \xi_\pm \Ind_A \right) = \int\limits_{A} \xi_\pm \,dP. 
+ \end{align*} Это две меры в $ \A $. Эти меры абсолютно непрерывны относительно $ P $. По теореме Радона-Никодима существует такие функции $ \eta_\pm \colon\, \Omega \to [0, +\infty)  $, измеримые отн. $ \A $ такие, что
+ \begin{align*}
+  \mu_\pm A = \int\limits_{A} \eta_\pm dP = \E (\eta_\pm \Ind_A).
+ \end{align*} Берём $ \eta = \eta_+ - \eta_- $.
+
+ Единственность. Пусть $ \eta  $ и $ \tilde \eta $ --- условные матожидание. Тогда
+ $ \eta - \tilde \eta $ измерима отн. $ \A $, и $ \E(\eta-\tilde\eta) \Ind_A = 0 $ для любого $ A \in \A $. Поэтому, $ \eta - \tilde\eta = 0 $ почти-всюду. Нужно взять
+ \begin{align*}
+  A_+ &= \left\{ \eta - \tilde\eta > 0 \right\} \in \A, \\
+  A_- &= \left\{ \eta - \tilde\eta < 0 \right\} \in \A,
+ \end{align*} и показать, что их меры равно нулю.
+\end{proof}
+
+\begin{prop}[свойства]\
+ \begin{enumerate}
+  \item Если $ \xi $ измерима относительно $ \A $, то $ \E(\xi \mid \A) = \xi $ почти всюду.
+  \item $ \E(\xi\mid \left\{ \varnothing,\Omega \right\}) = \E \xi $ --- константа.
+  \item Пусть $ \A_1 \subset \A_2 \subset \F $. Тогда
+   \begin{align*}
+    \E(\E(\xi \mid \A_2) \mid \A_1) = \E(\xi \mid \A_1).
+   \end{align*}
+  \item $ \E(\E(\xi \mid \A)) = \E \xi $.
+  \item Если $ \xi \leqslant \eta $ почти всюду, то $ \E(\xi \mid \A) \leqslant \E(\eta \mid \A) $ почти всюду.
+  \item $ \E(\xi \mid \A) $ линейно по $ \xi $.
+ \end{enumerate}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]\
+ \begin{enumerate}
+  \item Очевидно.
+  \item $ \eta $ измерима относительно $ \left\{ \varnothing, \Omega \right\} $ тогда и только тогда, когда $ \eta \equiv \mathrm{const} $. Нас интересует такая константа $ c $, что
+   \begin{align*}
+    c = \E(c \Ind_\Omega) = \E(\xi \Ind_\Omega) = \E\xi.
+   \end{align*}
+  \item Обозначим $ \eta = \E(\xi \mid \A_2) $ и $ \zeta = \E(\xi \mid \A_1) $. Нужно доказать, что $ \zeta = \E(\eta \mid \A_1) $, то есть $ \zeta $ измерима относительно $ \A_1 $, и $ \E(\zeta\Ind_A) = \E(\eta\Ind_A) $ для любого $ A \in \A_1 $. Измеримость есть по построению $ \zeta $. Возьмём $ A \in \A_1 $. Тогда $ A \in \A_2 $, и
+   \begin{align*}
+    \E(\eta \Ind_A) = \E(\xi\Ind_A) = \E(\zeta \Ind_A)
+   \end{align*}
+
+  \item $ 4 = 2 + 3 $.
+  \item По линейности (пункт 6) достаточно проверить, что если $ \xi \geqslant 0 $, то $ \E(\xi \mid \A) \geqslant 0 $ почти наверное. Пусть $ \eta = \E(\xi \mid \A) $ --- измерима относительно $ \A $. Возьмём $ A_- = \left\{ \eta < 0 \right\} \in \A $. Тогда 
+   \begin{align*}
+    0\geqslant \E(\eta \Ind_{A_-}) = \E(\xi\Ind_{A_-}) \geqslant 0.
+   \end{align*} Поэтому $ \E(\eta \Ind_{A_-}) = 0 \implies A_- $ имеет нулевую меру.
+
+   А можно было посмотреть на доказательство существования.
+  \item Ясно.
+ \end{enumerate}
+\end{proof}
+
+\begin{df}
+ Пусть $ \eta $ --- случайная величина, $ \sigma(\eta) $ --- наименьшая $ \sigma $-алгебра, относительно которой $ \eta $ измерима.
+ \begin{align*}
+  \sigma(\eta) = \left\{ \left\{ \eta \in A \right\} \mid A \in \B_1 \right\}
+ \end{align*} --- такие множества должны попасть, а это уже $ \sigma $-алгебра.
+\end{df}
+\begin{df}
+ Пусть $ \xi $ и $ \eta $ --- случайные величины. Тогда
+ \begin{align*}
+  \E(\xi \mid \eta) := \E (\xi \mid \sigma(\eta)).
+ \end{align*} --- \textit{условное математическое ожидание $ \xi $ относительно $ \eta $.}
+\end{df}
+\begin{thm}\
+ \begin{enumerate}
+  \item Если $ \xi $ и $ \eta $ независимы, то $ \E(\xi \mid\eta)=\E\xi $.
+  \item Если $ \eta $ измерима относительно $ \A $, то $ \E(\xi\eta \mid\A) = \eta E(\xi \mid \A) $.
+ \end{enumerate}
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]\
+ \begin{enumerate}
+  \item Нужно проверить, что если $ A \in \sigma(\eta) $, то
+   \begin{align*}
+    \E(\xi\Ind_A) = \E((\E\xi)\Ind_A) = \E\xi \cdot \E \Ind_A.
+   \end{align*}
+   Надо доказать, что $ \Ind_A  $ и $ \xi $ независимы. Нужна независимость событий $ \left\{ \xi \in C \right\} $ и $ \left\{ \Ind_A = 1 \right\} = A  = \left\{ \eta \in B \right\}$.
+
+  \item Пусть $ \zeta = \E(\xi\mid\A) $ --- измерима относительно $ \A $. Тогда $ \eta\zeta $ также измерима относительно $ \A $. Нужно лишь доказать, что для любого $ A \in \A $ выполнено $ \E(\xi\eta\Ind_A) = \E(\zeta\eta\Ind_A) $.
+
+   Проверим по стандартной схеме.
+   \begin{itemize}
+    \item Если $ \xi = \Ind_B $, то $ \E(\xi\eta\Ind_A) = \E(\eta\Ind_{A\cap B}) $
+   \end{itemize}
+
+   {\color{red} не получилось!}
+   
+ \end{enumerate}
+\end{proof}
+
+\begin{exmpl}
+ Пусть $ \Omega = \bigsqcup_{n=1}^{\infty} A_n $. Натянем на $ \left\{A_n \right\} $ $ \sigma $-алгебру $ \A $. Тогда
+ \begin{align*}
+  \E(\xi \mid \A) = \sum_{n=1}^{\infty} c_n \Ind_{A_n}
+ \end{align*} Нам нужно, чтобы $ \E(\eta\Ind_{A_n}) = \E(\xi\Ind_{A_n}) $ --- остальное по линейности. Слева $ c_n \Ind_{A_n} $. Значит
+ \begin{align*}
+  c_n = \frac{\E(\xi \Ind_{A_n})}{P(A_n)}.
+ \end{align*}
+\end{exmpl}
+
+Если $ \eta $ дискретна, то $ \sigma(\eta) $ --- это $ \sigma $-алгебра, натянутая $ A_k = \left\{ \eta = y_k \right\} $. Называют \textit{Условное матожидание относительно разбиения.}
+
+Обобщение формулы полной вероятности это с двумя $ \E\E $.
+
+\begin{df}
+ Условная вероятность относительно $ \sigma $-алгебры $ \A $ - это
+ \begin{align*}
+  P(B \mid \A) = \E(\Ind_B \mid \A).
+ \end{align*}
+\end{df}
+
+\end{document}
