@@ -27,7 +27,7 @@
 \end{align*} Далее по неравенству Маркова:
 \begin{align*}
  &\leqslant \frac{\E e^{\lambda S_n}}{e^{\lambda n r}}.
-\end{align*} Но $ e^{\lambda S_n} = \prod_{k=1}^{n}e^{\lambda \xi_k}  $. Так как $ \xi $ независимы, то
+\end{align*} Но $ e^{\lambda S_n} = \prod_{k=1}^{n}e^{\lambda \xi_k}  $, так как $ \xi $ независимы. Следовательно
 \begin{align*}
  \E e^{\lambda S_n} = \prod_{k=1}^{n} \E e^{\lambda \xi_k} = \left( \E e^{\lambda \xi_1} \right)^{n},
 \end{align*} ведь $ \xi_k $ одинаково распределены. Тогда
@@ -117,7 +117,7 @@
   \mu_\pm A = \int\limits_{A} \eta_\pm dP = \E (\eta_\pm \Ind_A).
  \end{align*} Берём $ \eta = \eta_+ - \eta_- $.
 
- Единственность. Пусть $ \eta  $ и $ \tilde \eta $ --- условные матожидание. Тогда
+ Единственность. Пусть $ \eta  $ и $ \tilde \eta $ --- условные матожидания. Тогда
  $ \eta - \tilde \eta $ измерима отн. $ \A $, и $ \E(\eta-\tilde\eta) \Ind_A = 0 $ для любого $ A \in \A $. Поэтому, $ \eta - \tilde\eta = 0 $ почти-всюду. Нужно взять
  \begin{align*}
   A_+ &= \left\{ \eta - \tilde\eta > 0 \right\} \in \A, \\
@@ -150,10 +150,9 @@
     \E(\eta \Ind_A) = \E(\xi\Ind_A) = \E(\zeta \Ind_A)
    \end{align*}
 
-\item Воспользуемся пунктом 3, взяв $\A_1 = \{ \varnothing, \Omega \}, \A_2 = \A$:
+\item Воспользуемся пунктами 2 и 3:
 	\begin{align*}
-		\E(\xi \mid \A) &= \E(\xi \mid \A_2) = \E(\E(\xi \mid \A_2) \mid \A_1) = \E(\E(\xi \mid \A_2) \mid \{ \varnothing, \Omega\}) = \\ 
-		&= \E(\E(\xi \mid \A_2)) = \E(\E(\xi \mid \A))
+		\E(\xi) = \E(\xi \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \A) \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \A))
 	\end{align*}
   \item По линейности (пункт 6) достаточно проверить, что если $ \xi \geqslant 0 $, то $ \E(\xi \mid \A) \geqslant 0 $ почти наверное. Пусть $ \eta = \E(\xi \mid \A) $ --- измерима относительно $ \A $. Возьмём $ A_- = \left\{ \eta < 0 \right\} \in \A $. Тогда 
    \begin{align*}
@@ -161,7 +160,13 @@
    \end{align*} Поэтому $ \E(\eta \Ind_{A_-}) = 0 \implies A_- $ имеет нулевую меру.
 
    А можно было посмотреть на доказательство существования.
-  \item Ясно.
+ \item Рассмотрим $\eta_1 = \E(\xi_1 \mid \A), \ \eta_2 = \E(\xi_2 \mid \A)$: 
+	 \begin{align*}
+		 \E((a \cdot \xi_1 + b \cdot \xi_2) \Ind_A) &= a \cdot \E(\xi_1 \Ind_A) + b \cdot \E(\xi_2 \Ind_A) \\
+																								&= a \cdot \E(\eta_1 \Ind_A) + b \cdot \E(\eta_2 \Ind_A) \\
+																								&= \E((a \cdot \eta_1 + b \cdot \eta_2) \Ind_A)
+	 \end{align*}
+		Тогда $a \cdot \eta_1 + b \cdot \eta_2 = \E(a \cdot \xi_1 + b \cdot \xi_2 \mid \A)$ 
  \end{enumerate}
 \end{proof}
 
