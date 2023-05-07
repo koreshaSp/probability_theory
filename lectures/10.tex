@@ -27,18 +27,18 @@
 \end{align*} Далее по неравенству Маркова:
 \begin{align*}
  &\leqslant \frac{\E e^{\lambda S_n}}{e^{\lambda n r}}.
-\end{align*} Но $ e^{\lambda S_n} = \prod_{k=1}^{n}e^{\lambda \xi_k}  $. Так как $ \xi $ независимы, то
+\end{align*} Но $ e^{\lambda S_n} = \prod_{k=1}^{n}e^{\lambda \xi_k}  $, так как $ \xi $ независимы. Следовательно
 \begin{align*}
  \E e^{\lambda S_n} = \prod_{k=1}^{n} \E e^{\lambda \xi_k} = \left( \E e^{\lambda \xi_1} \right)^{n},
 \end{align*} ведь $ \xi_k $ одинаково распределены. Тогда
 \begin{align*}
- \leqslant \left( \frac{\E e ^{\lambda \xi_1}}{e^{\lambda r}} \right)^{n}.
+ P\left(\frac{S_n}{n}\geqslant r\right)\leqslant \left( \frac{\E e ^{\lambda \xi_1}}{e^{\lambda r}} \right)^{n}.
 \end{align*} Изучим то, что под скобкой.
 \begin{align*}
  \varphi(\lambda) := \log \left( \frac{\E e^{\lambda \xi_1}}{e^{\lambda r}} \right) = \log \E e^{\lambda \xi_1} - \lambda r.
 \end{align*} Справа тогда написано $ e^{n\varphi(\lambda)} $. Таким образом, нас интересует $ \inf_{0 < \lambda < \lambda_0} \varphi(\lambda) $. Обозначим
 \begin{align*}
- I(r) =  \sup_{0 < \lambda < \lambda_0} \left\{ \lambda r - \log E e^{\lambda \xi_1} \right\}
+ I(r) =  \sup_{0 < \lambda < \lambda_0} \left\{ \lambda r - \log \E e^{\lambda \xi_1} \right\}
 \end{align*} --- \textit{функция уклонения.} Получаем \textbf{неравенство Чернова}
 \begin{prop}[неравенство Чернова]
  Пусть $ \xi_1, \xi_2, \ldots $ --- независимые и одинаково распределённые случайные величины, удовлетворяющие условию Крамера с $ \lambda_0 > 0 $. Тогда
@@ -73,13 +73,13 @@
   \lambda r - \log \E e^{\lambda \xi} = \lambda r + \log (1 - \lambda) \longrightarrow \max, \qquad \lambda \in (0, 1).
  \end{align*} Продифференцируем:
  \begin{align*}
-  ()' = r - \frac{1}{1 - \lambda} = 0 \iff 1 - \lambda = \frac{1}{r} \iff \lambda = 1 - \frac{1}{r}.
+  (\lambda r + \log(1 - \lambda))' = r - \frac{1}{1 - \lambda} = 0 \iff 1 - \lambda = \frac{1}{r} \iff \lambda = 1 - \frac{1}{r}.
  \end{align*} При $ r > 1 $. Тогда
   \begin{align*}
-  \pm I(r) = r\left(1 - \frac{1}{r}\right) + \log r = r - 1 + \log r.
+  I(r) = r\left(1 - \frac{1}{r}\right) + \log r = r - 1 - \log r.
  \end{align*} Подставим:
  \begin{align*}
-  P \left( \frac{S_n}{n} \geqslant r \right) \leqslant e^{-n(r - 1 + \log r)}
+  P \left( \frac{S_n}{n} \geqslant r \right) \leqslant e^{-n(r - 1 - \log r)}
  \end{align*}
 \end{exmpl}
 
@@ -117,12 +117,12 @@
   \mu_\pm A = \int\limits_{A} \eta_\pm dP = \E (\eta_\pm \Ind_A).
  \end{align*} Берём $ \eta = \eta_+ - \eta_- $.
 
- Единственность. Пусть $ \eta  $ и $ \tilde \eta $ --- условные матожидание. Тогда
+ Единственность. Пусть $ \eta  $ и $ \tilde \eta $ --- условные матожидания. Тогда
  $ \eta - \tilde \eta $ измерима отн. $ \A $, и $ \E(\eta-\tilde\eta) \Ind_A = 0 $ для любого $ A \in \A $. Поэтому, $ \eta - \tilde\eta = 0 $ почти-всюду. Нужно взять
  \begin{align*}
   A_+ &= \left\{ \eta - \tilde\eta > 0 \right\} \in \A, \\
   A_- &= \left\{ \eta - \tilde\eta < 0 \right\} \in \A,
- \end{align*} и показать, что их меры равно нулю.
+ \end{align*} и показать, что их меры равны нулю.
 \end{proof}
 
 \begin{prop}[свойства]\
@@ -150,14 +150,23 @@
     \E(\eta \Ind_A) = \E(\xi\Ind_A) = \E(\zeta \Ind_A)
    \end{align*}
 
-  \item $ 4 = 2 + 3 $.
+\item Воспользуемся пунктами 2 и 3:
+	\begin{align*}
+		\E(\xi) = \E(\xi \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \A) \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \A))
+	\end{align*}
   \item По линейности (пункт 6) достаточно проверить, что если $ \xi \geqslant 0 $, то $ \E(\xi \mid \A) \geqslant 0 $ почти наверное. Пусть $ \eta = \E(\xi \mid \A) $ --- измерима относительно $ \A $. Возьмём $ A_- = \left\{ \eta < 0 \right\} \in \A $. Тогда 
    \begin{align*}
     0\geqslant \E(\eta \Ind_{A_-}) = \E(\xi\Ind_{A_-}) \geqslant 0.
    \end{align*} Поэтому $ \E(\eta \Ind_{A_-}) = 0 \implies A_- $ имеет нулевую меру.
 
    А можно было посмотреть на доказательство существования.
-  \item Ясно.
+ \item Рассмотрим $\eta_1 = \E(\xi_1 \mid \A), \ \eta_2 = \E(\xi_2 \mid \A)$: 
+	 \begin{align*}
+		 \E((a \cdot \xi_1 + b \cdot \xi_2) \Ind_A) &= a \cdot \E(\xi_1 \Ind_A) + b \cdot \E(\xi_2 \Ind_A) \\
+																								&= a \cdot \E(\eta_1 \Ind_A) + b \cdot \E(\eta_2 \Ind_A) \\
+																								&= \E((a \cdot \eta_1 + b \cdot \eta_2) \Ind_A)
+	 \end{align*}
+		Тогда $a \cdot \eta_1 + b \cdot \eta_2 = \E(a \cdot \xi_1 + b \cdot \xi_2 \mid \A)$ 
  \end{enumerate}
 \end{proof}
 

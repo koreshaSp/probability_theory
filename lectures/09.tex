@@ -11,7 +11,7 @@
 \end{remrk}
 \begin{proof}[\normalfont\textsc{Доказательство}]
   \begin{align*}
-    P_{\xi+\eta}(\left\{ a \right\}) = P_\xi \ast P_\eta(\left\{ a \right\}) = \int\limits_{\R} P_{\eta}(\left\{ a \right\} - x) dP_\xi(x) = 0.
+		P_{\xi+\eta}(\left\{ a \right\}) = P_\xi \ast P_\eta(\left\{ a \right\}) = \int\limits_{\R} \underbrace{P_{\eta}(\left\{ a \right\} - x)}_{= 0 \text{ по непр. } \eta} dP_\xi(x) = 0.
    \end{align*}
   \end{proof}
 \begin{remrk}
@@ -27,10 +27,11 @@
 \end{proof}
 
 \begin{remrk}
+	\label{remrk:lim_f_n_using_f_n_a_minnus_f_n_b}
  Пусть $ F_n $ и $ F $ --- функции распределения такие, что для любых $ a, b \in \R $
  \begin{align*}
   \lim_{n \to \infty} (F_n(b) - F_n(a)) = F(b)  - F(a).
- \end{align*} Тогда просто $ \forall x \in \R \colon\; \lim_{n \to \infty}  F_n(x) = F(x)$.
+ \end{align*} Тогда $ \forall x \in \R \colon\; \lim_{n \to \infty}  F_n(x) = F(x)$.
 \end{remrk}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Нужна лишь ограниченность и существование предела на бесконечностях.
@@ -42,7 +43,7 @@
  \end{align*} Тогда $ F(b) - F(a) > 1 -2\eps $. Тогда существует $ N $ такое, что $ \forall n > N \colon\;  $
  \begin{align*}
   \left|(F_n(b) - F_n(a)) - (F(b)-F(a)) \right| < \eps \implies F_n(b) - F_n(a) > 1 - 3\eps. 
- \end{align*} Тогда $ F_n(a) < 3\eps $ при $ n > N $. Знаем, что для любого $ x $ существует $ N' $:
+ \end{align*} Тогда $ F_n(a) < 3\eps $ при $ n > N $. Получаем, что для любого $ x $ существует $ N' $:
  \begin{align*}
   \forall n > N' \colon\; \left|(F_n(x) - F_n(a)) - (F(x)-F(a)) \right| < \eps
  \end{align*} Следовательно,
@@ -67,11 +68,11 @@
   \item $ \xi_n $ сходится к $ \xi $ по распределению.
   \item Для любого открытого множества $ U \subset \R $
    \begin{align*}
-    \liminf_{n \to \infty} P(\xi \in U) \geqslant P(\xi \in U).
+    \varliminf_{n \to \infty} P(\xi_n \in U) \geqslant P(\xi \in U).
    \end{align*}
   \item Для любого замкнутого множества $ A \subset \R $
    \begin{align*}
-    \limsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
+    \varlimsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
    \end{align*}
   \item Для любого регулярного (относительно $ P_\xi $) борелевского множества $ B \subset \R$
    \begin{align*}
@@ -94,19 +95,19 @@
   P(\xi_n \in A) = 1 - P(\xi_n \in U).
  \end{align*} Тогда
  \begin{align*}
-  \limsup_{n \to \infty} P(\xi_n \in A) = 1 - \liminf_{n \to \infty} P(\xi_n \in U).
- \end{align*} Тогда 
+	 \underbrace{\varlimsup_{n \to \infty} P(\xi_n \in A)}_{\leqslant P(\xi \in A)} = \underbrace{1 - \varliminf_{n \to \infty} P(\xi_n \in U)}_{\leqslant 1 - P(\xi \in U)}.
+ \end{align*} А также:
  \begin{align*}
-  \leqslant P(\xi \in A) = 1 - P(\xi \in U) \geqslant 
- \end{align*} Понятно.
+  P(\xi \in A) = 1 - P(\xi \in U)
+ \end{align*} Получили что надо.
 
  $ 2 + 3 \implies 4 $. Возьмём $ A = \mathrm{Cl}\,B $, $ U = \mathrm{Int}\,B $. Тогда
  \begin{align*}
   P(\xi_n \in U) \leqslant P(\xi_n \in B) \leqslant P(\xi_n \in A).
  \end{align*} Пририсуем пределы:
  \begin{align*}
-  P(\xi \in U) &\leqslant \liminf_{n \to \infty} P(\xi_n \in U) \leqslant \liminf_{n \to \infty} P(\xi_n \in B) \leqslant \\
-  &\leqslant \limsup_{n \to \infty} P(\xi_n \in B) \leqslant \limsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
+  P(\xi \in U) &\leqslant \varliminf_{n \to \infty} P(\xi_n \in U) \leqslant \varliminf_{n \to \infty} P(\xi_n \in B) \leqslant \\
+  &\leqslant \varlimsup_{n \to \infty} P(\xi_n \in B) \leqslant \varlimsup_{n \to \infty} P(\xi_n \in A) \leqslant P(\xi \in A).
  \end{align*} Но так как множество $ B $ регулярное, то $ P(\xi \in U) = P(\xi \in A) = P(\xi \in B) $. Значит, это всё равенство, верхний предел равен нижнему, и он равен $ P(\xi \in B) $.
 
  $ 4 \iff 5 $.
@@ -132,37 +133,44 @@
  Тогда
  \begin{align*}
   P(\xi_n \in U) \geqslant P(\xi_n \in \bigsqcup_{k=1}^{m} \left(a_k, b_k\right]  ) = \sum_{k=1}^{m}P(\xi_n \in \left(a_k, b_k\right]  ) = \sum_{k=1}^{m}(F_n(b_k) - F_n(a_k)) \to \\
-  \sum_{k=1}^{m}(F(b_k)-F(a_k)) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  )
+  \to \sum_{k=1}^{m}(F(b_k)-F(a_k)) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  )
  \end{align*} Пририсуем пределы:
  \begin{align*}
-  \liminf_{n \to \infty} P(\xi \in U) \geqslant \liminf_{n \to \infty} P(\xi_n \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ).
+  \varliminf_{n \to \infty} P(\xi_n \in U) \geqslant \varliminf_{n \to \infty} P(\xi_n \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ) = P(\xi \in \bigsqcup_{k=1}^{m}\left(a_k, b_k\right]  ).
  \end{align*} Значит
  \begin{align*}
-  \liminf_{n \to \infty} P(\xi_n \in U) \geqslant \lim_{m \to \infty} P(\xi \in \bigsqcup_{k=1}^{m} \left(a_k, b_k\right]  ) = P(\xi \in U),
+  \varliminf_{n \to \infty} P(\xi_n \in U) \geqslant \varliminf_{m \to \infty} P(\xi \in \bigsqcup_{k=1}^{m} \left(a_k, b_k\right]  ) = P(\xi \in U),
  \end{align*} по непрерывности меры сверху.
 
  $ 5 \implies 6 $. Возьмём $ D = \left\{ x \in \R \mid P(f(\xi) = x) > 0 \right\} $. Множество $ D $ не более, чем счётно, так как сумма
  \begin{align*}
   \sum_{x \in D} P(f(\xi) = x) < 1
- \end{align*} конечна.  Функция $ f $ ограничена: $ \left| f \right| \leqslant M $, причём $ M \notin D $. Разобьём отрезок $ [-M,M] $ на много примерно одинаковых отрезочков: разрезы по точкам $ -M = t_0, t_1, t_2, \ldots, t_{m-1}, t_m = M $, причём
+ \end{align*} конечна.  Функция $ f $ ограничена: $ \left| f \right| \leqslant M $, причём $ M \notin D $(если все таки попало в $D$ то слегка увеличим $M$). Разобьём отрезок $ [-M,M] $ на много примерно одинаковых отрезочков: разрезы по точкам $ -M = t_0, t_1, t_2, \ldots, t_{m-1}, t_m = M $, причём
  \begin{align*}
-  t_j - t_{j-1} < \frac{3M}{m}
- \end{align*} --- разрезы примерно равные. Рассмотрим множества
+  t_j - t_{j-1} < \frac{3M}{m} \text{ и } t_j \not \in D
+\end{align*} --- разрезы примерно равные, см. рисунок \eqref{fig:7_points_theorem_cut_m} .
+\begin{figure}[ht]
+    \centering
+	\incfig[0.5]{7_points_theorem_cut_m}
+	\caption{Разрезание отрезка $[-M, M]$}
+    \label{fig:7_points_theorem_cut_m}
+\end{figure}
+ Рассмотрим множества
  \begin{align*}
-  B_j = \left\{ x \in \R \mid t_{j-1} < f(x) \leqslant t_j \right\} \supset U,
+  B_j = \left\{ x \in \R \mid t_{j-1} < f(x) \leqslant t_j \right\},
  \end{align*} $ U_j \subset B_j \subset A_j $где $ U_j = \left\{ x \in \R \mid t_{j-1} < f(x) < t_j \right\} $ и $ A_j = \left\{ t_{j-1} \leqslant f(x) \leqslant t_j \right\} $. Но $ U_j $ открыто (прообраз открытого), а $ A_j $ замкнутое (прообраз замкнутого). Тогда
  \begin{align*}
   U_j \subset \mathrm{Int}\, B_j \subset B_j \subset \mathrm{Cl}\,  B_j \subset A_j.
  \end{align*} Запишем
  \begin{align*}
-  P_\xi(\mathrm{Cl}\,B_j \setminus \mathrm{Int}\,B_j) \leqslant P_\xi(A_j \setminus U_j) = P(f(\xi) \in \left\{ t_{j-1}, t_j \right\}) = 0.
+  P_\xi(\mathrm{Cl}\,B_j \setminus \mathrm{Int}\,B_j) \leqslant P_\xi(A_j \setminus U_j) = P(f(\xi) \in \left\{ t_{j-1}, t_j \right\}) \underbrace{=}_{\text{т.к. $t_j, t_{j - 1} \not \in D$ }} 0.
  \end{align*} Значит, все множества $ B_j $ регулярные. Тогда по пункту 5:
  \begin{align*}
   \E\Ind_{B_j}(\xi_n) \to \E\Ind_{B_j}(\xi).
  \end{align*} Заведём функцию
  \begin{align*}
   g(x) = \sum_{k=1}^{m} t_{j-1} \Ind_{B_j}(x).
- \end{align*} Тогда $ g(x) \leqslant f(x) \leqslant g(x) + \text{мелкость} < g(x) + \eps $. Тогда
+ \end{align*} Тогда $ g(x) \leqslant f(x) \leqslant g(x) + \text{мелкость} < g(x) + \eps $(где $\eps$ равно $\frac{3M}{m}$  ). Тогда
  \begin{align*}
   \left| g(x) - f(x) \right| < \eps
  \end{align*} для всех $ x $, и тогда $ \E \left| f(\xi_n)-g(\xi_n) \right|< \eps $, $ \E \left| f(\xi)-g(\xi) \right| < \eps $. Ещё мы знаем, что
@@ -170,31 +178,31 @@
   \E g(\xi_n) \to \E g(\xi),
  \end{align*} так как $ g $ --- линейная комбинация $ \Ind_{B_j} $. Теперь $ 3\eps $-приём:
  \begin{align*}
-  \left| \E f(\xi_n) - \E f(\xi) \right| \leqslant \underbrace{\left| \E f(\xi_n) - \E g(\xi_n) \right|}_{<\eps} + \left| \E g(\xi_n) - \E g(\xi) \right| + \underbrace{\left| \E g(\xi) - \E f(\xi) \right|}_{< \eps} < 3\eps
+  \left| \E f(\xi_n) - \E f(\xi) \right| \leqslant \underbrace{\left| \E f(\xi_n) - \E g(\xi_n) \right|}_{<\eps} + \underbrace{\left| \E g(\xi_n) - \E g(\xi) \right|}_{\to 0} + \underbrace{\left| \E g(\xi) - \E f(\xi) \right|}_{< \eps} < 3\eps
  \end{align*} при больших $ n $.
 
  $ 7 \implies 1 $. Воспользуемся формулой обращения:
  \begin{align*}
   P(\xi \in (a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it} \varphi_\xi(t)\,dt,
- \end{align*} если $ P(\xi = a) = P(\xi = b) = 0 $. Здесь проблема в том, что интеграл не настоящий, а в смысле главного значения. Решать проблему будем так: изменим случайную величину, так чтобы не сильно поменялись значения, на характеристическая функция улучшилась бы. Возьмём случайную величину $ \eta $, не зависящую от всех $ \xi, \xi_1, \xi_2, \ldots $ такую, что $ \eta \sim \Norm(0, \sigma^{2}) $ (формально это очень занудно). Тогда мы знаем, что
+ \end{align*} если $ P(\xi = a) = P(\xi = b) = 0 $. Здесь проблема в том, что интеграл не настоящий, а в смысле главного значения. Решать проблему будем так: изменим случайную величину, так чтобы не сильно поменялись значения, но характеристическая функция улучшилась бы. Возьмём случайную величину $ \eta $, не зависящую от всех $ \xi, \xi_1, \xi_2, \ldots $ такую, что $ \eta \sim \Norm(0, \sigma^{2}) $ (формально это очень занудно). Тогда мы знаем, что
  \begin{align*}
   \varphi_{\xi_n + \eta}(t) = \varphi_{\xi_n}(t) \cdot \varphi_\eta(t) = \varphi_{\xi_n}(t) e^{-\sigma^{2}t^{2} / 2} \to \varphi_\xi(t) e^{-\sigma^{2}t^{2} / 2} = \varphi_{\xi+\eta}(t)
  \end{align*} поточечно. Кроме того, случайные величины $ \xi_n + \eta $ и   $ \xi + \eta $ непрерывны. Поэтому не нужно оговорка. Тогда
    \begin{align*}
-    P(\xi_n + \eta \in [a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^T \frac{e^{-iat} - e^{-ibt}}{it} \varphi_{\xi_n}(t) e^{-\sigma^{2}t^{2} / 2} \,dt
- \end{align*} Но интеграл сходится! Поэтому можно убрать предел:
+		 P(\xi_n + \eta \in [a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^T \underbrace{\frac{e^{-iat} - e^{-ibt}}{it}}_{|\cdot| \leqslant const} \underbrace{\varphi_{\xi_n}(t)}_{|\cdot| \leqslant 1} e^{-\sigma^{2}t^{2} / 2} \,dt
+	 \end{align*} Но интеграл сходится, так как $\int_{-\infty}^{+\infty} e^{-\sigma^2t^2/2}\,dt$ сходится, а остальные сомножители под интегралом ограничены! Поэтому можно убрать предел:
  \begin{align*}
-  = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat} - e^{-ibt}}{it} e^{-\sigma^{2}t^{2} / 2}\varphi_n(t)\,dt.
- \end{align*} Устремим $ n \to \infty $. Хотим доказать
+	 = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat} - e^{-ibt}}{it} e^{-\sigma^{2}t^{2} / 2}\varphi_{\xi_n}(t)\,dt
+ \end{align*} Устремим $ n \to \infty $. По теореме Лебега с мажорантой $const \cdot e^{\sigma^2t^2/2}$ переходим к пределу под интегралом:  
  \begin{align*}
-   \to \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it}  e^{-\sigma^{2}t^{2} / 2}\varphi(t)\,dt.
- \end{align*} Теорема Лебега. Мажоранта есть. Но
+	 \to \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it}  e^{-\sigma^{2}t^{2} / 2}\varphi_{\xi}(t)\,dt
+ \end{align*} Но
  \begin{align*}
   = P(\xi+ \eta \in (a,b]).
- \end{align*} Пусть $ G_n $ и $ G $ --- функции распределения для $ \xi_n + \eta $ и $ \xi + \eta $ соответственно.
+ \end{align*} Пусть $ G_n $ и $ G $ --- функции распределения для $ \xi_n + \eta $ и $ \xi + \eta $ соответственно. Тогда мы только что показали, что
  \begin{align*}
   G_n(b) - G_n(a) \to G(b) - G(a)
- \end{align*} для любых $ a,b\in\R $. По замечанию такому-то $ G_n(x) \to G(x) $ для любого $ x \in \R $.
+ \end{align*} для любых $ a,b\in\R $. По замечанию \ref{remrk:lim_f_n_using_f_n_a_minnus_f_n_b} $ G_n(x) \to G(x) $ для любого $ x \in \R $.
 
  Осталось перейти от $ G $ к $ F $. Пусть $ x $ --- точка непрерывности $ F $. Зафиксируем $ \eps  > 0 $. Выберем $ \delta > 0 $ так, что 
  \begin{align*}
@@ -204,20 +212,24 @@
   \left\{ \xi+\eta \leqslant x  + \delta \right\} \subset \left\{ \xi \leqslant x + 2\delta \right\} \cup \left\{ \left| \eta \right| \geqslant \delta \right\}.
  \end{align*} Запишем неравенство на вероятности:
  \begin{align*}
-  G(x+\delta) \leqslant F(x+2\delta) + P(\left| \eta \right| \geqslant \delta) \leqslant F(x+2\delta) \leqslant \frac{\D \eta}{\delta^{2}} = \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*} Значит
+	 G(x+\delta) \leqslant F(x+2\delta) + P(\left| \eta \right| \geqslant \delta) \leqslant F(x+2\delta) + \frac{\D \eta}{\delta^{2}} = F(x + 2\delta) + \frac{\sigma^2}{\delta^2}. 
+ \end{align*} 
+ Тогда при больших $n$
  \begin{align*}
-  G(x+\delta) \leqslant F(x+2\delta) + \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*} Напишем похожую штуку в другую сторону:
+	 F_n(x) = P(\xi_n < x) &\leqslant P(\xi_n + \eta \leqslant x + \delta) + P(|\eta| \geqslant \delta) \\
+												 &\leqslant G_n(x+\delta) + \frac{\sigma^{2}}{\delta^{2}} \\
+												 &< G(x+\delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \\
+												 &\leqslant F(x+2\delta) + \eps + \frac{2\sigma^{2}}{\delta^{2}} \\
+												 &< F(x) + 2\eps + \frac{2\sigma^{2}}{\delta^{2}}.
+ \end{align*}
+
+ Напишем похожую штуку в другую сторону:
  \begin{align*}
   \left\{ \xi +\eta \leqslant x - \delta \right\} \supset \left\{ \xi \leqslant x - 2\delta \right\} \setminus \left\{ \left| \eta \right| \geqslant \delta \right\}.
  \end{align*} Для вероятностей:
  \begin{align*}
   G(x-\delta) \geqslant F(x - 2\delta) - \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*} Тогда
- \begin{align*}
-  F_n(x) \leqslant G_n(x+\delta) + \frac{\sigma^{2}}{\delta^{2}} < G(x+\delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \leqslant F(x+2\delta) + \eps \frac{2\sigma^{2}}{\delta^{2}} < F(x) + 2\eps + \frac{2\sigma^{2}}{\delta^{2}}.
- \end{align*} (доказывается также) при больших $ n $. Аналогично с другой стороны
+ \end{align*}  Аналогично получаем оценку снизу 
  \begin{align*}
   F_n(x) \geqslant G_n(x - \delta) - \frac{\sigma^{2}}{\delta^{2}} > G(x-\delta) - \eps - \frac{\sigma^{2}}{\delta^{2}} \geqslant F(x - 2\delta) - \eps - \frac{2\sigma^{2}}{\delta^{2}}  > F(x) - 2\eps - \frac{2\sigma^{2}}{\delta^{2}}.
  \end{align*}
@@ -230,13 +242,22 @@
 \end{proof}
 
 \begin{thm}
- Пусть функции $ F_n, F \colon\, \R \to [0,1] $ возрастают, $ F \in C(\R) $ и $ F_n \to F $ поточечно. Тогда $ F_n \to F $ равномерно.
+ Пусть функции $ F_n, F \colon\, \R \to [0,1] $(они возрастают), $ F \in C(\R) $ и $ F_n \to F $ поточечно. Тогда $ F_n \rightrightarrows F $ равномерно.
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Найдём $ t_j $ такое, что $ F(t_j) = \frac{j}{m} $, где $ j = 1, 2, \ldots, m - 1 $. Мы знаем, что для всех $ j $ верно $ F_n(t_j) \to F(t_j) $, поэтому при больших $ n $ верно
  \begin{align*}
   \left| F_n(t_j) - F(t_j) \right| < \eps
- \end{align*} Тогда возьмём $ t_{j-1} < t \leqslant t_j $. Тогда при больших $ n $:
+ \end{align*}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[0.5]{distribution_function_points_to_evenlly}
+	\caption{Выбор $t_1, \dots, t_{m-1}$. }
+    \label{fig:distribution_function_points_to_evenlly}
+\end{figure}
+
+ Тогда возьмём $ t_{j-1} < t \leqslant t_j $. Тогда при больших $ n $:
  \begin{align*}
   F_n(t) \leqslant F_n(t_j) < F(t_j) + \eps = \frac{j}{m} + \eps = F(t_{j-1}) + \frac{1}{m} + \eps \leqslant F(t) + \eps + \frac{1}{m}.
  \end{align*} В другую сторону аналогично:
@@ -253,14 +274,14 @@
   S_n = \xi_1 + \xi_2 + \ldots + \xi_n
  \end{align*} --- их частичная сумма. Тогда
  \begin{align*}
-  P\left(\frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x\right) = P \left( \frac{S_n - na}{\sigma \sqrt n} \right) \rightrightarrows \Phi(x),
+  P\left(\frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x\right) = P \left( \frac{S_n - na}{\sigma \sqrt n} \leqslant x \right) \rightrightarrows \Phi(x),
  \end{align*} где
  \begin{align*}
   \Phi(x) = \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{x} e^{-t^{2} / 2}\,dt.
  \end{align*}
 \end{thm}
 \begin{remrk*}
- Поль Лев\'{и} --- не тот, что и Л\'{е}ви из теоремы в теории меры о перестановке знака предела и интеграла Лебега.
+ Поль Лев\'{и}(1886 - 1971) --- не тот, что и Л\'{е}ви(Беппо Леви, 1875 - 1961) из теоремы в теории меры о перестановке знака предела и интеграла Лебега.
 \end{remrk*}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Разложим
@@ -271,12 +292,18 @@
   \varphi_n(t) &:= \varphi_{\frac{S_n - na}{\sigma \sqrt n}}(t) = \varphi_{S_n - na} \left( \frac{t}{\sigma \sqrt n} \right) = \prod_{k=1}^{n} \varphi_{\xi_k - a} \left( \frac{t}{\sigma \sqrt n} \right) = \\
   &= \left(\varphi \left( \frac{t}{\sigma \sqrt n} \right) \right)^{n} = \left( 1- \frac{\sigma^{2} \frac{t^{2}}{\sigma^{2} n}}{2} + o \left( \frac{t^{2}}{\sigma^{2} n} \right) \right)^{n} = \\
   &= \left( 1 - \frac{t^{2}}{2n} + o \left( \frac{t^{2}}{n} \right) \right)^{n} \to e^{-t^{2} / 2}.
- \end{align*} Осталось проверить поточечную сходимость характеристических функций. Упражнение из первого семестра матана, формула Тейлора. + предыдущие теоремы.
+ \end{align*} Осталось проверить поточечную сходимость характеристических функций:
+
+ \begin{align*}
+	 \left(1 - \frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right)^{n} \to e^{-t^2/2} \Longleftrightarrow \\
+	 n \log \left(1 - \frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right) \to - \frac{t^2}{2} \Longleftrightarrow \\
+	 n \left(-\frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right) \to -\frac{t^2}{2} \Longleftrightarrow \\
+	 -\frac{t^2}{2} \to -\frac{t^2}{2}
+ \end{align*}. Получили что и требовалось.
+
 \end{proof}
 
-ЦПТ в форме кого-то.
-
-\begin{crly}[теорема Муавра-Лапласа]
+\begin{crly}[Интегральная теорема Муавра-Лапласа]
  Пусть $ S_n  $ --- количество успехов в схеме Бернулли в схеме с  $ n $  испытаниями и вероятностью успеха $ p $ . Тогда
  \begin{align*}
   P \left( \frac{S_n - np}{\sqrt{npq}} \leqslant x \right) \rightrightarrows \Phi(x).
@@ -298,7 +325,7 @@
   \max_{k=1}^{n} p_{nk} \to 0
  \end{align*} при $ n \to \infty $. Пусть также
  \begin{align*}
-  p_{n 1}  + p_{n 2} + \ldots p_{n n} \to \lambda > 0.
+  p_{n 1}  + p_{n 2} + \ldots + p_{n n} \to \lambda > 0.
  \end{align*} Пусть $ S_n = \xi_{n 1} + \xi_{n 2} + \ldots + \xi_{n n} $. Тогда
  \begin{align*}
   P(S_n = k) \to \frac{e^{-\lambda}\lambda^{k}}{k!}.
@@ -317,22 +344,23 @@
   \exp((e^{it} - 1)\lambda).
  \end{align*} Проверим: прологарифмируем:
  \begin{align*}
-  \log \varphi_{S_n}(t) = \sum_{k=1}^{n}\log (1 + (e^{it} - 1)p_{nk}) \to ? (e^{it} - 1) \lambda
+  \log \varphi_{S_n}(t) = \sum_{k=1}^{n}\log (1 + (e^{it} - 1)p_{nk}) \overset{?}{\to} (e^{it} - 1) \lambda
  \end{align*} Но
  \begin{align*}
   \log(1 + (e^{it} - 1)p_{n k}) = (e^{it} - 1)p_{n k} + O(p_{n k}^{2})
  \end{align*} Тогда сумма
  \begin{align*}
-  = \sum_{k=1}^{n} \left( (e^{it}-1)p_{nk} +O(p_{nk}^{2}) \right) = (e^{it} - 1) \sum_{k=1}^{n}p_{nk} + O(np_{nk} ^{ 2}).
+	 = \sum_{k=1}^{n} \left( (e^{it}-1)p_{nk} +O(p_{nk}^{2}) \right) = (e^{it} - 1) \underbrace{\sum_{k=1}^{n}p_{nk}}_{\to \lambda} + \sum_{k = 1}^{n} O(p_{nk} ^{ 2}).
  \end{align*} Оценим остаток:
  \begin{align*}
-  \sum_{k=1}^{n}p_{nk}^{2} \leqslant \sum_{k=1}^{n} p_{nk} \cdot \underbrace{\max}_{\to 0}.
- \end{align*} Мы поняли, что $ \varphi_{S_n}(t) \to \exp((e^{it}-1)\lambda) $. Тогда есть сходимость по распределению: $ S_n $ сходится по распределению к Пуассону. Так как сё дискретно, то условие <<точки непрерывности>> --- не проблема.
+	 \sum_{k=1}^{n}p_{nk}^{2} \leqslant \sum_{k=1}^{n} p_{nk} \cdot \max p_{n k} \to \lambda \cdot \underbrace{\max p_{nk}}_{\to 0} \to 0.
+ \end{align*} Мы поняли, что $ \varphi_{S_n}(t) \to \exp((e^{it}-1)\lambda) $. Тогда есть сходимость по распределению: $ S_n $ сходится по распределению к Пуассону. Так как всё дискретно, то условие <<точки непрерывности>> --- не проблема.
 \end{proof}
 \begin{remrk*}
- Вычислим хар. функцию распределения Пуассона:
+ Вычислим характеристическую функцию распределения Пуассона:
  \begin{align*}
-  \varphi(t) &= \E e^{it\xi} = \sum_{n=0}^{\infty} e^{itn} P(\xi = n) = \sum_{n=0}^{\infty} (e^{it})^{n} \cdot \frac{e^{-\lambda} \lambda^{n}}{n!} = e^{-\lambda} \cdot e^{\lambda e^{it}} = \exp((e^{it} - 1)\lambda).
+	 \varphi(t) &= \E e^{it\xi} = \sum_{n=0}^{\infty} e^{itn} P(\xi = n) = \sum_{n=0}^{\infty} (e^{it})^{n} \cdot \frac{e^{-\lambda} \lambda^{n}}{n!} = e^{-\lambda} \sum_{n = 0}^{\infty} \frac{(e^{it}\lambda)^{n}}{n!} = \\
+	 &= e^{-\lambda} \cdot e^{\lambda e^{it}} = \exp((e^{it} - 1)\lambda).
  \end{align*}
 \end{remrk*}
 
@@ -340,7 +368,7 @@
 ЦПТ в форме Линденберга]
  Пусть случайные величины $ \xi_1, \xi_2, \ldots $  независимы, $ a_k = \E \xi_k $,  $ \sigma_k^{2} = \D \xi_k > 0 $ . Пусть $ S_n = \xi_1 + \ldots + \xi_n $, и пусть
  \begin{align*}
-  D_n^{2} = \sum_{k=1}^{n} \sigma_k^{2}.
+  DS_n = D_n^{2} = \sum_{k=1}^{n} \sigma_k^{2}.
  \end{align*} Рассмотрим функцию $ f(x) := x^{2} \Ind_{\left\{ \left| x \right| \geqslant \eps D_n \right\}} $. Обозначим
  \begin{align*}
   \mathrm{Lind}(\eps, n) := \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E f(\xi_k - a_k).
@@ -374,10 +402,10 @@
   \mathrm{Lind}(\eps, n) &= \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E \left( (x_k-a_k)^{2}\Ind_{\left\{ \left| x \right| \geqslant \eps D_n\right\}}(\xi_k - a_k) \right).
  \end{align*} Заметим, что $ \Ind_{\left\{ \left| x \right| \geqslant \eps D_n \right\}} \leqslant \left(\frac{\left| x \right|}{\eps D_n} \right)^{\delta} $. Подставим вместо индикатора эту дробь:
  \begin{align*}
-  \leqslant \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E \left( (\xi_k-a_k)^{2} \cdot \frac{\left| \xi_k-a_k \right|^{\delta}}{\eps^{\delta} D_n^{\delta}} \right) = L(\delta, n) / \eps^{\delta}.
+    \leqslant \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E \left( (\xi_k-a_k)^{2} \cdot \frac{\left| \xi_k-a_k \right|^{\delta}}{\eps^{\delta} D_n^{\delta}} \right) = \frac{L(\delta, n)}{\eps^{\delta}}.
  \end{align*} 
-\end{proof}Для Ляпунова есть оценка.
-\begin{thm}
+\end{proof}
+\begin{thm}[Оценка для Ляпунова]
  \begin{align*}
   \left| P \left( \frac{S_n-\E S_n}{\sqrt{\D S_n}} \leqslant x\right) - \Phi(x) \right| \leqslant C_\delta L(\delta, n),
  \end{align*} где $ C_\delta $ --- константа, зависящая от $ \delta $, для любого $ \delta \in (0, 1] $.
@@ -420,10 +448,10 @@
 \begin{thm}[Хартмана-Винтнера, закон повторного логарифма]
  Пусть случайные величины $ \xi_1, \ldots $ независимы и одинаково распределены, $ \E \xi_i = 0 $, $ \sigma^{2} = \D \xi_i > 0 $. Тогда
  \begin{align*}
-  \limsup_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = \sigma,
+  \varlimsup_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = \sigma,
  \end{align*} и
  \begin{align*}
-  \liminf_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = -\sigma.
+  \varliminf_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = -\sigma.
  \end{align*}
 \end{thm}
 
