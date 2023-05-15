@@ -72,21 +72,31 @@
 \end{proof}
 
 \newpage
-\part{Общая теория вероятностей}
-\section{Колмогоровская модель теории вероятностей}
+\part{Общая теория вероятностей.}
+\section{Колмогоровская модель теории вероятностей.}
 
-Начиная с этого момента мы пустим в ход теорию меры, которую мы усердно изучали в третьем семестре матана. 
+Сейчас мы построим <<более взрослую>> теорию вероятностей, вовсю опирающуюся на теорию меры, которую мы усердно изучали в третьем семестре матана.
 
 \begin{df}[вероятностное пространство]
  \textit{Вероятностным пространством} называется тройка $(\Omega, \mathcal F, P)$, где
  \begin{itemize}
   \item $\Omega$ --- произвольное множество, называемое \textit{пространством элементарных исходов}.
   \item $\F \subset 2^{\Omega}$ --- $\sigma$-алгебра подмножеств $\Omega$, называемая \textit{пространством событий}. Элементы $\F$ называются \textit{случайными событиями} (или просто \textit{событиями}).
-  \item $P \colon\, \F \to [0,1]$ --- вероятностная мера на $\F$. То есть функция $P$ счётно-аддитивна, неотрицательна, и $P(\Omega) = 1$.
+  \item $P \colon\, \F \to [0,1]$ --- \textit{вероятностная мера} на $\F$. То есть функция $P$ счётно-аддитивна:
+   \begin{align*}
+    P \left( \bigsqcup_{k=1}^{\infty}A_k \right) = \sum_{k=1}^{\infty}P(A_k), \qquad A_k \in \mathcal F,
+   \end{align*} неотрицательна, и $P(\Omega) = 1$.
  \end{itemize}
 \end{df}
+
+По сути вероятность --- это конечная мера (а вероятностное пространство --- пространство с конечной мерой), условие $ P(\Omega) = 1 $ можно воспринимать лишь как нормировку, сделанную для удобства.
+
+Как и не все множества измеримы в теории меры, так и не всякое подмножество $ \Omega $ имеет вероятность (то есть является \textit{событием}). Тем не менее, измеримых множеств достаточно много.
+
+Покажем явно, что классическая модель теории вероятностей из предыдущей главы является частным случаем нового определения.
+
 \begin{exmpl}[дискретное вероятностное пространство]
- Пусть пространство элементарных исходов $\Omega = \left\{ \omega_1, \omega_2, \ldots \right\}$ не более, чем счётно. Пусть $p_1, p_2, \ldots \in [0,1]$ --- вероятности элементарных исходов $\omega_1, \omega_2, \ldots$, причём $p_1 + p_2 + \ldots  = 1$. Тогда положим $\F = 2^{\Omega}$ и для всякого $A \subset \Omega$ положим
+ Пусть пространство элементарных исходов $\Omega = \left\{ \omega_1, \omega_2, \ldots \right\}$ не более, чем счётно. Пусть $p_1, p_2, \ldots \in [0,1]$ --- вероятности элементарных исходов $\omega_1, \omega_2, \ldots$, причём $p_1 + p_2 + \ldots  = 1$. Тогда положим $\F = 2^{\Omega}$ и для всякого $A \subset \Omega$
  \begin{align*}
   P(A) = \sum_{\omega_i \in A} p_i.
  \end{align*} Полученное вероятностное пространство называется \textit{дискретным}.
@@ -95,7 +105,7 @@
 Зафиксируем теперь вероятностное пространство $(\Omega, \F, P)$ и введём все те же самые определения, какие мы вводили для классической модели. 
 
 \begin{df}[условная вероятность]
- Пусть $A \in \F$ --- событие, такое, что $P(A) > 0$. Пусть $B \in \F$. Тогда \textit{вероятностью события $B$ при условии события $A$} называется число
+ Пусть $A \in \F$ --- событие, такое, что $P(A) > 0$. Тогда \textit{вероятностью события $B \in \mathcal F$ при условии события $A$} называется число
  \begin{align*}
   P(B \mid A) = \frac{P(A\cap B)}{P(A)}.
  \end{align*}
@@ -112,7 +122,7 @@
  \end{align*} 
 \end{df}
 \begin{conventn*}
- Как и ранее, когда мы будем говорить, что события $A_1, \ldots, A_n$ \textit{независимы}, мы будем иметь в виду независимость в совокупности. \textit{Попарную независимость} мы будем иметь в виду, только если мы так скажем явно.
+ Как и ранее, когда мы будем говорить, что события $A_1, \ldots, A_n$ \textit{независимы}, по умолчанию мы будем иметь в виду независимость в совокупности. \textit{Попарную независимость} мы будем иметь в виду, только если так будет сказано явно.
 \end{conventn*}
 \begin{remrk}
  \label{remark:independed_complement}
@@ -146,6 +156,8 @@
  \end{align*} 
 \end{proof}
 
+Таким образом, среди независимых событий можно свободно переходить к их дополнениям.
+
 \begin{df}[независимость бесконечного числа событий]
  Говорят, что события $A_1, A_2, \ldots \in \F$ \textit{независимы}, если любое их конечное подмножество независимо. Иными словами, для любого конечного набора различных индексов $i_1, \ldots, i_n$ верно
  \begin{align*}
@@ -167,36 +179,40 @@
 \end{proof}
 \begin{lm}[%
  Бореля-Кантелли]
- Пусть $A_1, A_2, \ldots \in \F$  --- случайные события. Обозначим за $ B \in \F$ событие <<случилось бесконечное количество событий из $ A_k $>>:
+ \label{lemma:borel_cantelli}
+ Пусть $A_1, A_2, \ldots \in \F$  --- случайные события. Обозначим за $ B \in \F$ событие <<среди событий $ A_k $ случилось бесконечно много событий>>:
  \begin{align*}
   B = \bigcap_{n=1}^{\infty} \bigcup_{k \geqslant n} A_k.
- \end{align*} Также обозначим неотрицательный ряд \begin{align*}
+ \end{align*} Также обозначим неотрицательный ряд вероятностей
+ \begin{align*}
   S = \sum_{k=1}^{\infty} P(A_k).
  \end{align*}  Тогда:
  \begin{enumerate}
   \item \label{enum1:lemma:borel_cantelli} Если ряд $ S $ сходится, то $P(B) = 0$.
-  \item \label{enum2:lemma:borel_cantelli} Если события $A_k$  независимы и ряд $ S $ расходится к $ \infty $, то $P(B) = 1$.
+  \item \label{enum2:lemma:borel_cantelli} Если события $A_k$  независимы и ряд $ S $ расходится к $ +\infty $, то $P(B) = 1$.
  \end{enumerate} 
 \end{lm}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Пункт \ref{enum1:lemma:borel_cantelli} был на матане, но он легко проверяется:
- \begin{align*}
-  P(B) \leqslant P \left( \bigcup_{k \geqslant n} A_k \right) \leqslant \sum_{k \geqslant n} P(A_k) \to 0,
- \end{align*} где правая часть стремится к нулю как хвост сходящегося ряда $ S $.
+\begin{proof}[\normalfont\textsc{Доказательство}]\
+ \begin{enumerate}
+  \item Этот пункт был доказан на матане, но доказательство простое:
+   \begin{align*}
+    P(B) \leqslant P \left( \bigcup_{k \geqslant n} A_k \right) \leqslant \sum_{k \geqslant n} P(A_k) \to 0,
+   \end{align*} где правая часть стремится к нулю как хвост сходящегося ряда $ S $.
 
- Докажем пункт \ref{enum2:lemma:borel_cantelli}. Обозначим $B_k = \overline {A_k}$. События $B_1, B_2, \ldots$ независимы по замечанию \ref{remark:independed_complement}. По замечанию \ref{remark:independent_infinite_product} для любого $ n \geqslant 1$:
- \begin{align*}
-  P \left( \bigcap_{k \geqslant n} B_k \right) = \prod_{k \geqslant n} P(B_k) = \prod_{k \geqslant n} (1 - P(A_k)).
- \end{align*} Пользуясь неравенством $ 1 + x \leqslant e^{x} $ получаем 
- \begin{align*}
-  P \left( \bigcap_{k \geqslant n} B_k \right) \leqslant \prod_{k \geqslant n} e^{-P(A_k)} = e^{-\sum_{k \geqslant n} P(A_k)} = 0,
- \end{align*} так как $ \sum_{k \geqslant n} P(A_k) = +\infty $ для любого $ n $ (хвост расходящегося ряда). Следовательно,
- \begin{align*}
-  P \left( \overline { \bigcap_{k \geqslant n} B_k } \right) = 1 \implies P \left( \bigcup_{k \geqslant n} A_k \right) = 1.
- \end{align*} Кроме того, множества $\bigcup_{k \geqslant n} A_k$ убывают при $ n \to \infty $, поэтому по непрерывности меры снизу имеем
- \begin{align*}
-  P(B) = P \left( \bigcap_{n=1}^{\infty} \bigcup_{k \geqslant n} A_k \right) = \lim_{n \to \infty} P \left( \bigcup_{k \geqslant n}^{\infty} A_k \right) = 1.
- \end{align*}
+  \item Докажем второй пункт. Обозначим $B_k = \overline {A_k}$. События $B_1, B_2, \ldots$ независимы по замечанию \ref{remark:independed_complement}. По замечанию \ref{remark:independent_infinite_product} для любого $ n \geqslant 1$:
+   \begin{align*}
+    P \left( \bigcap_{k \geqslant n} B_k \right) = \prod_{k \geqslant n} P(B_k) = \prod_{k \geqslant n} (1 - P(A_k)).
+   \end{align*} Пользуясь неравенством $ 1 + x \leqslant e^{x} $ получаем 
+   \begin{align*}
+    P \left( \bigcap_{k \geqslant n} B_k \right) \leqslant \prod_{k \geqslant n} e^{-P(A_k)} = \exp \left(-\sum_{k \geqslant n} P(A_k)\right) = 0,
+   \end{align*} так как $ \sum_{k \geqslant n} P(A_k) = +\infty $ для любого $ n $ (хвост расходящегося неотрицательного ряда). Следовательно,
+   \begin{align*}
+    P \left( \overline { \bigcap_{k \geqslant n} B_k } \right) = 1 \implies P \left( \bigcup_{k \geqslant n} A_k \right) = 1
+   \end{align*} для всякого $ n \geqslant 1 $. Кроме того, множества $\bigcup_{k \geqslant n} A_k$ убывают при $ n \to \infty $, поэтому по непрерывности меры снизу имеем
+   \begin{align*}
+    P(B) = P \left( \bigcap_{n=1}^{\infty} \bigcup_{k \geqslant n} A_k \right) = \lim_{n \to \infty} P \left( \bigcup_{k \geqslant n}^{\infty} A_k \right) = 1.
+   \end{align*}
+ \end{enumerate}
 \end{proof}
 \begin{crly*}[закон нулей и единиц]
  Пусть события $A_1, A_2, \ldots \in \F$ независимы. Тогда вероятность того, что случилось бесконечное число из них равна либо нулю, либо единице. 
@@ -210,6 +226,9 @@
  случайная величина]
  Пусть $(\Omega, \F, P)$ --- вероятностное пространство. Всякая измеримая функция $\xi \colon\, \Omega \to \R$ называется \textit{случайной величиной}.
 \end{df}
+
+Напомним, что функция $ \xi \colon\, \Omega \to \R $ называется \textit{измеримой}, если $ \xi^{-1}((a, +\infty)) \in \mathcal F $ для всякого $ a \in \R \cup \{\pm \infty\} $. Как мы увидели на теории меры, почти все  встречающиеся на практике функции так или иначе измеримы, то есть это условие довольно-таки слабое.
+
 \begin{df}[%
  распределение случайной величины]
  \textit{Распределением случайной величины} $\xi$ называется мера $ P_{\xi} \colon\, \mathcal B_1 \to [0, 1] $ на борелевских подмножествах $\R$, заданная формулой
@@ -271,16 +290,16 @@
 \end{remrk}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Пусть $F$ --- такая функция. Рассмотрим функцию множества
-\begin{align*}
-\nu \left(a, b\right] = F(b) - F(a),
-\end{align*} заданную на полукольце ячеек $ \mathcal P_1 $. Функция $ \nu $ является неотрицательной (так как $ F $ нестрого возрастает по пункту \ref{enum2:prop:distribution_function}), а также счётно-аддитивной (так как она непрерывна справа по пункту \ref{enum3:prop:distribution_function}, но это требует доказательства). По теореме Каратеодори существует мера $ \nu $ --- её стандартное продолжение на некоторую $ \sigma $-алгебру $ \mathfrak A $ подмножеств $ \R $. При этом мера $ \nu $ --- вероятностная, так как по пункту \ref{enum4:prop:distribution_function}
-\begin{align*}
- \nu(\R) = \lim_{x \to +\infty} \nu \left(-x, x\right] = \lim_{x \to +\infty} F(x) - \lim_{x \to -\infty} F(x) = 1. 
-\end{align*} Таким образом, мы получили вероятностное пространство $ (\R,\mathfrak A, \nu) $. Случайная величина $ \xi \colon\, \R \to \R $, $ \xi(\omega) = \omega $ как раз даёт нужное распределение $ F $.
+ \begin{align*}
+  \nu \left(a, b\right] = F(b) - F(a),
+ \end{align*} заданную на полукольце ячеек $ \mathcal P_1 $. Функция $ \nu $ является неотрицательной (так как $ F $ нестрого возрастает по пункту \ref{enum2:prop:distribution_function}), а также счётно-аддитивной (так как она непрерывна справа по пункту \ref{enum3:prop:distribution_function}, но это требует доказательства). По теореме Каратеодори существует мера $ \nu $ --- её стандартное продолжение на некоторую $ \sigma $-алгебру $ \mathfrak A $ подмножеств $ \R $. При этом мера $ \nu $ --- вероятностная, так как по пункту \ref{enum4:prop:distribution_function}
+ \begin{align*}
+  \nu(\R) = \lim_{x \to +\infty} \nu \left(-x, x\right] = \lim_{x \to +\infty} F(x) - \lim_{x \to -\infty} F(x) = 1. 
+ \end{align*} Таким образом, мы получили вероятностное пространство $ (\R,\mathfrak A, \nu) $. Случайная величина $ \xi \colon\, \R \to \R $, $ \xi(\omega) = \omega $ как раз даёт нужное распределение $ F $.
 \end{proof}
 
 \begin{df}[%
-дискретное распределение]
+ дискретное распределение]
  Говорят, что случайная величина обладает \textit{дискретным распределением}, если её область значений не более, чем счётная. В таком случае случайная величина называется \textit{дискретной}.
 \end{df}
 \begin{prop*}

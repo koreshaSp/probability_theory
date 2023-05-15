@@ -92,138 +92,221 @@
 \newpage
 \part{Дискретные случайные процессы.}
 \section{Условное математическое ожидание.}
-\begin{df}
- Пусть $ (\Omega, \F, P) $ --- вероятностное пространство, $ \xi \colon \, \Omega \to \R $ --- случайная величина. Пусть $ \mathfrak A \subset \F $ --- некоторая $ \sigma $-алгебра. Тогда
+
+\begin{df}[условное математическое ожидание относительно события]
+ Пусть $ \xi $  --- случайная величина, $ A \in \F $  --- событие, $ P(A) > 0 $. Тогда \textit{условным математическим ожиданием $ \xi $ при условии события $ A $} называется число
  \begin{align*}
-  \E(\xi \mid \mathfrak A) =: \eta,
- \end{align*} --- случайная величина, обладающая следующими свойствами:
+  \E(\xi \mid A) = \frac{\E (\xi \cdot \Ind_A)}{P(A)}.
+ \end{align*}
+\end{df}
+
+Это определение элементарно и полностью аналогично определению условной вероятности: по сути мы <<сужаем>> вероятностное пространство $ \Omega $ на событие $ A $. Вместе с вероятностным пространством сужается также пространство событий ($ \sigma $-алгебра), мера, и всевозможные случайные величины (наверняка меняя своё распределение).
+
+В более элементарном курсе теории вероятностей мы бы ограничились этим определением, и тогда мы бы смогли определить условное математическое ожидание одной случайной величины относительно другой случайной величины, но только в том случае, когда вторая случайная величина дискретна. Так как нам этого недостаточно, мы введём другое, более фундаментальное определение условного математического ожидания.
+
+\begin{df}[условное математическое ожидание относительно $ \sigma $-алгебры]
+ \label{df:umo}
+ Пусть $ (\Omega, \F, P) $ --- вероятностное пространство, $ \xi \colon \, \Omega \to \R $ --- случайная величина. Пусть $ \mathfrak A \subset \F $ --- некоторая $ \sigma $-алгебра. Тогда \textit{условным математическим ожиданием $ \xi $ относительно $ \sigma $-алгебры $ \A $} называется случайная величина $ \eta $ (которую обозначают $ \E(\xi \mid \A) = \eta $), обладающая следующими двумя свойствами.
  \begin{enumerate}
   \item $ \eta $ измерима относительно $ \sigma $-алгебры $ \mathfrak A $.
-  \item Для любого $ A \in \A $ выполнено
-   \begin{align*}
-    \E(\xi \Ind_A) = \E(\eta \Ind_A).
-   \end{align*}
+  \item Для любого измеримого множества $ A \in \A $ выполнено
+   \begin{align}
+    \label{eq:def:umo}
+    \E(\xi \cdot \Ind_A) = \E(\eta \cdot \Ind_A).
+   \end{align}
  \end{enumerate}
 \end{df}
-\begin{thm}
- Пусть $ \E \left| \xi \right| < +\infty $. Тогда $ \E(\xi\mid\A) $ существует и единственно с точностью до совпадения почти всюду.
-\end{thm}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Существование. Рассмотрим $ \xi_\pm = \max(0, \pm \xi) $.
- \begin{align*}
-  \mu_\pm A = \E \left( \xi_\pm \Ind_A \right) = \int\limits_{A} \xi_\pm \,dP. 
- \end{align*} Это две меры в $ \A $. Эти меры абсолютно непрерывны относительно $ P $. По теореме Радона-Никодима существует такие функции $ \eta_\pm \colon\, \Omega \to [0, +\infty)  $, измеримые отн. $ \A $ такие, что
- \begin{align*}
-  \mu_\pm A = \int\limits_{A} \eta_\pm dP = \E (\eta_\pm \Ind_A).
- \end{align*} Берём $ \eta = \eta_+ - \eta_- $.
 
- Единственность. Пусть $ \eta  $ и $ \tilde \eta $ --- условные матожидания. Тогда
- $ \eta - \tilde \eta $ измерима отн. $ \A $, и $ \E(\eta-\tilde\eta) \Ind_A = 0 $ для любого $ A \in \A $. Поэтому, $ \eta - \tilde\eta = 0 $ почти-всюду. Нужно взять
+\begin{remrk*}
+ Так как $ \A \subset \F $, то любая функция, измеримая относительно $ \A $, автоматически измерима относительно $ \F $, поэтому функция $ \eta $, удовлетворяющая определению \ref{df:umo}, действительно является случайной величиной.
+\end{remrk*}
+
+Неформально, мы ищем случайную величину $ \eta $, измеримую относительно $ \A $, которая <<наилучшим образом>> приближает $ \xi $.
+
+Равенство \eqref{eq:def:umo} можно также записать в виде
+\begin{align*}
+ \E(\xi \mid A) = \E(\eta \mid A).
+\end{align*}
+
+Так как в определении не дана явная формула для условного матожидания, то встаёт вопрос о его существовании и единственности.
+
+\begin{thm}
+ Пусть $ \E \left| \xi \right| < +\infty $. Тогда условное математическое ожидание $ \E(\xi\mid\A) $ существует и единственно с точностью до совпадения почти всюду.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]\
+
+ Существование. Рассмотрим две неотрицательные случайные величины $ \xi_\pm = \max(\pm \xi, 0) $. Рассмотрим также следующие две меры в измеримом пространстве $ (\Omega,\A)$:
+ \begin{align*}
+  \mu_\pm (A) = \E \left( \xi_\pm \cdot \Ind_A \right) = \int_{A} \xi_\pm \,dP. 
+ \end{align*} Меры $ \mu_\pm $ абсолютно непрерывны относительно $ P $ (то есть $ P(A) = 0 $ влечёт $ \mu_\pm(A) = 0 $). По теореме Радона-Никодима существует такие две неотрицательные функции $ \eta_\pm \colon\, \Omega \to [0, +\infty)  $, измеримые относительно $ \A $, что
+ \begin{align*}
+  \mu_\pm (A) = \int_{A} \eta_\pm \, dP = \E (\eta_\pm \cdot \Ind_A).
+ \end{align*} Тогда случайная величина $ \eta = \eta_+ - \eta_- $ как раз подходит.
+
+ Единственность. Пусть $ \eta $ и $ \tilde \eta $ --- пара условных матожиданий. Тогда
+ разность $ \eta - \tilde \eta $ измерима относительно $ \sigma $-алгебры $ \A $, и $ \E((\eta-\tilde\eta) \Ind_A) = 0 $ для любого $ A \in \A $. Из этого следует $ \eta - \tilde\eta = 0 $ почти всюду: нужно рассмотреть множества
  \begin{align*}
   A_+ &= \left\{ \eta - \tilde\eta > 0 \right\} \in \A, \\
   A_- &= \left\{ \eta - \tilde\eta < 0 \right\} \in \A,
  \end{align*} и показать, что их меры равны нулю.
 \end{proof}
 
-\begin{prop}[свойства]\
+\begin{prop}[свойства условного математического ожидания]\
  \begin{enumerate}
-  \item Если $ \xi $ измерима относительно $ \A $, то $ \E(\xi \mid \A) = \xi $ почти всюду.
-  \item $ \E(\xi\mid \left\{ \varnothing,\Omega \right\}) = \E \xi $ --- константа.
-  \item Пусть $ \A_1 \subset \A_2 \subset \F $. Тогда
+  \item \label{umo_property_1} Если $ \xi $ измерима относительно $ \A $, то $ \E(\xi \mid \A) = \xi $ почти всюду.
+  \item \label{umo_property_2} $ \E(\xi\mid \left\{ \varnothing,\Omega \right\}) = \E \xi $ --- константа.
+  \item \label{umo_property_3} Пусть $ \A_1 \subset \A_2 \subset \F $. Тогда
    \begin{align*}
     \E(\E(\xi \mid \A_2) \mid \A_1) = \E(\xi \mid \A_1).
    \end{align*}
-  \item $ \E(\E(\xi \mid \A)) = \E \xi $.
-  \item Если $ \xi \leqslant \eta $ почти всюду, то $ \E(\xi \mid \A) \leqslant \E(\eta \mid \A) $ почти всюду.
-  \item $ \E(\xi \mid \A) $ линейно по $ \xi $.
+  \item \label{umo_property_4} $ \E(\E(\xi \mid \A)) = \E \xi $.
+  \item \label{umo_property_5} $ \E(\xi \mid \A) $ линейно по $ \xi $:
+   \begin{align*}
+    \E(a \cdot \xi_1 + b \cdot \xi_2 \mid \A) = a \E(\xi_1 \mid \A) + b\E(\xi_2 \mid \A).
+   \end{align*}
+  \item \label{umo_property_6} Если $ \xi \leqslant \eta $ почти всюду, то и $ \E(\xi \mid \A) \leqslant \E(\eta \mid \A) $ почти всюду.
  \end{enumerate}
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]\
  \begin{enumerate}
-  \item Очевидно.
-  \item $ \eta $ измерима относительно $ \left\{ \varnothing, \Omega \right\} $ тогда и только тогда, когда $ \eta \equiv \mathrm{const} $. Нас интересует такая константа $ c $, что
+  \item Очевидно: можно взять $ \xi $ в качестве $ \eta $.
+  \item Случайная величина $ \eta $ измерима относительно $ \sigma $-алгебры $ \left\{ \varnothing, \Omega \right\} $ тогда и только тогда, когда $ \eta \equiv \mathrm{const} $. Таким образом, нас интересует такая константа $ c $, что
    \begin{align*}
     c = \E(c \Ind_\Omega) = \E(\xi \Ind_\Omega) = \E\xi.
    \end{align*}
-  \item Обозначим $ \eta = \E(\xi \mid \A_2) $ и $ \zeta = \E(\xi \mid \A_1) $. Нужно доказать, что $ \zeta = \E(\eta \mid \A_1) $, то есть $ \zeta $ измерима относительно $ \A_1 $, и $ \E(\zeta\Ind_A) = \E(\eta\Ind_A) $ для любого $ A \in \A_1 $. Измеримость есть по построению $ \zeta $. Возьмём $ A \in \A_1 $. Тогда $ A \in \A_2 $, и
+  \item Обозначим $ \eta = \E(\xi \mid \A_2) $ и $ \zeta = \E(\xi \mid \A_1) $. Нужно доказать, что $ \zeta = \E(\eta \mid \A_1) $, то есть $ \zeta $ измерима относительно $ \A_1 $, и $ \E(\zeta\Ind_A) = \E(\eta\Ind_A) $ для любого $ A \in \A_1 $. Измеримость относительно $ \A_1 $ есть по построению $ \zeta $. Возьмём любое множество $ A \in \A_1 $. Тогда $ A \in \A_2 $, и поэтому есть равенство
    \begin{align*}
-    \E(\eta \Ind_A) = \E(\xi\Ind_A) = \E(\zeta \Ind_A)
+    \E(\eta \Ind_A) = \E(\xi\Ind_A) = \E(\zeta \Ind_A).
    \end{align*}
 
-\item Воспользуемся пунктами 2 и 3:
-	\begin{align*}
-		\E(\xi) = \E(\xi \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \A) \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \A))
-	\end{align*}
-  \item По линейности (пункт 6) достаточно проверить, что если $ \xi \geqslant 0 $, то $ \E(\xi \mid \A) \geqslant 0 $ почти наверное. Пусть $ \eta = \E(\xi \mid \A) $ --- измерима относительно $ \A $. Возьмём $ A_- = \left\{ \eta < 0 \right\} \in \A $. Тогда 
+  \item Воспользуемся пунктами \ref{umo_property_2} и \ref{umo_property_3}:
+   \begin{align*}
+    \E\xi = \E(\xi \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \F) \mid \{\varnothing, \Omega\}) = \E(\E(\xi \mid \F)),
+   \end{align*} где $ \F $ --- исходная $ \sigma $-алгебра, относительно которой измерима $ \xi $.
+  \item Возьмём $\eta_1 = \E(\xi_1 \mid \A), \ \eta_2 = \E(\xi_2 \mid \A)$. Тогда
+   \begin{align*}
+    \E((a \cdot \xi_1 + b \cdot \xi_2) \Ind_A) &= a \cdot \E(\xi_1 \Ind_A) + b \cdot \E(\xi_2 \Ind_A) \\
+    &= a \cdot \E(\eta_1 \Ind_A) + b \cdot \E(\eta_2 \Ind_A) \\
+    &= \E((a \cdot \eta_1 + b \cdot \eta_2) \Ind_A).
+   \end{align*}
+   Поскольку случайная величина $ a \cdot \eta_ 1 + b \cdot \eta_2 $ измерима относительно $ \A $, получаем
+   \begin{align*}
+    a \cdot \eta_1 + b \cdot \eta_2 = \E(a \cdot \xi_1 + b \cdot \xi_2 \mid \A).
+   \end{align*}
+  \item По линейности (пункт \ref{umo_property_5}) достаточно проверить, что если $ \xi \geqslant 0 $, то $ \E(\xi \mid \A) \geqslant 0 $ почти всюду. Обозначим $ \eta = \E(\xi \mid \A) $. Рассмотрим множество $ A_- = \left\{ \eta < 0 \right\} \in \A $. Тогда 
    \begin{align*}
     0\geqslant \E(\eta \Ind_{A_-}) = \E(\xi\Ind_{A_-}) \geqslant 0.
-   \end{align*} Поэтому $ \E(\eta \Ind_{A_-}) = 0 \implies A_- $ имеет нулевую меру.
-
-   А можно было посмотреть на доказательство существования.
- \item Рассмотрим $\eta_1 = \E(\xi_1 \mid \A), \ \eta_2 = \E(\xi_2 \mid \A)$: 
-	 \begin{align*}
-		 \E((a \cdot \xi_1 + b \cdot \xi_2) \Ind_A) &= a \cdot \E(\xi_1 \Ind_A) + b \cdot \E(\xi_2 \Ind_A) \\
-																								&= a \cdot \E(\eta_1 \Ind_A) + b \cdot \E(\eta_2 \Ind_A) \\
-																								&= \E((a \cdot \eta_1 + b \cdot \eta_2) \Ind_A)
-	 \end{align*}
-		Тогда $a \cdot \eta_1 + b \cdot \eta_2 = \E(a \cdot \xi_1 + b \cdot \xi_2 \mid \A)$ 
+   \end{align*} Поэтому $ \E(\eta \Ind_{A_-}) = 0 $, и множество $ A_- $ имеет нулевую меру.
  \end{enumerate}
 \end{proof}
 
-\begin{df}
- Пусть $ \eta $ --- случайная величина, $ \sigma(\eta) $ --- наименьшая $ \sigma $-алгебра, относительно которой $ \eta $ измерима.
- \begin{align*}
-  \sigma(\eta) = \left\{ \left\{ \eta \in A \right\} \mid A \in \B_1 \right\}
- \end{align*} --- такие множества должны попасть, а это уже $ \sigma $-алгебра.
+Мы определили условное математическое ожидание относительно $ \sigma $-алгебры, а хотим построить определение относительно случайной величины. Значит, нам нужно научится естественным образом строить $ \sigma $-алгебру по данной случайной величине, что приводит нас к следующему определению.
+
+\begin{df}[$ \sigma $-алгебра, порождённая случайной величиной]\
+
+ Пусть $ \eta $ --- случайная величина.
+ \textit{$ \sigma $-алгеброй, порождённой $ \eta $} называется наименьшая $ \sigma $-алгебра $ \sigma(\eta) $, относительно которой $ \eta $ измерима.
 \end{df}
-\begin{df}
- Пусть $ \xi $ и $ \eta $ --- случайные величины. Тогда
+\begin{prop}
+ Для любой случайной величины $ \eta $, $ \sigma $-алгебра, порождённая $ \eta $ существует, причём
+ \begin{align*}
+  \sigma(\eta) = \left\{ \left\{ \eta \in A \right\} \mid A \in \B_1 \right\}.
+ \end{align*}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Так как прообраз всякого борелевского множества измерим при измеримой функции, то в $ \sigma $-алгебру $ \sigma(\eta) $ обязаны попасть множества вида $ \eta^{-1}(A) = \left\{ \eta \in A \right\} $, $ A \in \B_1 $. С другой стороны, семейство таких множеств уже образует $ \sigma $-алгебру.
+ \begin{itemize}
+  \item $ \varnothing = \eta^{-1}(\varnothing) $, и $ \Omega = \eta^{-1}(\R) $.
+  \item Если $ A_1 = \eta^{-1}(B_1),\; A_2 = \eta^{-1}(B_2), \ldots $, то
+   \begin{align*}
+    \bigcup_{k=1}^{\infty} A_k = \eta^{-1} \left( \bigcup_{k=1}^{\infty} B_k \right).
+   \end{align*}
+  \item Если $ A = \eta^{-1}(B) $, то $ \Omega \setminus A = \eta^{-1}(\R \setminus B) $.
+ \end{itemize}
+\end{proof}
+
+Естественным образом определим УМО относительно случайной величины как УМО относительно порождённой ей $ \sigma $-алгеброй.
+
+\begin{df}[условное математическое ожидание относительно случайной величины]
+ Пусть $ \xi $ и $ \eta $ --- случайные величины. \textit{Условным математическим ожиданием $ \xi $ относительно $ \eta $} называется случайная величина
  \begin{align*}
   \E(\xi \mid \eta) := \E (\xi \mid \sigma(\eta)).
- \end{align*} --- \textit{условное математическое ожидание $ \xi $ относительно $ \eta $.}
+ \end{align*} 
 \end{df}
-\begin{thm}\
- \begin{enumerate}
-  \item Если $ \xi $ и $ \eta $ независимы, то $ \E(\xi \mid\eta)=\E\xi $.
-  \item Если $ \eta $ измерима относительно $ \A $, то $ \E(\xi\eta \mid\A) = \eta E(\xi \mid \A) $.
- \end{enumerate}
+\begin{thm}
+ Если случайные величины $ \xi $ и $ \eta $ независимы, то
+ \begin{align*}
+  \E(\xi \mid \eta) = \E\xi.
+ \end{align*}
 \end{thm}
-\begin{proof}[\normalfont\textsc{Доказательство}]\
- \begin{enumerate}
-  \item Нужно проверить, что если $ A \in \sigma(\eta) $, то
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Нужно проверить, что для всякого $ A \in \sigma(\eta) $
    \begin{align*}
     \E(\xi\Ind_A) = \E((\E\xi)\Ind_A) = \E\xi \cdot \E \Ind_A.
-   \end{align*}
-   Надо доказать, что $ \Ind_A  $ и $ \xi $ независимы. Нужна независимость событий $ \left\{ \xi \in C \right\} $ и $ \left\{ \Ind_A = 1 \right\} = A  = \left\{ \eta \in B \right\}$.
-
-  \item Пусть $ \zeta = \E(\xi\mid\A) $ --- измерима относительно $ \A $. Тогда $ \eta\zeta $ также измерима относительно $ \A $. Нужно лишь доказать, что для любого $ A \in \A $ выполнено $ \E(\xi\eta\Ind_A) = \E(\zeta\eta\Ind_A) $.
-
-   Проверим по стандартной схеме.
-   \begin{itemize}
-    \item Если $ \xi = \Ind_B $, то $ \E(\xi\eta\Ind_A) = \E(\eta\Ind_{A\cap B}) $
-   \end{itemize}
-
-   {\color{red} не получилось!}
-   
- \end{enumerate}
+   \end{align*} Таким образом, нужно показать независимость случайных величин $ \xi $  и $ \Ind_A $. Так как индикатор принимает лишь значения $ 0 $ и $ 1 $, то достаточно показать независимость событий $ \left\{ \xi \in C \right\} $ и $ \left\{ \Ind_A = 1 \right\} = A  = \left\{ \eta \in B \right\}$. А она есть, ведь $ \xi $ и $ \eta $ независимы.
+\end{proof}
+\begin{thm}
+ Пусть $ \xi $ и $ \eta $ --- случайные величины. Если $ \eta $ измерима относительно $ \sigma $-алгебры $ \A $, то
+  \begin{align*}
+   \E(\xi\eta \mid\A) = \eta E(\xi \mid \A).
+  \end{align*}
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Проверять будем по стандартной схеме из теории меры.
+ \begin{itemize}
+  \item Проверим сначала для индикаторов $ \eta = \Ind_B $, $ B \in \A $. Мы хотим проверить
+   \begin{align*}
+    \E(\xi\Ind_B \mid \A) = \Ind_B \E(\xi \mid \A),
+   \end{align*} то есть правая часть подходит под определение условного математического ожидания. Она, очевидно, измерима относительно $ \A $, поэтому нужно лишь проверить
+   \begin{align*}
+    \E(\Ind_B \E(\xi\mid\A)\Ind_A) = \E(\xi\Ind_B\Ind_A)
+   \end{align*} для любого $ A\in\A $. Правая часть равна $ \E(\xi\Ind_{A \cap B}) $, а левая часть равна $ \E(\E(\xi \mid \A)\Ind_{A\cap B}) $. Однако по определению условного математического ожидания есть равенство
+   \begin{align*}
+    \E(\E(\xi \mid \A)\Ind_{A\cap B}) = \E(\xi\Ind_{A\cap B}),
+   \end{align*} ведь $ A \cap B \in \A $.
+  \item По линейности теорема верна для всех простых неотрицательных $ \eta $.
+  \item По теореме об аппроксимации и теореме Леви теорема верна для неотрицательных измеримых $ \eta $.
+  \item Для функций произвольного знака рассмотреть $ \eta_\pm  =\max(\pm \eta, 0) $.
+ \end{itemize}
 \end{proof}
 
 \begin{exmpl}
- Пусть $ \Omega = \bigsqcup_{n=1}^{\infty} A_n $. Натянем на $ \left\{A_n \right\} $ $ \sigma $-алгебру $ \A $. Тогда
+ \label{example:umo_otn_partition}
+ Пусть есть разбиение всего вероятностного пространства на счётное число событий:
  \begin{align*}
-  \E(\xi \mid \A) = \sum_{n=1}^{\infty} c_n \Ind_{A_n}
- \end{align*} Нам нужно, чтобы $ \E(\eta\Ind_{A_n}) = \E(\xi\Ind_{A_n}) $ --- остальное по линейности. Слева $ c_n \Ind_{A_n} $. Значит
+  \Omega = \bigsqcup_{n=1}^{\infty} A_n, \qquad A_n \in \F.
+ \end{align*} Натянем на разбиение $ \left\{A_n \right\}_{n=1}^{\infty} $ $ \sigma $-алгебру $ \A $:
  \begin{align*}
-  c_n = \frac{\E(\xi \Ind_{A_n})}{P(A_n)}.
+  \A = \left\{ \bigsqcup_{n \in I} A_n \Mid I \subset \N \right\}.
+ \end{align*} 
+
+ Найдём условное математическое ожидание $ \xi $ относительно такой $ \sigma $-алгебры $ \A $. Так как оно измеримо относительно $ \A $, то
+ \begin{align*}
+  \eta = \E(\xi \mid \A) = \sum_{n=1}^{\infty} c_n \Ind_{A_n}.
+ \end{align*} Нам будет достаточно равенства \begin{align*}
+ \E(\eta\Ind_{A_n}) = \E(\xi\Ind_{A_n}), \qquad n \geqslant 1,
+ \end{align*} для остальных множеств $ B \in \A $ равенство получится по линейности. Левая часть равна $ c_n \E \Ind_{A_n} $, поэтому
+ \begin{align*}
+  c_n = \frac{\E(\xi \Ind_{A_n})}{P(A_n)} = \E(\xi \mid A_n).
+ \end{align*} Таким образом, получаем равенство
+ \begin{align*}
+  \E(\xi \mid \A) = \sum_{n=1}^{\infty} \E(\xi\mid A_n)  \cdot \Ind_{A_n}.
  \end{align*}
 \end{exmpl}
 
-Если $ \eta $ дискретна, то $ \sigma(\eta) $ --- это $ \sigma $-алгебра, натянутая $ A_k = \left\{ \eta = y_k \right\} $. Называют \textit{Условное матожидание относительно разбиения.}
+\begin{remrk}
+ Пусть случайная величина $ \eta \colon\,\Omega \to \left\{ y_1, y_2, y_3, \ldots \right\} $ дискретна. Тогда $ \sigma(\eta) $ --- это $ \sigma $-алгебра, натянутая на счётное число событий вида $ A_n = \left\{ \eta = y_n \right\} $, то есть она имеет вид из примера \ref{example:umo_otn_partition}. Поэтому, условное матожидание $ \xi $ относительно $ \eta $ выражается как
+ \begin{align*}
+  \E(\xi \mid \eta) = \sum_{n=1}^{\infty} \E(\xi \mid \eta = y_n) \cdot \Ind_{\left\{ \eta = y_n \right\}}.
+ \end{align*}
 
-Обобщение формулы полной вероятности это с двумя $ \E\E $.
+ В этом случае условное матожидание $ \E(\xi \mid \eta) $ называют \textit{условным матожиданием $ \xi $ относительно разбиения}.
+\end{remrk}
 
-\begin{df}
- Условная вероятность относительно $ \sigma $-алгебры $ \A $ - это
+По аналогии с условным математическим ожиданием, мы можем определить условную вероятность (но уже относительно $ \sigma $-алгебры).
+
+\begin{df}[условная вероятность относительно $ \sigma $-алгебры]
+ \textit{Условной вероятностью события $ A \in \F $ относительно $ \sigma $-алгебры $ \A $} называется случайная величина
  \begin{align*}
   P(B \mid \A) = \E(\Ind_B \mid \A).
  \end{align*}

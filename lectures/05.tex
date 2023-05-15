@@ -3,93 +3,126 @@
 \begin{document}
 
 \newpage
-\section{Математическое ожидание и дисперсия}
+\section{Математическое ожидание и дисперсия.}
+
+В этом параграфе мы определим ключевые характеристики случайных величин: математическое ожидание, дисперсию, моменты и другие.
+
 \begin{df}[математическое ожидание]
- Пусть $ \xi \colon \, \Omega \to \R$ --- случайная величина. Тогда \textit{математическим ожиданием} cлучайной величины $ \xi $ называется число
+ \textit{Математическим ожиданием} (или \textit{матожиданием}) cлучайной величины $ \xi \colon \, \Omega \to \R $ называется число
  \begin{align}
   \label{equation:expected_value_def}
-  \E \xi = \int\limits_{\Omega}  \xi(w)\,dP(\omega),
+  \E \xi = \int\limits_{\Omega}  \xi\,dP,
  \end{align} где интеграл берётся по мере $ P $ --- вероятности.
 \end{df}
 \begin{remrk*}
- У случайной величины может не быть математического ожидания! Такое может быть в случае, когда интеграл \eqref{equation:expected_value_def} не существует (расходится).
+ В общем случае у случайной величины может не быть математического ожидания! Такое может быть, когда интеграл \eqref{equation:expected_value_def} не существует (расходится). Например, распределение Коши.
+
+ Если $ \xi \geqslant 0 $ с вероятностью $ 1 $, то можно считать, что $ \E \xi $ существует всегда, но тогда возможен случай $ \E \xi = \infty $ (интеграл расходится).
 \end{remrk*}
-Обсудим свойства матожидания.
-\begin{prop}
- Матожидание линейно:
- \begin{align*}
-  \E(a\xi + b\eta) = a \E \xi + b \E \eta.
- \end{align*} 
-\end{prop}
-\begin{prop}
- Если $ \xi \geqslant 0 $ с вероятностью $ 1 $, то $ \E \xi \geqslant 0 $.
-\end{prop}
-\begin{prop}
- Если $ \xi \geqslant \eta $ с вероятностью $ 1 $, то $ \E\xi \geqslant \E\eta $.
-\end{prop}
-\begin{prop}
-$ \E\xi = \int_{\R} x\,dP_{\vec \xi}(x)  $.
- Это будет частным случаем более общего свойства.
-\end{prop}
-\begin{prop}
- Если $ f \colon\, \R^{n}\to\R $ --- измеримая по Борелю функция, то
- \begin{align*}
-  \E f(\xi_1, \xi_2, \ldots, \xi_n) = \int\limits_{\R^{n}} f(x_1, \ldots, x_n) \,d P_{\vec\xi}(x_1, \ldots, x_n).
- \end{align*} 
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]\
- \begin{itemize}
-  \item Пусть $ f = \Ind_A $, $ A \subset R^{n} $ измеримо. Тогда
+В следующем предложении перечислим свойства матожидания, непосредственно следующие из свойств интеграла Лебега.
+\begin{prop}\
+ \begin{enumerate}
+  \item Математическое ожидание линейно:
    \begin{align*}
-    \E f (\xi_1, \ldots, \xi_n) = P(\vec\xi \in A) = P_{\vec\xi}(A) = \int\limits_{\R^{n}} \Ind_A\,dP_{\vec\xi}.
-   \end{align*}  Для индикаторных функций доказали.
-  \item По линейности доказано для простых неотрицательных функций $ f $.
-  \item Пусть $ f \geqslant 0 $ измеримая. По теореме об аппроксимации берём простые неотрицательные функции $ f_1 \leqslant f_2 \leqslant \ldots $ такие, что $ f_n \to f $. По теореме Леви правая часть стремится к
-   \begin{align*}
-    \int\limits_{\R^{n}} f_k(\vec x)  \,dP_{\vec\xi}(\vec x) \to \int\limits_{\R^{n}} f(\vec x)\,dP_{\vec\xi} (\vec x),
-   \end{align*} а левая часть к
-   \begin{align*}
-    \E f_k (\xi_1, \ldots, \xi_n) = \int\limits_{\Omega} f_k(\xi_1, \ldots, \xi_n) \,dP \to \int\limits_{\Omega} f(\xi_1, \ldots, \xi_n)\,dP = \E f(\xi_1, \ldots, \xi_n).
-   \end{align*} 
-  \item Для функция произвольного знака рассмотреть $ f_\pm = \max(\pm f, 0) $.
- \end{itemize}
-\end{proof}
-\begin{crly*}
- Значение матожидания зависит только от распределения.
-\end{crly*}
+    \E(a\xi + b\eta) = a \E \xi + b \E \eta.
+   \end{align*} Более формально, левая часть определена тогда и только тогда, когда определены оба слагаемых в правой части, и в этом случае выполнено равенство.
+  \item Если $ \xi \geqslant 0 $ с вероятностью $ 1 $, то $ \E\xi\geqslant 0 $.
+  \item Если $ \xi \geqslant \eta $ с вероятностью $ 1 $, то $ \E\xi \geqslant \E\eta $.
+ \end{enumerate}
+\end{prop}
+
+Важное замечание: линейность матожидания верна даже если величины $ \xi $ и $ \eta $ не являются независимыми. Это крайне важное и часто применимое свойство.
+
+Математическое ожидание можно выразить вообще не привлекая вероятностное пространство, исключительно в терминах распределения.
 \begin{prop}
- \label{proposition:independent_expected_product}
- Если $ \xi $ и $ \eta $ независимы, то
- \begin{align*}
-  \E(\xi \eta) = \E\xi \cdot \E\eta.
- \end{align*} 
+ Если математическое ожидание cлучайной величины $ \xi $ существует, то верна формула
+ \begin{align}
+  \label{equation:expected_value_integral_on_real}
+  \E\xi = \int\limits_{\R} x\,dP_{\xi}(x),
+ \end{align} где $ P_\xi $ --- распределение случайной величины $ \xi $ как борелевская мера на $ \R $.
+\end{prop}
+Формула \eqref{equation:expected_value_integral_on_real} будет частным случаем следующей полезной формулы.
+\begin{prop}
+ Если $ \xi_1, \xi_2, \ldots, \xi_n \colon\, \Omega \to \R $ --- случайные величины, и $ f \colon\, \R^{n}\to\R $ --- измеримая по Борелю функция, то
+ \begin{align}
+  \label{equation:expected_value_of_function}
+  \E f(\xi_1, \xi_2, \ldots, \xi_n) = \int\limits_{\R^{n}} f(x_1, \ldots, x_n) \,d P_{\vec\xi}(x_1, \ldots, x_n),
+ \end{align} где $ P_{\vec\xi} $ --- совместное распределение случайных величин $ \vec\xi = (\xi_1, \xi_2, \ldots, \xi_n) $ как борелевская мера на $ \R^{n} $.
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Рассмотрим функцию $ f(x,y) = xy $. Тогда по предыдущему свойству
+ Доказательство будет по стандартной схеме из теории меры.
+ \begin{itemize}
+  \item Пусть $ f = \Ind_A $, $ A \subset \R^{n} $ --- борелевское множество. Тогда
+   \begin{align*}
+    \E f (\xi_1, \ldots, \xi_n) = P(\vec\xi \in A) = P_{\vec\xi}(A) = \int\limits_{\R^{n}} \Ind_A\,dP_{\vec\xi}.
+   \end{align*}  Для индикаторных функций формула \eqref{equation:expected_value_of_function} доказана.
+  \item По линейности матожидания и интеграла Лебега формула \eqref{equation:expected_value_of_function} доказана для простых неотрицательных функций.
+  \item Пусть неотрицательная функция $ f \geqslant 0 $ измерима. По теореме об аппроксимации существуют простые неотрицательные функции $ f_1 \leqslant f_2 \leqslant \ldots $ такие, что $ f_k \to f $ всюду. По предыдущему пункту для каждого $ k \geqslant 1 $ имеем \begin{align*}
+    \E f_k(\xi_1, \xi_2, \ldots, \xi_n) = \int\limits_{\R^{n}} f_k(\vec x) \,dP_{\vec\xi}(\vec x).
+  \end{align*} По теореме Леви правая часть стремится к
+   \begin{align*}
+    \lim_{k \to \infty} \int\limits_{\R^{n}} f_k(\vec x)  \,dP_{\vec\xi}(\vec x) = \int\limits_{\R^{n}} f(\vec x)\,dP_{\vec\xi} (\vec x),
+   \end{align*} а левая часть к
+   \begin{align*}
+    \lim_{k \to \infty} \E f_k (\xi_1, \ldots, \xi_n) &= \lim_{k \to \infty} \int\limits_{\Omega} f_k(\xi_1, \ldots, \xi_n) \,dP = \int\limits_{\Omega} f(\xi_1, \ldots, \xi_n)\,dP = \\
+    &= \E f(\xi_1, \ldots, \xi_n).
+   \end{align*} Равенство \eqref{equation:expected_value_of_function} доказано для неотрицательных измеримых функций.
+  \item Для функций произвольного знака рассмотреть $ f_\pm = \max(\pm f, 0) $ и воспользоваться линейностью.
+ \end{itemize}
+\end{proof}
+\begin{crly}
+ Математическое ожидание зависит только от распределения случайной величины.
+\end{crly}
+
+Следующее свойство матожидания не имеет никакого аналога в теории меры, оно имеет смысл лишь в теории вероятностей.
+
+\begin{prop}
+ \label{proposition:independent_expected_product}
+ Если случайные величины $ \xi $ и $ \eta $ независимы, то
+ \begin{align}
+  \label{equation:independednt_expected_product}
+  \E(\xi \eta) = \E\xi \cdot \E\eta.
+ \end{align} 
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Воспользуемся формулой \eqref{equation:expected_value_of_function} для функции $ f(x,y) = xy $; тем фактом, что совместное распределение $ \xi $ и $ \eta $ является произведением распределений (теорема \ref{theorem:random_variable_independence_through_distribution_measure_eq}), а также теоремой Фубини:
  \begin{align*}
-  \E(\xi\eta) = \int\limits_{\R^{2}} xy \,dP{(\xi,\eta)} (x,y) &= \int\limits_{\R} \int\limits_{\R} xy\,dP_{\xi}(x)\,dP_{\eta}(y) = \\
-  &= \int\limits_{\R} y \int\limits_{\R} x\,dP_{\xi}(x)\,dP_{\eta}(y) = \\
-  &= \int\limits_{\R} y \cdot \E\xi\,dP_{\eta}(y) = \\
-  &= \E\xi \cdot \E\eta.
+  \E(\xi\eta) &= \int\limits_{\R^{2}} xy \,dP_{(\xi,\eta)} (x,y) = \int\limits_{\R^{2}} xy\,d(P_{\xi} \times P_{\eta})(x,y) = \int\limits_{\R} \left( \int\limits_{\R} xy\,dP_\eta(y)  \right) dP_\xi(x) = \\
+  &=  \int\limits_{\R} x\,dP_\xi(x)  \cdot  \int\limits_{\R} y\,dP_\eta(y)   = \E \xi \cdot \E\eta.
  \end{align*} 
 \end{proof}
-\begin{prop*}
- Если $ \xi_1,\xi_2, \ldots, \xi_n $ независимы, то
+\begin{crly}
+ Если cлучайные величины $ \xi_1,\xi_2, \ldots, \xi_n $ независимы, то
  \begin{align*}
   \E(\xi_1 \xi_2 \ldots \xi_n) = \E\xi_1 \cdot \E\xi_2 \cdot \ldots \cdot \E\xi_n.
  \end{align*} 
-\end{prop*}
-
-Доказательство полностью аналогично.
-
+\end{crly}
 \begin{remrk}
- Предложение \ref{proposition:independent_expected_product} не верно без независимости. Пусть $ \xi, \eta $ выдают $ \pm 1 $ с вероятностью $ \frac{1}{2} $. Тогда $ \E\xi = \E\eta = 0 $. Но если $ \xi = \eta $, то $ \E(\xi\eta) = \E(1) = 1 $!
+ Формула \eqref{equation:independednt_expected_product} не верна без независимости случайных величин $ \xi $ и $ \eta $.
 \end{remrk}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Пусть $ \xi, \eta $ равны $ \pm 1 $ с вероятностью $ \frac{1}{2} $. Тогда $ \E\xi = \E\eta = 0 $. Но если $ \xi = \eta $, то $ \E(\xi\eta) = \E(1) = 1 $!
+\end{proof}
+\begin{remrk}
+ Из равенства \eqref{equation:independednt_expected_product} не следует независимость случайных величин $ \xi $ и $ \eta $.
+\end{remrk}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Пусть пространство элементарных исходов состоит из четырёх исходов: $ \Omega = \left\{ \omega_1, \omega_2, \omega_3, \omega_4 \right\} $ с одинаковыми вероятностями, а случайные величины $ \xi $ и $ \eta $ принимают следующие значения:
+ \begin{center}
+  \begin{tabular}{r|cccc}
+   & $\omega_1$ & $\omega_2$ & $\omega_3$ & $\omega_4$ \\
+   \hline
+   $\xi$ & $ 1 $ & $0$ & $0$ & $-1$ \\
+   $\eta$ & $0$ & $1$ & $-1$ & $0$
+  \end{tabular}
+ \end{center}
+ Тогда  $ \E \xi = \frac{1 + 0 + 0 + (-1)}{4} = 0 $, $ \E\eta = \frac{0 + 1 + (-1) + 0}{4} = 0 $, $ \E (\xi \eta) = \frac{0 + 0 + 0 + 0}{4} = 0 $, и равенство \eqref{equation:independednt_expected_product} выполнено. Однако независимости нет: например события $ \left\{ \xi=1 \right\} $ и $ \left\{ \eta = 0 \right\} $ зависимы.
+\end{proof}
 
 \begin{prop}
- Если $ \xi \geqslant 0 $, то
+ Если $ \xi \geqslant 0 $ почти всюду, то
  \begin{align*}
-  \E\xi = \int_{0}^{+\infty} P(\xi \geqslant t)\,dt.
+  \E\xi = \int\limits_{0}^{+\infty} P(\xi \geqslant t)\,dt.
  \end{align*} 
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
@@ -100,158 +133,197 @@ $ \E\xi = \int_{\R} x\,dP_{\vec \xi}(x)  $.
  \end{align*} 
 \end{proof}
 
-\begin{prop}[Неравенство Гёльдера]
-	\label{proposition:gulder_inequality}
- Если $ p, q > 1 $ и $ \frac{1}{p}+\frac{1}{q} = 1 $, то
- \begin{align*}
-  \E|\xi\eta| \leqslant \left( \E \left| \xi \right|^{p} \right)^{\frac{1}{p}} \left( \E \left| \eta \right|^{q} \right)^{\frac{1}{q}}.
- \end{align*} 
+Отметим некоторые неравенства с матожиданием.
+
+\begin{prop}[неравенство Гёльдера]
+ \label{proposition:gulder_inequality}
+ Если числа $ p, q > 1 $ таковы, что $ 1/p+1/q = 1 $, то
+ \begin{align}
+  \label{equation:holder_inequality}
+  \E\left|\xi\eta\right| \leqslant \left( \E \left| \xi \right|^{p} \right)^{1/p} \left( \E \left| \eta \right|^{q} \right)^{1/q}.
+ \end{align} 
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Применить неравенство Гёльдера для интегралов.
+ Применим неравенство Гёльдера для интегралов:
+ \begin{align*}
+  \int_{\Omega} \left|\xi \eta \right|\,dP \leqslant \left( \int_{\Omega} \left| \xi \right|^{p}  \right)^{1 / p} \left( \int_{\Omega} \left| \eta \right|^{q}  \right)^{1 / q}.
+ \end{align*}
 \end{proof}
 
 \begin{prop}[неравенство Ляпунова]
  \label{proposition:Lyapunov_inequality}
  Если $ 0 < r < s $, то 
  \begin{align*}
-  \left(\E \left| \xi \right|^{r} \right)^{\frac{1}{r}} \leqslant \left( \E \left| \xi \right|^{s} \right)^{\frac{1}{s}}.
+  \left(\E \left| \xi \right|^{r} \right)^{1/r} \leqslant \left( \E \left| \xi \right|^{s} \right)^{1/s}.
  \end{align*} 
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
-	Возведём обе части в степень $r$. Нужно проверить 
-	\begin{align*}
-		\E |\xi|^r \le (\E |\xi|^s)^{\frac{r}{s}}
-	\end{align*}
+ Возведём обе части в степень $r$. Нужно проверить 
+ \begin{align*}
+  \E \left|\xi\right|^r \leqslant (\E \left|\xi\right|^s)^{r/s}
+ \end{align*}
 
-	Воспользуемся неравенством Гёльдера \ref{proposition:gulder_inequality}. $p = \frac{s}{r} > 1, \frac{1}{q} = 1 - \frac{1}{p} = \frac{s - r}{s} \in (0, 1)$, взяв $\eta = 1$ и $\xi = |\xi|^{r}$  
-
-	\begin{align*}
-		\E ||\xi|^r \cdot 1| \le (\E |\xi|^{r \cdot p})^{\frac{1}{p}} \cdot (\E 1^q)^{\frac{1}{q}} = (\E |\xi|^s)^{\frac{r}{s}}
-	\end{align*}
-	
+ Воспользуемся неравенством Гёльдера \eqref{equation:holder_inequality}, взяв $ \xi = \left| \xi \right|^{r} $, $ \eta = 1 $, $ p = s / r > 1 $ и соответствующее $ q $:
+ \begin{align*}
+  \E \left| \xi \right|^{r} \leqslant \left( \E (\left| \xi \right|^{r})^{s / r} \right)^{r / s} \cdot \left( \E 1^{q} \right)^{1 / q} = \left( \E \left| \xi \right|^{s} \right)^{r / s}.
+ \end{align*}
 \end{proof}
 
-
 \begin{prop}[неравенство Маркова]
- Пусть $ \xi \geqslant 0 $ и есть числа $ p,t > 0 $. Тогда
-  \begin{align}
-   \label{equation:markov_inequality}
-  P(\xi \geqslant t) \leqslant \frac{\E \xi^{p}}{t^{p}}.
+ Пусть $ \xi \geqslant 0 $ почти всюду и число $ t > 0 $. Тогда
+ \begin{align}
+  \label{equation:markov_inequality}
+  P(\xi \geqslant t) \leqslant \frac{\E \xi}{t}.
  \end{align}  
 \end{prop}
 
-\begin{proof}
-	Было в теории меры и называлось неравенством Чебышева.
+Неравенство \eqref{equation:markov_inequality} Маркова было в теории меры (там оно называлось неравенством Чебышева; в теории вероятностей такое название будет у другого неравенства).
 
+\begin{proof}
+ \begin{align*}
+  \E \xi = \int\limits_{\Omega} \xi\,dP \geqslant \int\limits_{\left\{ \xi \geqslant t \right\}} \xi \,dP \geqslant \int\limits_{\left\{ \xi \geqslant t \right\}}  t\,dP = t \cdot P(\xi \geqslant t).
+ \end{align*}
 \end{proof}
 
-Математическое ожидание --- среднее значение случайной величины. Посмотрим на другие характеристики случайной величины.
+Неравенство Маркова можно обобщить.
+
+\begin{prop}
+ Пусть $ \xi \geqslant 0 $ почти всюду, функция $f$ неотрицательна, возрастает, и число $ t > 0 $ таково, что $ f(t) > 0 $. Тогда
+ \begin{align*}
+  P(\xi \geqslant t) \leqslant \frac{\E f(\xi)}{f(t)}.
+ \end{align*}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Действительно,
+ \begin{align*}
+  P(\xi \geqslant t) = P(f(\xi) \geqslant f(t)) \leqslant \frac{\E f(\xi)}{f(t)}
+ \end{align*} по обычному неравенству \eqref{equation:markov_inequality} Маркова.
+\end{proof}
+
+Математическое ожидание характеризует среднее значение случайной величины --- константу, которая в некотором смысле лучше всего описывает распределение случайной величины. 
+
+Посмотрим на другие характеристики случайной величины.
 
 \begin{df}[моменты случайной величины]
- Пусть $ \xi $ --- случайная величина. \textit{$ k $-ым моментом} случайной величины $ \xi $ называется число
- \begin{align*}
-  \E \xi^{k} = \int\limits_{\R} x^{k}\,dP_{\xi}(x).
- \end{align*} 
-
-  \textit{$ k $-ым абсолютным моментом} называется
- \begin{align*}
-  \E \left| \xi \right|^{k} = \int\limits_{\R} \left| x \right|^{k}\,dP_{\xi} (x).
- \end{align*} 
-
- Центральный момент --- это
- \begin{align*}
-  \E (\xi - \E \xi)^{k}.
- \end{align*} 
-
- Абсолютный центральный момент --- это
- \begin{align*}
-  \E \left| \xi - \E \xi \right|^{k}.
- \end{align*} 
+ Пусть есть целое число $ k \geqslant 1 $.
+ \begin{itemize}
+  \item \textit{$ k $-м моментом} случайной величины $ \xi $ называется число
+   \begin{align*}
+    \E \xi^{k} = \int\limits_{\R} x^{k}\,dP_\xi(x). 
+   \end{align*}
+  \item \textit{$ k $-м абсолютным моментом} называется число
+   \begin{align*}
+    \E \left| \xi \right|^{k} = \int\limits_{\R} \left| x \right|^{k}dP_\xi(x). 
+   \end{align*}
+  \item \textit{$ k $-м центральным моментом} называется число
+   \begin{align*}
+    \E (\xi - \E \xi)^{k}.
+   \end{align*}
+  \item \textit{$ k $-м абсолютным центральным моментом} называется число
+   \begin{align*}
+    \E \left| \xi - \E\xi \right|^{k}.
+   \end{align*}
+ \end{itemize}
 \end{df}
+
+Отметим, что в случае, когда $ k $  чётное, абсолютный момент равен обычному.
+
+Другая известная характеристика случайной величины --- медиана.
 
 \begin{df}[медиана случайной величины]
- Число $ m \in\R$ --- это \textit{медиана} cлучайной величины $ \xi $, если
+ Число $ m \in\R$ называется \textit{медианой} cлучайной величины $ \xi $, если
  \begin{align*}
-  P(\xi \geqslant m) \geqslant \frac{1}{2}, & &\text{ и } & &P(\xi \leqslant m) \geqslant \frac{1}{2}.
+  P(\xi \leqslant m) \geqslant \frac{1}{2}, & &\text{ и } & &P(\xi \geqslant m) \geqslant \frac{1}{2}.
  \end{align*} 
 \end{df}
 \begin{remrk*}
- Медиана не единственна. Возьмём бросок честной монетки: любое число из отрезка $ [0,1] $ будет медианой.
+ Знак неравенства в определении медианы нужен для дискретных распределений, в случае когда $ P(\xi = m) > 0 $. Например, у константной случайной величины $ \xi = 0 $ число $ m = 0 $ не было бы медианой, если бы там стояли знаки равенства (ведь $ P(\xi \geqslant 0) = P(\xi \leqslant 0) = 1 \neq 1 / 2$).
 \end{remrk*}
 \begin{remrk*}
- Легко видеть, что медиана --- это всегда либо число, либо отрезок. Иногда фиксируют одну медиану --- середину этого отрезка.
+ Медиана не единственна. Возьмём бросок честной монетки: любое число из отрезка $ [0,1] $ будет медианой (слева от него число $ 0 $ с вероятностью $ 1 / 2 $, а справа от него число $ 1 $ с вероятностью $ 1 / 2 $). 
+\end{remrk*}
+\begin{remrk*}
+ Легко видеть, что множество всех медиан образует отрезок $ [m_1,m_2] $ (возможно вырождающийся в одно число, когда $ m_1 = m_2 $). Иногда фиксируют одну медиану --- середину этого отрезка.
 \end{remrk*}
 
 \begin{remrk*}
- Если $ F_\xi $ --- непрерывная функция распределения случайной величины $ \xi $, то $ m = F_\xi^{-1}(\frac{1}{2}) $ --- всевозможные медианы $ \xi $.
+ Если $ F_\xi $ --- непрерывная функция распределения случайной величины $ \xi $, то отрезок $ [m_1,m_2] = F_\xi^{-1}(1/2) $ содержит всевозможные медианы величины $ \xi $.
 \end{remrk*}
 
-Проблема медианы в том, что её сложно считать.
+Основная проблема медианы состоит в том, что её сложно вычислять. Однако, в некоторых случаях медиана может описывать статистические данные лучше математического ожидания.
 
 \begin{exmpl*}
- Есть $ 1000 $ человек, один из них --- начальник с $ 999 $ подчинёнными. У подчинённых зарплата $ 1000 $ долларов, а у начальника --- $ 1000000 $ долларов. Тогда матожидание зарплаты равно $ 1999 $ долларов, а медиана --- $ 1000 $ долларов.
+ В компании есть $ 1000 $ человек, один из них --- начальник, а остальные $ 999 $ --- подчинённые. У подчинённых зарплата $ 1000 $ долларов, а у начальника --- $ 1000000 $ долларов. Тогда математическое ожидание зарплаты равно $ 1999 $ долларов, а медиана --- $ 1000 $ долларов. Как можно видеть, в данном случае медиана лучше приближает <<среднюю зарплату>>.
 \end{exmpl*}
 
-\begin{remrk}
- Пусть $ \xi \geqslant 0 $. Тогда
+\begin{remrk*}
+ Медиану можно оценить сверху в терминах математического ожидания. Пусть $ \xi \geqslant 0 $ и $ \E\xi > 0 $. Тогда по неравенству Маркова
  \begin{align*}
   P(\xi \geqslant 2\E\xi) \leqslant \frac{\E\xi}{2\E\xi} = \frac{1}{2}.
  \end{align*} Следовательно, $ m \leqslant 2\E\xi $, где в левой части подразумевается наименьшая медиана.
-\end{remrk}
+\end{remrk*}
+
+Существует обобщение понятия медианы.
+
+\begin{df*}
+ Пусть $ \alpha \in (0,1) $. Тогда \textit{$ \alpha $-квантилем} случайной величины $ \xi $ называется число $ x \in \R $ такое, что
+ \begin{align*}
+  P(\xi \leqslant x) \leqslant \alpha, &&\text{и} &&P(\xi \geqslant x) \geqslant 1 - \alpha.
+ \end{align*}
+\end{df*}
+
+Медиана --- это в точности $ 1 / 2 $-квантиль.
+
+До текущего момента мы рассматривали характеристики случайной величины, приближающие её <<среднее значение>>. Сейчас мы рассмотрим \textit{дисперсию} --- каноническую характеристику, описывающую степень отклонения случайной величины от её математического ожидания.
 
 \begin{df}[дисперсия]
- \textit{Дисперсией}
+ \textit{Дисперсией} случайной величины $ \xi $ называется её второй центральный момент:
  \begin{align*}
-  \mathbb D \xi = \E (\xi - \E\xi)^{2}
- \end{align*} --- второй центральный момент.
-
+  \mathbb D \xi = \E (\xi - \E\xi)^{2}.
+ \end{align*}
+ В англоязычной литературе дисперсию обозначают $ \mathrm{Var} \;\xi $.
 \end{df}
 
-В англоязычной литературе есть альтернативное обозначение: $ \mathrm{Var} \;\xi $.
+Рассмотрим некоторые свойства дисперсии.
+\begin{prop}[свойства дисперсии]\
+ \begin{enumerate}
+  \item $ \D\xi = \E\xi^{2} - (\E\xi)^{2} $.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Обозначим $ a = \E\xi $. Тогда
+    \begin{align*}
+     \D\xi &= \E(\xi - a)^{2} = \E(\xi^{2} - 2a\xi + a^{2}) = \E\xi^{2} - 2a\E\xi + a^{2} = \E\xi^{2} - a^{2}.
+    \end{align*}
+   \end{proof}
+  \item $ \D\xi \geqslant 0 $.
+  \item Если $ \D\xi = 0 $, то $ P(\xi = \E\xi) = 1 $ (случайная величина почти константа).
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Так как интеграл от неотрицательной функции равен нулю:
+    \begin{align*}
+     \int\limits_{\Omega} (\xi-\E\xi)^{2} \,dP = 0,
+    \end{align*} то подынтегральная функция равна нулю почти всюду: $ (\xi - \E\xi)^{2} = 0 $ почти всюду.
+   \end{proof}
+  \item \label{enum:variance_plus_const} $ \D(\xi + c) = \D\xi $.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    \begin{align*}
+     \D(\xi + c) = \E(\xi + c - \E(\xi + c))^{2} = \E(\xi - \E\xi)^{2} = \D\xi.
+    \end{align*}
+   \end{proof}
+  \item \label{enum:variance_times_const} $ \D(c\xi) = c^{2}\D\xi $. В частности, $ \D(-\xi) = \D\xi $.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    \begin{align*}
+     \D(c\xi) = \E(c\xi - \E(c\xi))^{2} = \E (c^{2}(\xi - \E\xi)^{2}) = c^{2}\E(\xi-\E\xi)^{2} = c^{2}\D\xi.
+    \end{align*}
+   \end{proof}
+ \end{enumerate}
+\end{prop}
 
-Рассмотрим свойства дисперсии.
+Как видно из свойств \ref{enum:variance_plus_const}, \ref{enum:variance_times_const}, дисперсия не линейна. Однако для независимых величин верно следующее.
+
 \begin{prop}
+ Если cлучайные величины $ \xi  $ и $ \eta $ независимы, то
  \begin{align*}
-  \D\xi = \E \xi^{2} - \left( \E \xi \right)^{2}.
- \end{align*} 
-
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Пусть $a = \E\xi $. Тогда
- \begin{align*}
-  \D\xi = \E(\xi - a)^{2} = \E\xi^{2} - 2a \underbrace{\E\xi}_{a} + a^{2} = \E\xi^{2} - a^{2}.
- \end{align*} 
-\end{proof}
-
-\begin{prop}
- $ \D\xi \geqslant 0 $, и если $ \D\xi = 0 $, то $ P(\xi = \E\xi) = 1 $ (почти константа).
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- \begin{align*}
-  \int\limits_{\Omega} (\xi - a)^{2} \,dP(\omega) = 0.
- \end{align*} Следовательно, $ (\xi - a)^{2} = 0 $ почти везде.
-\end{proof}
-
-\begin{prop}
- $ \D(\xi + c) = \D\xi $.
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- $ \E(\xi + c) = c + \E\xi $, поэтому $ \xi - \E\xi = (\xi + c) - \E(\xi + c) $. Подставили, получили.
-\end{proof}
-\begin{prop}
- $ \D(c\xi) = c^{2}\D\xi $.
-
- В частности, $ \D(-\xi) = \D(\xi) $.
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]
-  \begin{align*}
-    \D(c \cdot \xi) = \E (c \cdot \xi)^{2} - \left( \E c \cdot \xi \right)^{2} = c^2 \cdot (\E(\xi^2) - (\E \xi)^2) = c^2 \cdot \D\xi
-  \end{align*}
-\end{proof}
-
-\begin{prop}
- Если $ \xi  $ и $ \eta $ независимы, то $ \D(\xi + \eta) = \D\xi + \D\eta $.
+  \D(\xi + \eta) = \D\xi + \D\eta.
+ \end{align*}
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  \begin{align*}
@@ -266,7 +338,7 @@ $ \E\xi = \int_{\R} x\,dP_{\vec \xi}(x)  $.
  $ \E \left| \xi - \E\xi \right| \leqslant \sqrt{\D\xi} $.
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
-  Это неравенство Ляпунова \eqref{proposition:Lyapunov_inequality} для $ 1 $ и $ 2 $.
+ Это неравенство Ляпунова \eqref{proposition:Lyapunov_inequality} для $ 1 $ и $ 2 $.
 \end{proof}
 
 \begin{prop}[неравенство Чебышева]
@@ -292,129 +364,129 @@ $ \E\xi = \int_{\R} x\,dP_{\vec \xi}(x)  $.
   \E\xi &= \int\limits_{\R} x\,dP_\xi(x)  = \int\limits_{\R} x \cdot \Ind_{[0,1]}  (x)\,dx= \int\limits_{0}^{1} x\,dx = \left. \frac{x^{2}}{2} \right|_0^{1} = \frac{1}{2}; \\
    \E\xi^{2} &= \int\limits_{\R} x^2\,dP_\xi(x) = \int\limits_{0}^{1} x^{2}\,dx = \left. \frac{x^{3}}{3}\right|_0^{1} = \frac{1}{3}; \\
     \D\xi &=\E\xi^{2} - \left( \E\xi \right)^{2} = \frac{1}{3} - \left(\frac{1}{2}\right)^2 = \frac{1}{12}.
- \end{align*} 
-\end{exmpl}
-\begin{exmpl}
- $ \xi \sim U[a,b] $. Если $ \eta \sim U[0,1] $, то $ \xi = (b-a)\eta + a\sim U[a,b] $. Тогда
- \begin{align*}
-  \E\xi &= \E \left( (b-a)\eta + a \right) = (b-a)\E\eta + a = \frac{b-a}{2} + a = \frac{a+b}{2}; \\
-  \D\xi &= \D((b-a)\eta + a) = (b-a)^{2}\D\eta = \frac{(b-a)^{2}}{12}.
- \end{align*} 
-\end{exmpl}
+   \end{align*} 
+  \end{exmpl}
+  \begin{exmpl}
+   $ \xi \sim U[a,b] $. Если $ \eta \sim U[0,1] $, то $ \xi = (b-a)\eta + a\sim U[a,b] $. Тогда
+   \begin{align*}
+    \E\xi &= \E \left( (b-a)\eta + a \right) = (b-a)\E\eta + a = \frac{b-a}{2} + a = \frac{a+b}{2}; \\
+    \D\xi &= \D((b-a)\eta + a) = (b-a)^{2}\D\eta = \frac{(b-a)^{2}}{12}.
+   \end{align*} 
+  \end{exmpl}
 
-\begin{exmpl}
- Пусть $ \xi \sim \Norm(0,1) $,  $ p_\xi = \frac{1}{\sqrt{2\pi}}e^{-t^{2} / 2} $. Тогда
- \begin{align*}
-  \E\xi &= \int\limits_{\R} x\,dP_\xi(x) = \int\limits_{\R} x p_\xi(x)\,dx = \int\limits_{\R} x \cdot \frac{1}{\sqrt{2\pi}}      e^{-x^{2} / 2}\,dx = 0,
- \end{align*} так как функция нечётная. Тогда
- \begin{align*}
-  \D\xi &= \E\xi^{2} = \frac{1}{\sqrt{2\pi}}\int\limits_{\R} x^{2} e^{-x^{2} / 2}\,dx = [xe^{-\frac{x}{2}} = (-e^{-x^{2} / 2})'] = \\
-  &= \frac{1}{\sqrt{2\pi}} \left( x \left.(-e^{-x^{2} / 2})\right|_{-\infty}^{+\infty} + \int\limits_{\R} e^{-x^{2} / 2}\,dx  \right) = \\
-   &= \frac{1}{\sqrt{2\pi}} \int\limits_{\R} e^{-x^{2} / 2} \,dx = 1,
- \end{align*} так как это плотность распределения.
-\end{exmpl}
- 
-\begin{exmpl}
- $ \xi \sim \Norm(\mu,\sigma^{2}) $. Тогда
- \begin{align*}
-  p_\xi(t) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
- \end{align*} Если $ \eta \sim \Norm(0,1) $, то $ \xi = \sigma \eta + a \sim \Norm(\mu,\sigma^{2}) $.
-\begin{align*}
- &F_\xi(x) = P(\xi \leqslant x) = P(\sigma\eta + \mu \leqslant x) = P\left(\eta \leqslant \frac{x-\mu}{\sigma}\right) = F_{\eta}\left( \frac{x-\mu}{\sigma} \right) = \\
- &= \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{\frac{x-\mu}{\sigma}} e^{-t^{2} / 2}\,dt. \\
- &p_\xi(x) = F'_\xi(x) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}} \left( \frac{x-\mu}{\sigma} \right)' = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
-\end{align*} Тогда
-\begin{align*}
- &E\xi = \E(\sigma \eta + \mu)  = \sigma \E\eta + \mu = \mu.\\
- &D\xi = \D(\sigma\eta + a) = \sigma^{2}\D\eta = \sigma^{2}.
-\end{align*} 
-\end{exmpl}
+  \begin{exmpl}
+   Пусть $ \xi \sim \Norm(0,1) $,  $ p_\xi = \frac{1}{\sqrt{2\pi}}e^{-t^{2} / 2} $. Тогда
+   \begin{align*}
+    \E\xi &= \int\limits_{\R} x\,dP_\xi(x) = \int\limits_{\R} x p_\xi(x)\,dx = \int\limits_{\R} x \cdot \frac{1}{\sqrt{2\pi}}      e^{-x^{2} / 2}\,dx = 0,
+   \end{align*} так как функция нечётная. Тогда
+   \begin{align*}
+    \D\xi &= \E\xi^{2} = \frac{1}{\sqrt{2\pi}}\int\limits_{\R} x^{2} e^{-x^{2} / 2}\,dx = [xe^{-\frac{x}{2}} = (-e^{-x^{2} / 2})'] = \\
+    &= \frac{1}{\sqrt{2\pi}} \left( x \left.(-e^{-x^{2} / 2})\right|_{-\infty}^{+\infty} + \int\limits_{\R} e^{-x^{2} / 2}\,dx  \right) = \\
+     &= \frac{1}{\sqrt{2\pi}} \int\limits_{\R} e^{-x^{2} / 2} \,dx = 1,
+    \end{align*} так как это плотность распределения.
+   \end{exmpl}
 
-\begin{df}[ковариация]
- Пусть $ \xi $ и $ \eta $ --- случайные величины, $ \E\xi^{2} $, $ \E\eta^{2} < +\infty$. Тогда \textit{ковариацией} $ \xi $ и $ \eta $ называется
- \begin{align*}
-  \mathrm{cov}(\xi,\eta) = \E \left( (\xi - \E\xi)(\eta - \E\eta) \right)
- \end{align*} 
-\end{df}
-\begin{prop}
- \begin{align*}
-  \cov(\xi,\eta) = \E(\xi\eta) - \E\xi \cdot \E\eta.
- \end{align*} 
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]
-	Обозначим $\E \xi = a, \E \eta = b$ 
-	\begin{align*}
-		\cov(\xi, \eta) = \E((\xi - a)(\eta - b)) = \E(\xi \eta) - a\underbrace{\E\eta}_b -b\underbrace{\E\xi}_b + a \cdot b = \E(\xi \eta) - a \cdot b
-	\end{align*}
-\end{proof}
-\begin{prop}
- \begin{align*}
-  \cov(\xi,\xi) = \D\xi.
- \end{align*} 
-\end{prop}
-\begin{prop}
- \begin{align*}
-  \cov(\xi,\eta) = \cov(\eta,\xi).
- \end{align*}
-\end{prop}
-\begin{prop}
- \begin{align*}
-  \cov(a\xi_1 + b\xi_2, \eta) = a\cov(\xi_1,\eta) + b \cov(\xi_2, \eta).
- \end{align*} 
-\end{prop}
-\begin{prop}
- Если $ \xi $ и $ \eta $ независимы, то
- \begin{align*}
-  \cov(\xi,\eta) = 0.
- \end{align*} 
-\end{prop}
-\begin{prop}
- $ \D(\xi + \eta) = \D\xi + \D\eta + 2\cov(\xi,\eta) $.
-\end{prop}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- \begin{align*}
-  \D(\xi+\eta) &= \E(\xi+\eta)^{2} - \left( \E(\xi+\eta) \right)^{2} = \\
-  &= \E\xi^{2} + \E\eta^{2} + 2\E(\xi\eta) - (\E\xi)^{2} - (\E\eta)^{2} - 2\E\xi \cdot \E\eta = \\
-  &= \D\xi + \D\eta +2\cov(\xi,\eta).
- \end{align*} 
-\end{proof}
-\begin{prop}
- \begin{align*}
-  \D(\xi_1 + \xi_2 + \ldots + \xi_n) = \sum_{i=1}^{n} \D\xi_i + 2 \sum_{i < j} \cov(\xi_i, \xi_j).
- \end{align*} 
-\end{prop}
+   \begin{exmpl}
+    $ \xi \sim \Norm(\mu,\sigma^{2}) $. Тогда
+    \begin{align*}
+     p_\xi(t) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
+    \end{align*} Если $ \eta \sim \Norm(0,1) $, то $ \xi = \sigma \eta + a \sim \Norm(\mu,\sigma^{2}) $.
+    \begin{align*}
+     &F_\xi(x) = P(\xi \leqslant x) = P(\sigma\eta + \mu \leqslant x) = P\left(\eta \leqslant \frac{x-\mu}{\sigma}\right) = F_{\eta}\left( \frac{x-\mu}{\sigma} \right) = \\
+     &= \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{\frac{x-\mu}{\sigma}} e^{-t^{2} / 2}\,dt. \\
+     &p_\xi(x) = F'_\xi(x) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}} \left( \frac{x-\mu}{\sigma} \right)' = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
+    \end{align*} Тогда
+    \begin{align*}
+     &E\xi = \E(\sigma \eta + \mu)  = \sigma \E\eta + \mu = \mu.\\
+     &D\xi = \D(\sigma\eta + a) = \sigma^{2}\D\eta = \sigma^{2}.
+    \end{align*} 
+   \end{exmpl}
 
-\begin{remrk}
- Из того, что $ \cov(\xi,\eta) = 0 $ не следует, что $ \xi $ и $ \eta $ независимы!
-\end{remrk}
-\begin{exmpl}
- Пусть $ \Omega = \left\{ 0,\frac{\pi}{2},\pi \right\} $ с одинаковыми вероятностями. Рассмотрим две случайной величины
- \begin{align*}
-  \xi(\omega) = \cos \omega, & &\eta(\omega) = \sin \omega.
- \end{align*} Тогда
- \begin{align*}
-  \E\xi = \frac{1 + 0 + (-1)}{3} = 0,
- \end{align*} следовательно $ \E\xi \cdot \E\eta = 0 $. Далее,
- \begin{align*}
-  \xi\eta = 0, 
- \end{align*} значит $ \E(\xi\eta) = 0 $. Следовательно, $ \cov(\xi,\eta) = 0 $, но нет независимости!
- 
-\begin{align*}
- P(\xi = 1,\eta =1) = 0 \neq \frac{1}{3} \cdot \frac{1}{3} = P(\xi = 1) \cdot P(\eta = 1).
-\end{align*}
-\end{exmpl}
+   \begin{df}[ковариация]
+    Пусть $ \xi $ и $ \eta $ --- случайные величины, $ \E\xi^{2} $, $ \E\eta^{2} < +\infty$. Тогда \textit{ковариацией} $ \xi $ и $ \eta $ называется
+    \begin{align*}
+     \mathrm{cov}(\xi,\eta) = \E \left( (\xi - \E\xi)(\eta - \E\eta) \right)
+    \end{align*} 
+   \end{df}
+   \begin{prop}
+    \begin{align*}
+     \cov(\xi,\eta) = \E(\xi\eta) - \E\xi \cdot \E\eta.
+    \end{align*} 
+   \end{prop}
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Обозначим $\E \xi = a, \E \eta = b$ 
+    \begin{align*}
+     \cov(\xi, \eta) = \E((\xi - a)(\eta - b)) = \E(\xi \eta) - a\underbrace{\E\eta}_b -b\underbrace{\E\xi}_b + a \cdot b = \E(\xi \eta) - a \cdot b
+    \end{align*}
+   \end{proof}
+   \begin{prop}
+    \begin{align*}
+     \cov(\xi,\xi) = \D\xi.
+    \end{align*} 
+   \end{prop}
+   \begin{prop}
+    \begin{align*}
+     \cov(\xi,\eta) = \cov(\eta,\xi).
+    \end{align*}
+   \end{prop}
+   \begin{prop}
+    \begin{align*}
+     \cov(a\xi_1 + b\xi_2, \eta) = a\cov(\xi_1,\eta) + b \cov(\xi_2, \eta).
+    \end{align*} 
+   \end{prop}
+   \begin{prop}
+    Если $ \xi $ и $ \eta $ независимы, то
+    \begin{align*}
+     \cov(\xi,\eta) = 0.
+    \end{align*} 
+   \end{prop}
+   \begin{prop}
+    $ \D(\xi + \eta) = \D\xi + \D\eta + 2\cov(\xi,\eta) $.
+   \end{prop}
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    \begin{align*}
+     \D(\xi+\eta) &= \E(\xi+\eta)^{2} - \left( \E(\xi+\eta) \right)^{2} = \\
+     &= \E\xi^{2} + \E\eta^{2} + 2\E(\xi\eta) - (\E\xi)^{2} - (\E\eta)^{2} - 2\E\xi \cdot \E\eta = \\
+     &= \D\xi + \D\eta +2\cov(\xi,\eta).
+    \end{align*} 
+   \end{proof}
+   \begin{prop}
+    \begin{align*}
+     \D(\xi_1 + \xi_2 + \ldots + \xi_n) = \sum_{i=1}^{n} \D\xi_i + 2 \sum_{i < j} \cov(\xi_i, \xi_j).
+    \end{align*} 
+   \end{prop}
 
-\begin{df}[коэффициент корреляции]
- 
-\begin{flalign*}
-&  \rho(\xi,\eta) = \frac{\cov(\xi,\eta)}{\sqrt{\D\xi} \cdot \sqrt{\D\eta}} \in [-1,1] &\\
-&  |\cov(\xi, \eta)| \leq \E (|\xi - \E \xi| \cdot |\eta - \E \eta|) \leq (\E |\xi - \E \xi|^2)^{\frac{1}{2}} \cdot (\E |\eta - \E \eta|^2)^{\frac{1}{2}} = \sqrt{\D\xi}\cdot\sqrt{\D\eta}. &
-\end{flalign*} Если $ \rho(\xi,\eta) = 0 $, то величины $ \xi $ и $ \eta $ называются \textit{некоррелированными}.
+   \begin{remrk}
+    Из того, что $ \cov(\xi,\eta) = 0 $ не следует, что $ \xi $ и $ \eta $ независимы!
+   \end{remrk}
+   \begin{exmpl}
+    Пусть $ \Omega = \left\{ 0,\frac{\pi}{2},\pi \right\} $ с одинаковыми вероятностями. Рассмотрим две случайной величины
+    \begin{align*}
+     \xi(\omega) = \cos \omega, & &\eta(\omega) = \sin \omega.
+    \end{align*} Тогда
+    \begin{align*}
+     \E\xi = \frac{1 + 0 + (-1)}{3} = 0,
+    \end{align*} следовательно $ \E\xi \cdot \E\eta = 0 $. Далее,
+    \begin{align*}
+     \xi\eta = 0, 
+    \end{align*} значит $ \E(\xi\eta) = 0 $. Следовательно, $ \cov(\xi,\eta) = 0 $, но нет независимости!
 
-\end{df}
+    \begin{align*}
+     P(\xi = 1,\eta =1) = 0 \neq \frac{1}{3} \cdot \frac{1}{3} = P(\xi = 1) \cdot P(\eta = 1).
+    \end{align*}
+   \end{exmpl}
 
-\begin{exercs*}
- Пусть $ \rho(\xi,\eta) = \pm 1 $. Доказать, что тогда $ \xi = a\eta + b $, где $ a, b \in \R $ и $ \mathrm{sign}\;a = \mathrm{sign}\;\rho(\xi,\eta) $.
-\end{exercs*}
+   \begin{df}[коэффициент корреляции]
 
-\end{document}
+    \begin{flalign*}
+     &  \rho(\xi,\eta) = \frac{\cov(\xi,\eta)}{\sqrt{\D\xi} \cdot \sqrt{\D\eta}} \in [-1,1] &\\
+     &  |\cov(\xi, \eta)| \leq \E (|\xi - \E \xi| \cdot |\eta - \E \eta|) \leq (\E |\xi - \E \xi|^2)^{\frac{1}{2}} \cdot (\E |\eta - \E \eta|^2)^{\frac{1}{2}} = \sqrt{\D\xi}\cdot\sqrt{\D\eta}. &
+    \end{flalign*} Если $ \rho(\xi,\eta) = 0 $, то величины $ \xi $ и $ \eta $ называются \textit{некоррелированными}.
+
+   \end{df}
+
+   \begin{exercs*}
+    Пусть $ \rho(\xi,\eta) = \pm 1 $. Доказать, что тогда $ \xi = a\eta + b $, где $ a, b \in \R $ и $ \mathrm{sign}\;a = \mathrm{sign}\;\rho(\xi,\eta) $.
+   \end{exercs*}
+
+   \end{document}
