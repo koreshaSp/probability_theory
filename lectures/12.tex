@@ -1,0 +1,289 @@
+% 2023.05.16 lecture 12
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\section{Цепи Маркова.}
+
+\begin{df}
+ Пусть $ Y $ --- не более, чем счётное множество, называемое \textit{фазовым пространством}. Пусть $ (\Omega,\F,P) $ --- вероятностное пространство, $ \xi_n \colon\, \Omega \to Y $ --- последовательность случайных величин. Последовательность $ \xi_n $ называется \textit{цепью Маркова}, если 
+ \begin{align*}
+  P(\xi_n = a_n \mid \xi_{n-1} = a_{n-1}, \ldots, \xi_0 = a_0) = P(\xi_n = a_n \mid \xi_{n-1} = a_{n-1})
+ \end{align*} для любых $ a_0, a_1, \ldots, a_n \in Y $ таких, что $ P(\xi_{n-1} = a_{n-1}, \ldots, \xi_0 = a_0) > 0 $.
+
+ Неформально, $ \xi_n $ не зависит от $ \xi_1, \xi_2, \ldots, \xi_{n-2} $, то может зависеть от $ \xi_{n-1} $.
+\end{df}
+\begin{exmpl}[случайное блуждание по $ \Z $]
+ Пусть $ \eta_k = 1 $ с вероятностью $ p $ и $ \eta_k = -1 $  с вероятностью $ 1-p $. $ \eta_1, \eta_2, \ldots $  независимы. Тогда $ \xi_n := \eta_1 + \eta_2 + \ldots + \eta_n $ --- цепь Маркова.
+\end{exmpl}
+\begin{exmpl}
+ Пусть есть прибор, у которого бывают два состояния: <<работает>> и <<не работает>>. Каждый день может случиться следующее. Если прибор работает, то с вероятностью $ p $ он сломаться, а с вероятностью $ 1-p $ он продолжит работать. Если прибор не работает, то с вероятностью $ q $ его починить, а с вероятностью $ 1-q $ он останется сломанным.
+\end{exmpl}
+\begin{remrk}
+ Цепь Маркова однозначно определяется начальным распределением $ \pi_0 := P_{\xi_0} $ и функциями перехода
+ \begin{align*}
+  p_n(a,b) := P(\xi_n = b \mid \xi_{n-1} = a).
+ \end{align*}
+\end{remrk}
+
+\begin{df}
+ Цепь Маркова называется \textit{однородной}, если функции перехода $ p_n(a,b) = p_{ab} $ не зависят от $ n $.
+\end{df}
+
+Далее мы будем изучать лишь однородные цепи Маркова.
+
+\begin{remrk}
+ В примере 3.2:
+ \begin{align*}
+  \begin{cases}
+   p_{ab}, \text{ если } \left| a-b \right| \neq 1, \\
+   p_{a,a+1} = p, \\
+   p_{a,a-1} = 1-p.
+  \end{cases} 
+ \end{align*}
+
+ В примере 3.3:
+ \begin{align*}
+  P_{yy} = 1-p, && p_{yn} = p, && p_{ny} = q, p_{nn} = 1-q.
+ \end{align*}
+\end{remrk}
+
+\begin{df}
+ Последовательность $ \xi_0 = a_0,\; \xi_1 = a_1,\; \ldots,\; \xi_n = a_n $ называется \textit{траекторией} цепи Маркова.
+\end{df}
+
+\begin{thm}
+ \begin{align*}
+  P(\xi_0 = a_0,\; \xi_1 = a_1,\; \ldots,\; \xi_n = a_n) = \pi_0(a_0) \cdot  p_{a_0 a_1} \cdot p_{a_1 a_2} \cdot  \ldots \cdot p_{a_{n-1}a_n}.
+ \end{align*}
+ \begin{proof}[\normalfont\textsc{Доказательство}]
+  По индукции. База очевидна (определение $ \pi_0 $). Переход $ n-1 \to n $ тоже очевиден:
+  \begin{align*}
+   P(\xi_0 = a_0, \ldots, \xi_n = a_n) &= P(\xi_n = a_n \mid \xi_{n-1} = a_{n-1},\ldots,\xi_0 = a_0) \cdot P(\xi_{n-1} = a_{n-1},\ldots,\xi_0=a_0) = \\
+   &= P(\xi_n = a_n \mid \xi_{n-1} = a_{n-1}) \cdot P(\xi_{n-1} = a_{n-1}, \ldots, \xi_0 = a_0) = \\
+   &= p_{a_{n-1}a_n} \cdot P(\xi_{n-1} = a_{n-1},\ldots,\xi_0 = a_0).
+  \end{align*}
+ \end{proof}
+\end{thm}
+
+\begin{thm}[о существовании цепи Маркова]
+ Пусть $ \pi_0 \colon\, Y \to [0,1] $, $ p \colon\, Y \times Y \to [0,1] $ такие, что
+ \begin{align*}
+  \sum_{y \in Y} \pi_0(y) = 1, && \sum_{y \in Y} p_{ay} = 1.
+ \end{align*} Тогда существует такое вероятностное пространство $ (\Omega,\F,P) $ и такая цепь Маркова $ \left\{\xi_n \right\}_{n=0}^{\infty} $ с начальным распределением $ \pi_0 $ и функциями перехода $ p $.
+\end{thm}
+
+Доказывать не будем (возня).
+
+\begin{thm}
+ Пусть есть цепь Маркова. Обозначим $ \pi_n = P_{\xi_n} $. Тогда
+ \begin{align*}
+  \pi_n = \pi_0 P^{n},
+ \end{align*} где $ P $ --- матрица, составленная из $ p_{ab} $.
+\end{thm}
+
+Здесь $ \pi_n $ --- вектор-строка (возможно счётная). Матрица $ P $ также может быть счётной ($ \N \times \N $).
+
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ По индукции. База очевидна. Переход $ n -1 \to n $.
+ \begin{align*}
+  \pi_n(b) &= \sum_{a \in Y} \pi_{n-1}(a) \cdot p_{ab} \implies \pi_n = \pi_{n-1} P.
+ \end{align*}
+\end{proof}
+
+\begin{df}
+ Будем говорить, что $ \pi \colon\, Y \to [0,1] $ --- \textit{распределение} на $ Y $, если
+ \begin{align*}
+  \sum_{y \in Y} \pi(y) = 1.
+ \end{align*}
+\end{df}
+\begin{df}
+ $ \pi \colon\, Y \to [0,1] $ --- \textit{стационарное} распределение на $ Y $, если $ \pi P = \pi $.
+\end{df}
+
+Стационарное распределение --- это в точности неподвижная точка линейного оператора $ P $.
+
+\begin{exmpl}
+ Рассмотрим случайное блуждание на $ \Z $ с вероятностью $ p = 1 / 2 $. Предположим, что есть стационарное распределение $ \pi \colon\, \Z \to [0,1] $. Тогда для любой точки $ y \in \Z $ верно
+ \begin{align*}
+  \pi(y) = \frac{1}{2}\pi(y-1) + \frac{1}{2}\pi(y+1) \implies \pi(y) - \pi(y-1) = \pi(y+1) - \pi(y).
+ \end{align*} То есть, величина $ \alpha(y) = \pi(y+1) - \pi(y) $  --- это константа. Если $ \alpha > 0 $, то $ \pi(n) = \pi(0) + \alpha n \to \infty $, что невозможно. Аналогично получаем противоречие при $ \alpha < 0 $. Если же $ \alpha = 0 $, то $ \pi(y) $ --- константа, что тоже невозможно.
+\end{exmpl}
+
+\begin{thm}[эргодическая теорема Маркова]
+ \label{theorem:ergodic_thorem_markov}
+ Пусть есть конечная цепь Маркова (фазовое пространство $ Y $ конечно). Пусть $ p_{ab} > 0 $ для всех $ a,b\in Y $. Тогда существует единственное стационарное распределение $ \pi\colon\,Y\to[0,1] $, причём
+ \begin{align*}
+  \pi(b) = \lim_{n \to \infty} P(\xi_n = b \mid \xi_0 = a).
+ \end{align*}
+
+ Более того, существует $ q \in (0,1) $ и $ C> 0 $ такие, что
+ \begin{align*}
+  \left| \pi(b) - P(\xi_n = b \mid \xi_0 = a) \right| \leqslant C q^{n}.
+ \end{align*}
+\end{thm}
+
+Особенность теоремы \ref{theorem:ergodic_theorem_markov} в том, что с чего мы бы не стартовали, мы всё равно получим в пределе единственное стационарное распределение.
+
+Теорема \ref{theorem:ergodic_thorem_markov} имеет множество приложений в биологии и других прикладных областях.
+
+Здесь применяется теорема о сжимающем отображении.
+
+\begin{proof}[\normalfont\textsc{Доказательство теоремы \ref{theorem:ergodic_thorem_markov}}]
+ Обозначим $ \# Y = n $. Рассмотрим в $ \R^{n} $ $ L^{1} $-норму:
+ \begin{align*}
+  \left\| x \right\| = \left| x_1 \right| + \left| x_2 \right| + \ldots + \left| x_n \right|
+ \end{align*} --- получили полное пространство. Рассмотрим следующее множество в этом пространстве:
+ \begin{align*}
+  S = \left\{ x \in \R^{n} \mid \left\| x \right\| = 1,\; x_j \geqslant 0 \right\}
+ \end{align*} --- это тоже полное пространство как замкнутое подпространство $ \R^{n} $.
+
+ Все распределения на $ Y $ попадают в $ S $. Рассмотрим отображение $ T \colon\,S\to S $
+ \begin{align*}
+  T x = x^{\top} P.
+ \end{align*} Оказывается, отображение $ T $ является сжимающем на множестве $ S $. Докажем это.
+
+ Обозначим
+ \begin{align*}
+  \delta := \min \left\{ p_{ab} \mid a,b\in Y \right\} > 0.
+ \end{align*} Возьмём какие-нибудь $ x,y \in S $ и рассмотрим $ z = x - y $. Посмотрим на
+ \begin{align*}
+  Tx - Ty = Tz.
+ \end{align*}
+ \begin{align*}
+  (Tz)_k = \sum_{j=1}^{n} z_j p_{jk}.
+ \end{align*} Тогда
+ \begin{align*}
+  \left\| Tz \right\| &= \sum_{k=1}^{n} \left|\sum_{j=1}^{n} z_j p_{jk} \right| = \sum_{k=1}^{n} \left| \sum_{j=1}^{n} z_j(p_{jk} - \delta) + \underbrace{\sum_{j=1}^{n} z_j \delta}_0 \right| \leqslant \sum_{k=1}^{n} \sum_{j=1}^{n} \left| z_j \right|(p_{jk} - \delta) = \\
+  &= \sum_{j=1}^{n} \left| z_j \right| \underbrace{\sum_{k=1}^{n} (p_{jk} - \delta)}_{1-n\delta} = (1-n\delta) \sum_{j=1}^{n} \left| z_j \right| = \left\| z \right\|(1 - n\delta).
+ \end{align*} Получаем, что $ T $ --- сжимающее отображение. Тогда берём $ q := 1 - n\delta \in (0,1) $, и по теореме о сжимающем отображении для любой начальной точки $ x_0 $, последовательность $ x_0, T x_0, T^{2} x_0, \ldots $ стремится к единственной неподвижной точке $ x^{\ast} $, $ T x^{\ast}= x^{\ast} $.
+\end{proof}
+
+\begin{remrk}
+ Пусть $ Y $ конечно, и существует число $ m \in \N $ такое, что
+ \begin{align*}
+  p_{ab}(m) := P(\xi_m = b \mid \xi_0 = a) > 0
+ \end{align*} для всех $ a,b \in Y $. Тогда тоже существует единственное стационарное распределение.
+\end{remrk}
+
+Упражнение: вывести замечание из теоремы \ref{theorem:ergodic_thorem_markov}.
+
+\begin{notatn*}
+ $ p_{ab}(m) = P(\xi_m = b \mid \xi_0 = a) $ --- вероятность перехода в $ b $ за $ m $ шагов, начиная из точки $ a $.
+\end{notatn*}
+
+\begin{df}
+ Состояние $ b \in Y $ \textit{достижимо} из состояния $ a \in Y $, если $ p_{ab}(m) > 0 $ при некотором $ m \in \N $.
+\end{df}
+
+\begin{df}
+ Состояния $ a \in Y $ и $ b \in Y $ \textit{сообщающиеся}, если $ a $ достижимо из $ b $, и $ b $ достижимо из $ a $.
+\end{df}
+
+\begin{df}
+ Состояние $ a \in Y $ \textit{существенное}, если для любого $ b $, достижимого из $ a $, $ a $ и $ b $ сообщающиеся.
+\end{df}
+
+Упражнение: доказать, что в конечной цепи всегда есть хотя бы одно существенное состояние.
+
+\begin{notatn*}
+ \begin{align*}
+  f_a(n) = P(\xi_n=a\mid \xi_{n-1} \neq a,\; \ldots,\; \xi_1 \neq a,\; \xi_0 = a)
+ \end{align*} --- вероятность впервые вернуться в $ a $ за $ n $ шагов.
+\end{notatn*}
+
+\begin{df}
+ $ a \in Y $ --- \textit{возвратное состояние}, если 
+ \begin{align*}
+  \sum_{n=1}^{\infty} f_a(n) = 1,
+ \end{align*} то есть вероятность вернуться из $ a $ назад равна $ 1 $.
+
+ Если же
+ \begin{align*}
+  \sum_{n=1}^{\infty} f_a(n) < 1,
+ \end{align*} то $ a \in Y $ --- \textit{невозвратное состояние}.
+\end{df}
+
+\begin{df}
+ Если
+ \begin{align*}
+  \lim_{n \to \infty} p_{aa}(n)  = 0,
+ \end{align*} то $ a $ --- \textit{нулевое состояние}.
+\end{df}
+
+\begin{notatn*}
+ \begin{align*}
+  F_a := \sum_{n=1}^{\infty} f_a(n)
+ \end{align*} --- вероятность возврата в $ a $.
+\end{notatn*}
+
+\begin{thm}[критерий возвратности]
+ Состояние $ a \in Y $  возвратно тогда и только тогда, когда
+ \begin{align*}
+  \sum_{n=1}^{\infty} p_{aa}(n) = +\infty.
+ \end{align*}
+
+ Если $ a \in Y $  не возвратно, то $ F_a = \frac{P_a}{1 + P_a} $, где $ P_a = \sum_{n=1}^{\infty} p_{aa}(n) $.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Положим $ p_{aa}(0) := 1 $, и рассмотрим производящую функцию
+  \begin{align*}
+   \mathcal P(z) = \sum_{n=0}^{\infty} p_{aa}(n) \cdot z^{n}.
+ \end{align*} и
+ \begin{align*}
+  \F (z) = \sum_{n=0}^{\infty}f_a(n)z^{n}, \qquad f_a(0)=0.
+ \end{align*}
+ Как связаны эти ряды?
+ \begin{align*}
+  p_{aa}(n) = \sum_{k=0}^{n} f_a(k) \cdot p_{aa}(n-k), \qquad n \geqslant 1.
+ \end{align*} Тогда
+ \begin{align*}
+  \mathcal P(z) = \mathcal F(z) \mathcal P(z) + 1.
+ \end{align*} Отсюда знаем
+ \begin{align*}
+  \mathcal F(z) = \frac{\mathcal P(z)-1}{\mathcal P(z)}.
+ \end{align*} Тогда
+ \begin{align*}
+  \lim_{z \to 1}  \mathcal F(z) = \lim_{z \to 1} \frac{\mathcal P(z) -1}{\mathcal P(z)}.
+ \end{align*} Левая часть равна $ F_a $, ведь
+ \begin{align*}
+  F_a - \mathcal F(z) = \sum_{n=1}^{\infty} f_a(n) (1-z^{n})
+ \end{align*} Если  ряд
+ \begin{align*}
+  \sum_{n=1}^{\infty}p_{aa}(n)
+ \end{align*} сходится, то
+ \begin{align*}
+  \lim_{z \to 1-} \mathcal P(z) = 1 + \sum_{n=1}^{\infty} p_{aa}(n)
+ \end{align*} по тем же причинам. То есть если $ \sum p_{aa}(n) $ сходится, то
+ \begin{align*}
+  F_a = \frac{P_a}{1+P_a} < 1.
+ \end{align*}
+
+ Если ряд расходится, то 
+ \begin{align*}
+  \lim_{z \to 1-} \mathcal P(z) = +\infty.
+ \end{align*}
+\end{proof}
+
+\begin{crly}
+ Всякое невозвратное состояние является нулевым.
+\end{crly}
+
+\begin{thm}[теорема солидарности]
+ Сообщающиеся состояния возвратные/невозвратные (нулевые/не нулевые) одновременно.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Пусть $ a $ и $ b $ сообщающиеся. Тогда
+ \begin{align*}
+  p_{ab}(i) > 0, && p_{ba}(j) > 0.
+ \end{align*} Тогда
+ \begin{align*}
+  p_{aa}(n+i+j) \geqslant p_{ab}(i) \cdot p_{bb}(n) \cdot p_{ba}(j).
+ \end{align*} Тогда если $ p_{aa}(n+i+j) \to 0 $ , то $ p_{bb}(n) \to 0 $ .
+
+ С суммой ряда аналогично. Если
+ \begin{align*}
+  \sum_{n=1}^{\infty} p_aa(n+i+j) \geqslant p_{ab}(i) p_{ba}(j) \cdot \sum_{n=1}^{\infty}p_{bb}(n).
+ \end{align*} Если левая часть сходится, то сходится и правая часть.
+\end{proof}
+
+\end{document}
+
