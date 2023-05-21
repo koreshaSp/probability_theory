@@ -9,7 +9,7 @@
   P(\xi_n = a_n \mid \xi_{n-1} = a_{n-1}, \ldots, \xi_0 = a_0) = P(\xi_n = a_n \mid \xi_{n-1} = a_{n-1})
  \end{align*} для любых $ a_0, a_1, \ldots, a_n \in Y $ таких, что $ P(\xi_{n-1} = a_{n-1}, \ldots, \xi_0 = a_0) > 0 $.
 
- Неформально, $ \xi_n $ не зависит от $ \xi_1, \xi_2, \ldots, \xi_{n-2} $, то может зависеть от $ \xi_{n-1} $.
+ Неформально, $ \xi_n $ не зависит от $ \xi_1, \xi_2, \ldots, \xi_{n-2} $, но может зависеть от $ \xi_{n-1} $.
 \end{df}
 \begin{exmpl}[случайное блуждание по $ \Z $]
  Пусть $ \eta_k = 1 $ с вероятностью $ p $ и $ \eta_k = -1 $  с вероятностью $ 1-p $. $ \eta_1, \eta_2, \ldots $  независимы. Тогда $ \xi_n := \eta_1 + \eta_2 + \ldots + \eta_n $ --- цепь Маркова.
@@ -34,7 +34,7 @@
  В примере 3.2:
  \begin{align*}
   \begin{cases}
-   p_{ab}, \text{ если } \left| a-b \right| \neq 1, \\
+   p_{ab} = 0, \text{ если } \left| a-b \right| \neq 1, \\
    p_{a,a+1} = p, \\
    p_{a,a-1} = 1-p.
   \end{cases} 
