@@ -216,6 +216,18 @@
  Если $\varphi(n) = o((npq)^{\frac{2}{3}})$ и $\left| k-np \right| \leqslant \varphi(n)$, то верен тот же вывод из теоремы \ref{theorem:local_theorem_muavr_laplas}.
 \end{remrk}
 
+
+\begin{exmpl*}
+	Игрок ставит на красное $n = 222$ раз.
+	Вероятность выигрыша тогда $p = \frac{18}{37}$.
+	Нас интересует вероятность выйгрыша в половине игр.
+
+	\begin{align*}
+	  P(S_{222} = 111) \approx 0.0493228... \\
+	  \frac{1}{\sqrt{2 \pi n p q}} e^{-x^2/2} \approx 0.0493950...
+	\end{align*}
+\end{exmpl*}
+
 \begin{thm}[%
  интегральная теорема Муавра-Лапласа]
  \label{theorem:intergram_theorem_muavr_laplas}
