@@ -106,10 +106,11 @@
   = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \geqslant \frac{\frac{n}{p \cdot q} - 1}{n} - \frac{\frac{n}{p }}{n } \cdot \frac{\frac{n}{p }}{n} &\geqslant -\frac{1}{n} \\
   = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \leqslant \frac{\frac{n}{p \cdot q}}{n} - \frac{\frac{n}{p} - 1}{n} \cdot \frac{\frac{n}{q} - 1}{n} &\leqslant \frac{1}{n} \left(\frac{1}{p} + \frac{1}{q}\right)
  \end{align*} 
-  \begin{align*}
-   \frac{M}{n} \sum_{i \in I} \geqslant \frac{1}{n} \cdot \sum (\frac{1}{p} + \frac{1}{q}) \geqslant \sum \cov(\xi_p, \xi_q) \geqslant -\frac{1}{n} \sum 1 \geqslant -\frac{M^{2}}{n} = O(1)
-  \end{align*} 
-  $ \D\xi = \log\log n + O(1) $.
+ \begin{align*}
+	 \sum_{p < q \leqslant M} \cov(\xi_p, \xi_q) &= \sum_{p < q \leqslant M} \frac 1 n \left(\frac 1 p + \frac 1 q\right) \geqslant -\frac{M^2}{n} = O(1) \\
+	 \frac 1 n \sum_{p < q \leqslant M} \left(\frac 1 p + \frac 1 q\right) &= \frac 1 2 \cdot \frac 1 n \sum_{p \neq q \leqslant M} \left(\frac 1 p + \frac 1 q\right) \leqslant \frac 1 2 \frac 1 n \cdot 2M \sum_{p \leq M} \frac 1 p = O(1)
+ \end{align*}
+  А значит $ \D\xi = \log\log n + O(1) $.
 
   Выполнено вложение:
   \begin{align*}
