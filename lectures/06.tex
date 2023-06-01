@@ -15,16 +15,16 @@
  Пусть дан неориентированный граф $ G = (V,E) $, $ n $ вершин и $ \frac{nd}{2} $ рёбер, где $ d \geqslant 1 $. Тогда можно выбрать независимое множество на $ \frac{n}{2d} $ вершинах.
 \end{exmpl}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Рассмотрим случайное множество вершин $ S \subset V $ ($ n $ раз подбрасываем нечестную монетку для каждой вершины).
+ Рассмотрим случайное множество вершин $ S \subset V $ ($ n $ раз подбрасываем нечестную монетку для каждой вершины), это будет наше почти независимое множество.
  \begin{align*}
   P(x \in S) = p,
- \end{align*} всё независимо. Дальше для ребра $ xy \in E $ заведём случайную величину
+ \end{align*} Дальше для ребра $ xy \in E $ заведём случайную величину
  \begin{align*}
   \xi_{xy} = \begin{cases}
    1, \text{ если } x, y \in S; \\
    0, \text{ иначе. }
   \end{cases} 
- \end{align*} Тогда $ \E\xi_{xy} = p^{2} $. Рассмотрим случайную величину --- сумму:
+ \end{align*} Тогда $ \E\xi_{xy} = p^{2} $. Рассмотрим случайную величину --- сумму(а по сути количество ребер внутри $S$):
  \begin{align*}
   \xi = \sum_{xy \in E}\xi_{xy}.
  \end{align*} Тогда
@@ -36,15 +36,20 @@
    1, \text{ если } x \in S, \\
    0, \text{ иначе. }
   \end{cases} 
- \end{align*} $ \E\eta_x = p $. Тогда $ \E\eta_x = p $.
+ \end{align*} Тогда $ \E\eta_x = p $.
  \begin{align*}
   \eta = \sum_{x \in V} \eta_x
- \end{align*} $ \E\eta = pn $. Рассмотрим
+ \end{align*} $ \E\eta = pn $(ожидаемое количество элементов в $S$ ). Рассмотрим
  \begin{align*}
   \E(\eta - \xi) = np - \frac{nd}{2} \cdot p^{2}.
  \end{align*} Максимизируем по $ p $. Производная:
 
- Найдётся реализация, на которой $ \eta - \xi \geqslant \frac{n}{2d} $. Возьмём это множество $ S $. У каждого ребра выкинем одну из вершин, получим независимое множество из хотя бы $ \frac{n}{2d} $ вершин.
+ \begin{align*}
+	 \frac{d}{dp}(np - \frac{nd}{2} \cdot p^{2}) &= n - ndp = 0 \implies p = \frac{1}{d} \implies \\
+	 \implies \E(\eta - \xi) &= n \cdot \frac 1 d - \frac{n}{2d} \cdot \frac{1}{d^2} = \frac{n}{2d} \\
+ \end{align*}
+
+ А значит найдётся реализация, на которой $ \eta - \xi \geqslant \frac{n}{2d} $. Возьмём это множество $ S $. У каждого ребра выкинем одну из вершин, получим независимое множество из хотя бы $ \frac{n}{2d} $ вершин.
 \end{proof}
 
 Рассмотрим следующую теоретико-числовую иллюстрацию.
@@ -101,10 +106,11 @@
   = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \geqslant \frac{\frac{n}{p \cdot q} - 1}{n} - \frac{\frac{n}{p }}{n } \cdot \frac{\frac{n}{p }}{n} &\geqslant -\frac{1}{n} \\
   = \frac{\left\lfloor \frac{n}{pq} \right\rfloor }{n} - \frac{\left\lfloor \frac{n}{p} \right\rfloor}{n} \cdot \frac{\left\lfloor \frac{n}{q} \right\rfloor }{n} \leqslant \frac{\frac{n}{p \cdot q}}{n} - \frac{\frac{n}{p} - 1}{n} \cdot \frac{\frac{n}{q} - 1}{n} &\leqslant \frac{1}{n} \left(\frac{1}{p} + \frac{1}{q}\right)
  \end{align*} 
-  \begin{align*}
-   \frac{M}{n} \sum_{i \in I} \geqslant \frac{1}{n} \cdot \sum (\frac{1}{p} + \frac{1}{q}) \geqslant \sum \cov(\xi_p, \xi_q) \geqslant -\frac{1}{n} \sum 1 \geqslant -\frac{M^{2}}{n} = O(1)
-  \end{align*} 
-  $ \D\xi = \log\log n + O(1) $.
+ \begin{align*}
+	 \sum_{p < q \leqslant M} \cov(\xi_p, \xi_q) &= \sum_{p < q \leqslant M} \frac 1 n \left(\frac 1 p + \frac 1 q\right) \geqslant -\frac{M^2}{n} = O(1) \\
+	 \frac 1 n \sum_{p < q \leqslant M} \left(\frac 1 p + \frac 1 q\right) &= \frac 1 2 \cdot \frac 1 n \sum_{p \neq q \leqslant M} \left(\frac 1 p + \frac 1 q\right) \leqslant \frac 1 2 \frac 1 n \cdot 2M \sum_{p \leq M} \frac 1 p = O(1)
+ \end{align*}
+  А значит $ \D\xi = \log\log n + O(1) $.
 
   Выполнено вложение:
   \begin{align*}
@@ -143,7 +149,7 @@
  \end{align*} должны быть независимы.
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Доказываем для $ \xi_1, \ldots, \xi_m, \eta_1, \ldots \eta_m $. Тогда
+ Доказываем для $ \xi_1, \ldots, \xi_m, \eta_1, \ldots \eta_n $. Тогда
  \begin{align*}
   f(\xi_1, \ldots, \xi_m),\;g(\eta_1, \ldots, \eta_n)
 \end{align*}  независимы. Нужно доказать, что события $ \left \{ f(\xi_1, \ldots,\xi_m) \in \tilde A \right \} $ и $ \left\{ g(\eta_1, \ldots, \eta_n) \in \tilde B \right\} $ независимы. Но левое событие, это $ \vec\xi \in f^{-1}(\tilde A) $, а правое событие --- это $ \vec\eta \in g^{-1}(\tilde B) $. Прообразы --- борелевские множества, поэтому достаточно доказать независимость событий $ \vec\xi \in A $ и $ \vec\eta \in B $ для любых борелевских множеств $ A \subset\R^{m} $ и $ B \subset \R^{n} $. На самом деле, достаточно ограничится ячейками: счётные дизъюнктные объединения ячеек порождают все борелевские множества. Нужно проверить

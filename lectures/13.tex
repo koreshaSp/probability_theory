@@ -1,0 +1,201 @@
+% 2023.05.23 lecture 13
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\begin{exmpl}[управление запасами]
+ Есть склад, на складе может быть максимум $ S $ единиц товара. Пусть $ \eta_i $ --- это спрос на товар в момент времени $ i $. Будем считать, что $ \eta_i $ --- независимые случайные величины. Если единиц товара в какой-то момент становится меньше $ s $, то склад заполняется до максимума. Обозначим за $ \xi_n $ количество единиц товара на складе в момент времени $ n $. Оно определяется так:
+ \begin{align*}
+  \xi_n = \begin{cases}
+   \xi_{n-1} - \eta_n, \text{ если }  \xi_{n-1} \geqslant s, \\
+   S - \eta_n, \text{ если } \xi_{n-1} < s.
+  \end{cases}
+ \end{align*} При этом считаем, что $ \eta_n \leqslant s $ всегда.
+\end{exmpl}
+
+\newpage
+\section{Случайные блуждания.}
+
+Возвратно = вероятность вернуться равна $ 1 $.
+
+\begin{thm}
+ Случайное блуждание по $ \Z $ возвратно тогда и только тогда, когда $ p = 1 / 2 $.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ По критерию возвратности состояние $ 0 $ возвратно, если и только если ряд
+ \begin{align}
+  \sum_{n=1}^{\infty}p_{00}(n) = +\infty.
+ \end{align} расходится. Но
+ \begin{align*}
+  &p_{00}(2n+1)= 0, \\
+  &p_{00}(2n) = \binom{2n} n \cdot p^{n}(1-p)^{n} \sim \frac{4^{n}}{\sqrt{\pi n}} p^{n}(1-p)^{n}.
+ \end{align*} Если $ p = 1 / 2 $, то $ p_{00} \sim \frac{1}{\sqrt{\pi n}} $, и ряд расходится. Если же $ p \neq 1 / 2 $, то $ p_{00}(2n) = \OO \left( (4p(1-p))^{n} \right) $, и ряд сходится ведь $ 4p(1-p) < 1 $.
+\end{proof}
+
+Теперь посмотрим не на блуждание по соседним точкам, а на, так называемое, \textit{произвольное} блуждание.
+
+\begin{df}[произвольное изотропное блуждание]
+ Есть $ \eta_n $ --- целозначная случайная величина все $ \eta_n $ независимы и одинаково распределены, и $ \xi_n = \eta_1 + \ldots + \eta_n $.
+\end{df}
+
+\begin{thm}
+ Если $ \eta_n $ симметричные (то есть $ P(\eta_n = a) = P(\eta_n = -a) $ для всех $ a $) и имеют матожидание, то случайное блуждание возвратно.
+\end{thm}
+\begin{remrk*}
+ Если матожидание есть, то оно обязательно равно нулю.
+\end{remrk*}
+\begin{proof}[\normalfont\textsc{Доказательство теоремы 1.3}]
+ Надо доказать, что ряд
+ \begin{align*}
+  \sum_{n=1}^{\infty}p_{00}(n) = +\infty
+ \end{align*} расходится.
+ \begin{align*}
+  p_{00}(n)&=P(\xi_n=0)=G_{\xi_n}(0) = G^{n}(0),
+ \end{align*} где $ G $ --- производящая функция для $ \eta_n $ (ряд Лорана в этом случае). Проинтегрируем по контуру
+ \begin{align*}
+  G^{n}[0] = \frac{1}{2\pi i} \int\limits_{\left| z \right|=1}   \frac{G^{n}(z)}{z}\,dz.
+ \end{align*} Тогда
+ \begin{align*}
+  \sum_{n=1}^{\infty}P(\xi_n=0)&=\sum_{n=1}^{\infty} \frac{1}{2\pi i} \int\limits_{\left| z \right|=1}   \frac{G^{n}(z)}{z}\,dz = \frac{1}{2\pi i} \int\limits_{\left| z \right|=1} \frac{1}{z} \sum_{n=0}^{\infty} G^{n}(z)\,dz = \\
+  &= \frac{1}{2\pi i} \int\limits_{\left| z \right|=1} \frac{1}{z} \cdot \frac{1}{1 - G(z)} = \begin{bmatrix}
+   z = e^{it} & dz = ie^{it}\,dt
+  \end{bmatrix} = \\
+ &= \frac{1}{2\pi } \int_{-\pi}^{\pi} \frac{dt}{1 - G(e^{it})} = \frac{1}{\pi} \int_{0}^{\pi} \frac{dt}{1 - G(e^{it})}.
+ \end{align*} Но
+ \begin{align*}
+  G(1+s) = 1 + o(s).
+ \end{align*} Интеграл сходится. Но очень нагло. Так не хорошо.
+
+ Исправим.
+ \begin{align*}
+  \sum_{n=0}^{\infty} x^{n}P(\xi_n=0) = \sum_{n=0}^{\infty} \frac{x^{n}}{2\pi i} \int\limits_{\left| z \right|=1}   \frac{G^{n}(z)}{z}\,dz
+ \end{align*} $ x \in (0,1) $. Всё сходится равномерно! И все получается! Итого
+ \begin{align*}
+  \sum_{n=0}^{\infty}x^{n}P(\xi_n=0) &= \frac{1}{\pi}\int_{0}^{\pi} \frac{dt}{1-xG(e^{it})} = \begin{bmatrix}
+   G(e^{it}) = 1 + o(t)
+  \end{bmatrix} = \\
+  &= \frac{1}{\pi} \int_{0}^{\pi} \frac{dt}{1-x + o(xt)} \geqslant \frac{1}{\pi} \int_{0}^{\pi}  \frac{dt}{1-x+xt} = \frac{1}{\pi} \left.\frac{\log \left| 1-x+xt \right|}{x}\right|_0^{\pi} = \\
+   &= -\frac{\log(1-x)}{\pi x} + \frac{\log(1-x+\pi x)}{\pi x}.
+  \end{align*} Теперь устремим $ x \to 1+  $. Тогда левая часть стремится к ряду, а правая часть к $ +\infty $. Ряд расходится.
+\end{proof}
+
+\begin{remrk}
+ Все состояния тут нулевые.
+\end{remrk}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Надо понять, что
+ \begin{align*}
+  \int\limits_{\left| z \right|=1} \frac{G^{n}(z)}{z}\,dz \to 0,\\
+  = c \int_{-\pi}^{\pi} G^{n}(e^{it})\,dt
+ \end{align*} Поймём, что $ G^{n}(e^{it}) \to 0 $ почти всюду. Знаем, что
+ \begin{align*}
+  \left| G(e^{it}) \right| = \left| \sum_{-\infty}^{+\infty} P(\eta=n)e^{int} \right| \leqslant \sum_{-\infty}^{+\infty} P(\eta = n)
+ \end{align*} Равенство означает, что все аргументы одинаковы при $ P(\eta=n)>0 $.
+ \begin{align*}
+  \arg e^{int} = \arg e^{ikt}
+ \end{align*} означает
+ \begin{align*}
+  nt = kt + 2\pi m, \quad m \in\Z.
+ \end{align*} если $ P(\eta=n)>0 $ и $ P(\eta=k)>0 $. Тогда
+ \begin{align*}
+  t = \frac{2\pi m}{n - k} \in \pi \Q
+ \end{align*} таких $ t $ не более чем счётно, и мера равна нулю.
+\end{proof}
+
+Посмотрим теперь на большие размерности, пусть теперь мы шагаем не по $ \Z $, а по $ \Z^{d} $. Случайное блуждание по $ \Z^{d} $. Из каждой точки мы идём в соседнюю с вероятностями $ \frac{1}{2d} $.
+
+\begin{thm}[теорема Пойя о возвращении]
+ Такое случайное блуждание возвратно тогда и только тогда, когда $ d=1 $ или $ d=2 $.
+\end{thm}
+
+Пьяная ворона назад не вернётся.
+
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Для $ d=1 $ уже всё доказано.
+
+ Посмотрим на $ d=2 $. Повернём на $ 45 $ градусов. Будем смотреть проекцию точки на две диагональные оси. $ \eta_n $ и $ \tilde \eta_n $. Оказывается --- это независимые блуждания по повернутым осям (по $ \Z $). Надо посмотреть на один шаг и всё будет понятно.
+ \begin{align*}
+  P(\vec\xi_n = 0) = P(\eta_n=0,\;\tilde\eta_n=0)=P(\eta_n=0)P(\tilde\eta_n=0) = \begin{cases}
+   0, \text{ если } n \text{ неч}  \\
+   (\binom{2n}n \frac{1}{4^{n}})^{2} \sim \left( \frac{1}{\sqrt{\pi n}} \right)^{2} = \frac{1}{\pi n} \text{ иначе }
+  \end{cases} 
+ \end{align*}
+ Ряд
+ \begin{align*}
+  \sum_{n=1}^{\infty}P(\vec\xi_n=\vec 0)
+ \end{align*} расходится, следовательно, блуждание возвратно.
+
+ Пусть теперь $ d = 3 $.
+ \begin{align*}
+  P(\vec\xi_n = \vec 0) = \begin{cases}
+   0, \text{ если $ n $ нечётно}  \\
+   0, \text{ иначе }
+  \end{cases} 
+ \end{align*}
+ \begin{align*}
+  P(\vec\xi_{2n} = \vec 0) = \sum_{i+j \leqslant n} \binom{2n}{i,i,j,j,n-i-j,n-i-j} \frac{1}{6^{2n}}
+ \end{align*} В
+ \begin{align*}
+  \frac{(2n)!}{(i!j!(n-i-j)!)^{2}} = (\frac{n!}{i!j!(n-i-j)!})^{2} \cdot \frac{(2n)!}{(n!)} = \binom {2n} n \cdot \binom{n}{i,j,n-i-j}^{2}
+ \end{align*} Сумму
+ \begin{align*}
+  = \binom{2n} n \frac{1}{6^{2n}} \sum_{i+j \leqslant n} \binom{n}{i,j,n-i-j}^{2}
+ \end{align*} Знаем
+ \begin{align*}
+  \sum_{i+j \leqslant n} \binom{n}{i,j,n-i-j} = 3^{n}.
+ \end{align*} Тогда сумма квадратов не превсохдит суммы умноженной на максимум:
+ \begin{align*}
+  \leqslant \binom{2n}n \frac{1}{6^{2n}} 3^{n} \max_{i+j \leqslant n} \binom{n}{i,j,n-i-j}.
+ \end{align*} Но
+ \begin{align*}
+  \max_{i+j \leqslant n} \sim 3^{n} \cdot \frac{3\sqrt 3}{2\pi n}
+ \end{align*} Надо взять и подставить
+ \begin{align*}
+  \binom n {\frac{n}{3},\frac{n}{3},\frac{n}{3}}
+ \end{align*} в формулу Стирлинга. Тогда
+ \begin{align*}
+  \sim \frac{C}{n\sqrt n}.
+ \end{align*} Ряд сходится!
+
+ Теперь сведём $ d \geqslant 4 $ к $ d=3 $. Будем следить на проекцию на $ \Z^{3} $: либо там происходит случайное блуждание, но с некоторой вероятностью мы стоим. Бесконечно стоять можем с вероятностю $ 0 $, поэтому все стоянки можно выкинуть, и получим случайное блуждание на $ \Z^{3} $. Чтобы вернуться в $ Z^{d} $, надо как минимум вернуться в $ \Z^{3} $.
+\end{proof}
+\begin{exercs*}
+ Доказать, что 
+ \begin{align*}
+  \binom{n}{i_0,j_0,n-i_0-j_)} = \max
+ \end{align*} влечёт $ n-j_0-1 \leqslant 2i_0 \leqslant n - j_0 + 1 $, и $ n-i_0 - 1 \leqslant 2j_0 \leqslant n - i_0 + 1 $.
+\end{exercs*}
+\begin{exercs*}
+ Рассмотрим блуждание по $ \Z^{d} $ по векторам вида $ (\pm 1, \ldots, \pm 1) $ равновероятно по $ \frac{1}{2^{d}} $. Доказать, что блуждание возвратно тогда и только тогда, когда $ d = 1 $ или $ d = 2 $.
+
+ Это проще, чем теорема Пойя.
+\end{exercs*}
+
+Задача о разорении.
+
+ Игрока $ A $ изначально имеет $ A $ монет, а игрок $ B $ --- $ B $ монет. Они играют в орлянку с кривой монеткой: с вероятностью $ q=1-p $ первый платит второму одну монету, а с вероятностью $ p $ --- второй первому. Игра заканчивается, когда игрок разорился.
+
+ Можно процесс представить так: целые точки от $ -A $ до $ B $. Расстояние до $ -A $ --- количество монет у первого, а расстояние до $ B $ --- количество монет у второго. На концах петли. 
+
+ Обозначим через $ \beta_k(x) $ вероятность через $ k $ шагов оказаться в $ B $, если на нулевом шаге мы находимся в $ x $. Напишем рекурренту:
+ \begin{align*}
+  \beta_k(x) = p \beta_{k-1}(x + 1) + q \beta_{k-1}(x-1)
+ \end{align*} верно при $ -A < x < B $. Ещё мы знаем $ \beta_{k-1}(x) \leqslant \beta_k(x) \leqslant 1$. Перейдём к пределу при $ k \to \infty $:
+ \begin{align*}
+  \beta(x) = \lim_{k \to \infty} \beta_k(x).
+ \end{align*} Тогда получим
+ \begin{align*}
+  \beta(x) = p\beta(x+1) +q\beta(x-1)
+ \end{align*} Кроме того, $ \beta(-A) = 0 $ и $ \beta(B) = 1 $. Нужно покумекать и решить эту рекурренту (решить в общем виде и подобрать параметры). Ответ: если $ p \neq q $, то
+ \begin{align*}
+  \beta(x) = \frac{(q / p)^{x} - (q / p)^{-A}}{(q / p) ^{B} - (q/ p)^{-A}}.
+ \end{align*} Если же $ p = q = 1 / 2 $, то
+ \begin{align*}
+  \beta(x) = \frac{x+A}{A+B}.
+ \end{align*}
+
+ $ \beta(0) $ --- ответ на задачу.
+
+ Интересно: матожидание числа раундов до конца игры большое (примерно квадратично по количеству монет, если число монет примерно одинаковое).
+
+\end{document}
+
