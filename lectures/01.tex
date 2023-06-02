@@ -164,7 +164,7 @@
 
 Формулу \eqref{eq:inclusion_exclusion_formula} включений-исключений можно также записать более компактно, в терминах множеств индексов:
 \begin{align*}
- P \left( \bigcup_{i=1}^{m} A_i \right) = \sum_{\varnothing \neq I \subseteq [m]} (-1)^{\# I + 1} P \left( \bigcap_{i \in I} A_i \right).
+ P \left( \bigcup_{i=1}^{m} A_i \right) = \sum_{\varnothing \neq I \subset [m]} (-1)^{\# I + 1} P \left( \bigcap_{i \in I} A_i \right).
 \end{align*}
 
 Часто формула-включений исключений появляется в симметричном варианте, когда события $ A_1, \ldots, A_m $ мы считаем <<плохими>>, и нам нужно посчитать вероятность того, что ни одно из них не произойдёт:
@@ -173,7 +173,7 @@
  &P \left( \bigcap_{i=1}^{m} \overline{A_i} \right) = P(\Omega) - \sum_{i=1}^{m}P(A_i) + \sum_{i < j} P(A_i \cap A_j) + \ldots + (-1)^{m} P \left( \bigcap_{i=1}^{m}A_i \right).
 \end{align} \eqref{eq:inclusion_exclusion_formula_compl} следует из обычной формулы включений-исключений и равенства \eqref{eq:prob_of_compl}. Запись \eqref{eq:inclusion_exclusion_formula_compl} в терминах множеств индексов имеет ещё более естественный вид:
 \begin{align*}
- P \left( \bigcap_{i=1}^{m}\overline{A_i} \right)=\sum_{I \subseteq [m]} (-1)^{\# I} P \left( \bigcap_{i \in I}A_i \right).
+ P \left( \bigcap_{i=1}^{m}\overline{A_i} \right)=\sum_{I \subset [m]} (-1)^{\# I} P \left( \bigcap_{i \in I}A_i \right).
 \end{align*}
 
 \subsection{Неравенство union bound.}

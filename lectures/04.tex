@@ -2,53 +2,58 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-Рассмотрим одну полезную формулу из теории меры: интеграл по мере, имеющей плотность.
+Прежде, чем мы пойдём далее, докажем одну полезную формулу из теории меры для мер с плотностью.
 
 \begin{thm}[%
 интеграл по мере, имеющей плотность]
 \label{theorem:integral_on_measure_with_density}
 Пусть $ w \colon X \to [0,\infty] $ --- измеримая, неотрицательная функция, заданная на пространстве с мерой $ (X,\mathfrak A,\mu) $. Пусть
  \begin{align*}
-  \nu(A) = \int\limits_{A} w\,d\mu 
- \end{align*} --- мера (функцию $ w $ называют плотностью меры $ \nu $). Тогда для любой функции $ f $ верно
+  \nu(A) = \int_{A} w\,d\mu 
+ \end{align*} --- мера с плотностью $ w $. Тогда для любой функции $ f $ верно
  \begin{align}
   \label{equation:integral_on_measure_with_density}
-  \int\limits_{X} f\,d\nu = \int\limits_{X} f w \, d\mu,
- \end{align} если $ f \geqslant 0 $ или если $ f\omega $ суммируема относительно $ \mu $.
+  \int_{X} f\,d\nu = \int_{X} f w \, d\mu,
+ \end{align} где левая часть определена тогда и только тогда, когда определена правая часть.
 \end{thm}
 \begin{conventn*}
  Пусть $ A \subset X $ --- измеримое подмножество. В теории вероятностей функцию
  \begin{align*}
   f \colon\, x \mapsto \begin{cases}
-   1, \text{ если } x \in A; \\
+   1, \text{ если } x \in A, \\
    0, \text{ если } x \notin A,
   \end{cases} 
- \end{align*} называют \textit{индикаторной функцией множества $ A $} (а не характеристической, как мы её называли на матане) и обозначают $ \Ind_A = f $.
+ \end{align*} называют \textit{индикаторной функцией множества $ A $} (а не характеристической, как мы её называли в теории меры) и обозначают $ \Ind_A = f $.
 \end{conventn*}
 \begin{proof}[\normalfont\textsc{Доказательство}]\
+ Доказывать мы будем по стандартной схеме из теории меры.
  \begin{itemize}
   \item Пусть $ f = \Ind_A $ --- индикаторная функция. Тогда
    \begin{align*}
-    \int\limits_{X} \Ind_A \, d\nu = \nu(A) = \int\limits_{A} w\,d\mu = \int\limits_{X} \Ind_A w\,d\mu.    
+    \int_{X} \Ind_A \, d\nu = \nu(A) = \int_{A} w\,d\mu = \int_{X} \Ind_A w\,d\mu.    
    \end{align*} 
   \item По линейности \eqref{equation:integral_on_measure_with_density} верно для простых неотрицательных функций $ f $.
-  \item Пусть теперь $ f $ неотрицательна и измерима. По теореме об аппроксимации можно взять последовательных простых неотрицательных функций $\{f_{n}\}_{n=1}^{\infty} $, которые поточечно возрастают к $ f $. По предыдущему пункту для каждого $ n \geqslant 1 $ имеем
+  \item Пусть теперь функция $ f $ неотрицательна и измерима. По теореме об аппроксимации можно взять последовательность простых неотрицательных функций $\{f_{n}\}_{n=1}^{\infty} $, которые поточечно возрастают к $ f $. По предыдущему пункту для каждого $ n \geqslant 1 $ имеем
    \begin{align*}
-    \int\limits_{X} f_n \,d\nu = \int\limits_{X} f_n w \, d\mu.  
-   \end{align*} По теореме Леви левая часть стремится к $ \int_{X} f\,d\nu  $, а правая --- к $ \int_{X} fw\,d\mu $ (ведь функции $ f_n w $ также измеримы, неотрицательны и поточечно возрастают к функции $ fw $). Равенство \eqref{equation:integral_on_measure_with_density} доказано для неотрицательных измеримых функций.
+    \int_{X} f_n \,d\nu = \int_{X} f_n w \, d\mu.  
+   \end{align*} По теореме Леви левая часть при $ n \to \infty $ стремится к $ \int_{X} f\,d\nu  $, а правая --- к $ \int_{X} fw\,d\mu $ (ведь функции $ f_n w $ также измеримы, неотрицательны и поточечно возрастают к функции $ fw $). Равенство \eqref{equation:integral_on_measure_with_density} доказано для неотрицательных измеримых функций.
 
   \item Для суммируемых функций произвольного знака нужно рассмотреть функции $ f_\pm = \max(\pm f, 0) $, воспользоваться предыдущим пунктом и линейностью.
  \end{itemize}
 \end{proof}
 
+\subsection{Примеры распределений.}
+
 Рассмотрим несколько канонических примеров вероятностных распределений. Начнём с дискретных распределений.
 
-\begin{exmpl}[биномиальное распределение] Пусть есть число $ p \in [0,1] $ и целое число $ n \geqslant 0 $. \textit{Биномиальным распределением} называется распределение случайной величины $ \xi \colon\, \Omega \to \left\{ 0, 1, \ldots, n \right\} $, для которой
+\begin{exmpl}[биномиальное распределение] Пусть есть число $ p \in [0,1] $, число $ q = 1 - p $ и целое число $ n \geqslant 0 $. \textit{Биномиальным распределением} называется распределение случайной величины $ \xi \colon\, \Omega \to \left\{ 0, 1, \ldots, n \right\} $, для которой
  \begin{align*}
-  P(\xi = k) = \binom n k p^{k}(1-p)^{k}
+  P(\xi = k) = \binom n k p^{k}q^{k}
  \end{align*} при всех $ 0 \leqslant k \leqslant n $. Обозначение: $ \xi \sim \Binom(n,p) $.
 
- Биномиальным распределением обладает величина $ S_n $ --- количество успехов с схеме Бернулли с $ n $ испытаниями и вероятностью успеха $ p $.
+ Биномиальным распределением обладает случайная величина $ S_n $ --- количество успехов с схеме Бернулли с $ n $ испытаниями и вероятностью успеха $ p $.
+
+ Биномиальное распределение при $ n=1 $ также называют \textit{распределением Бернулли} и обозначают $ \mathrm{Bernoulli}(p) = \Binom(1,p) $. Случайная величина с распределением Бернулли принимает значение $ 1 $ с вероятностью $ p $, и значение $ 0 $ с вероятностью $ q $.
 \end{exmpl}
 \begin{exmpl}[распределение Пуассона]
  Пусть есть число $ \lambda > 0 $. \textit{Распределением Пуассона} называется распределение случайной величины $ \xi\colon\,\Omega\to \left\{ 0,1,2,\ldots \right\} $, для которой
@@ -58,8 +63,8 @@
 
  В теореме \ref{theorem:poisson} Пуассона было показано, что при условии
  \begin{align*}
-  \lim_{n \to \infty} np_n = \lambda > 0 
- \end{align*} биномиальное распределение $ \Binom(n,p_n) $ стремится к распределению Пуассона $ \Poisson(\lambda) $.
+  p_n \sim \frac{\lambda}{n}
+ \end{align*} биномиальное распределение $ \Binom(n,p_n) $ стремится к распределению Пуассона $ \Poisson(\lambda) $. 
 
  Проверим, что распределение Пуассона определено корректно:
  \begin{align*}
@@ -68,16 +73,16 @@
 \end{exmpl}
 \begin{exmpl}[%
 геометрическое распределение]
- Пусть есть число $ 0 < p \leqslant 1 $. \textit{Геометрическим распределением} называется называется распределение случайной величины $ \xi \colon\,\Omega \to \left\{ 1,2,3,\ldots \right\} $, для которого
+ Пусть есть число $ 0 < p \leqslant 1 $, $ q = 1-p $. \textit{Геометрическим распределением} называется называется распределение случайной величины $ \xi \colon\,\Omega \to \left\{ 1,2,3,\ldots \right\} $, для которого
  \begin{align*}
-  P(\xi = k) = p(1-p)^{k-1}.
+  P(\xi = k) = pq^{k-1}.
  \end{align*} Обозначение: $ \xi \sim \Geom(p) $.
 
- Номер шага, на котором случился первый успех в схеме Бернулли с вероятностью успеха $ p $, обладает геометрическим распределением $ \Geom(p) $. Иногда удобнее считать не номер шага первого успеха, а число неудач до первого успеха: тогда из величины будет вычтена единица, и формулы немного поменяются.
+ Номер шага, на котором случился первый успех в схеме Бернулли с вероятностью успеха $ p > 0$, обладает геометрическим распределением $ \Geom(p) $. Иногда удобнее считать не номер шага первого успеха, а число неудач до первого успеха: тогда из величины будет вычтена единица, и формулы немного поменяются.
 
  Снова проверим корректность в качестве упражнения:
  \begin{align*}
-  \sum_{k=1}^{\infty} p(1-p)^{k-1} = p \cdot \sum_{k=0}^{\infty} (1-p)^{k} = \frac{p}{1 - (1-p)} = 1.
+  \sum_{k=1}^{\infty} pq^{k-1} = p \cdot \sum_{k=0}^{\infty} q^{k} = \frac{p}{1 - q} = 1.
  \end{align*} 
 \end{exmpl}
 
@@ -86,40 +91,45 @@
  \textit{Дискретным равномерным распределением} называется распределение случайной величины $ \xi\colon\,\Omega\to \left\{ 1,2,\ldots,n \right\} $, для которого
  \begin{align*}
   P(\xi = k) = \frac{1}{n}.
- \end{align*}
-
-Общепринятого обозначения нет.
+ \end{align*} Общепринятого обозначения нет.
 \end{exmpl}
 
-Теперь рассмотрим канонические примеры непрерывных вероятностных распределений.
+Теперь рассмотрим канонические примеры абсолютно непрерывных вероятностных распределений.
 
 \begin{exmpl}[непрерывное равномерное распределение]
  \textit{Непрерывным равномерным распределением} называется распределение случайной величины $ \xi\colon\,\Omega \to [a,b] $ с плотностью $ p_\xi \colon\,\R\to\R $, заданной по формуле
  \begin{align*}
   p_\xi(t) = \frac{1}{b-a}\Ind_{[a,b]}(t).
  \end{align*} Обозначение: $ \xi \sim U[a,b] $.
+
+ Интуитивно, непрерывное равномерное распределение соответствует выбору случайной точки из отрезка $ [a,b] $ с равной вероятностью.
 \end{exmpl}
+
 \begin{exmpl}[%
 нормальное распределение]
- \textit{Нормальным распределением} (или \textit{распределением Гаусса}) с параметрами $ \mu \in \R $ и $ \sigma > 0 $ называется распределение случайной величины $ \xi \colon\,\Omega \to \R $ с плотностью
+ Пусть $ \mu\in\R $ и $ \sigma>0 $. \textit{Нормальным распределением} (или \textit{распределением Гаусса}) называется распределение случайной величины $ \xi \colon\,\Omega \to \R $ с плотностью
  \begin{align*}
   p_\xi(t) = \frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2} \left( \frac{t-\mu}{\sigma} \right)^{2}}.
- \end{align*} Обозначение: $ \xi \sim \Norm(\mu,\sigma^{2}) $. Корректность проверятся с помощью интеграла Эйлера-Пуассона $ \int_{-\infty}^{+\infty}  e^{-x^{2}} = \sqrt \pi $:
+ \end{align*} Обозначение: $ \xi \sim \Norm(\mu,\sigma^{2}) $.
+
+ Нормировка проверятся с помощью интеграла Эйлера-Пуассона $ \int_{\R}  e^{-x^{2}} \,dx = \sqrt \pi $:
  \begin{align*}
-  \frac{1}{\sigma \sqrt{2\pi}} \int\limits_{-\infty}^{+\infty} e^{-\frac{1}{2} \left( \frac{t-\mu}{\sigma} \right)^{2}} \, dt &= \begin{bmatrix}
+  \frac{1}{\sigma \sqrt{2\pi}} \int_\R e^{-\frac{1}{2} \left( \frac{t-\mu}{\sigma} \right)^{2}} \, dt &= \begin{bmatrix}
    x = \frac{t-\mu}{\sigma\sqrt{2}}, & t = \sigma \sqrt 2 x + \mu, & dt = \sigma \sqrt 2 \, dx
   \end{bmatrix} = \\
-  &= \frac{1}{\sigma\sqrt{2\pi}} \int\limits_{-\infty}^{+\infty} e^{-x^{2}} \cdot \sigma\sqrt{2}\,dx = \frac{1}{\sqrt \pi} \cdot \sqrt\pi = 1.
+  &= \frac{1}{\sigma\sqrt{2\pi}} \int_\R e^{-x^{2}} \cdot \sigma\sqrt{2}\,dx = \frac{1}{\sqrt \pi} \cdot \sqrt\pi = 1.
  \end{align*} 
 
  Распределение $ \Norm(0,1) $ называется \textit{стандартным нормальным распределением}. Его плотность равна
  \begin{align*}
-  p_\xi = \frac{1}{\sqrt{2\pi}}e^{-t^{2} / 2}.
+  p_\xi(t) = \frac{1}{\sqrt{2\pi}}e^{-t^{2} / 2}.
  \end{align*} 
+
+ Забегая вперёд, параметры $ \mu $ и $ \sigma^{2} $ нормального распределения называются \textit{математическим ожиданием} и \textit{дисперсией} соответственно.
 \end{exmpl}
 \begin{exmpl}[%
 экспоненциальное распределение]
-Пусть $ \lambda > 0 $. \textit{Экспоненциальным распределением} называется распределение случайной величины $ \xi \colon\,\Omega\to[0,+\infty) $ с плотностью
+Пусть $ \lambda > 0 $. \textit{Экспоненциальным распределением} (или \textit{показательным распределением}) называется распределение случайной величины $ \xi \colon\,\Omega\to[0,+\infty) $ с плотностью
 \begin{align*}
  p_\xi(t) = \begin{cases}
   \lambda e^{-\lambda t}, \text{ если } t\geqslant 0;  \\
@@ -129,56 +139,67 @@
 
 Снова проверим корректность в качестве упражнения:
 \begin{align*}
- \lambda \int\limits_{0}^{+\infty} e^{-\lambda t}\,dt = \lambda \cdot \left. \left( -\frac{1}{\lambda} e^{-\lambda t} \right)\right|_0^{+\infty} = \lambda \cdot \left( 0 - \left( -\frac{1}{\lambda} \right) \right) = 1.
+ \lambda \int_{0}^{+\infty} e^{-\lambda t}\,dt = \lambda \cdot \left. \left( -\frac{e^{-\lambda t}}{\lambda} \right)\right|_0^{+\infty} = \lambda \cdot \left( 0 - \left( -\frac{1}{\lambda} \right) \right) = 1.
 \end{align*} 
+
+ Распределение $ \Exp(1) $ называется \textit{стандартным экспоненциальным распределением}.
 \end{exmpl}
 
-\section{Совместное распределение}
+\newpage
+\section{Совместное распределение.}
 
-Рассмотрим частую ситуацию, когда у нас есть несколько случайных величин, собранных вместе: можно сказать, что у нас есть \textit{случайный вектор}. В таком случае можно говорить как о распределениях каждой случайной величины в отдельности (\textit{распределения координат}), а можно говорить о так называемом \textit{совместном распределении}, которое мы сейчас и определим.
+\subsection{Совместное распределение.}
+
+Рассмотрим частую ситуацию, когда у нас есть несколько случайных величин, заданных на одном вероятностном пространстве и собранных вместе: можно сказать, что у нас есть \textit{случайный вектор}. В таком случае можно говорить как о распределениях каждой случайной величины в отдельности (\textit{распределения координат}), а можно говорить о так называемом \textit{совместном распределении}, которое мы сейчас и определим.
 
 \begin{df}[совместное распределение]
  Пусть есть случайные величины $ \xi_1, \xi_2, \ldots, \xi_n \colon\,\Omega\to\R $. Рассмотрим случайный вектор, составленный из этих величин:
  \begin{align*}
   \vec\xi = (\xi_1, \xi_2, \ldots,\xi_n)\colon\,\Omega \to \R^{n}.
- \end{align*} Тогда \textit{совместным распределением} случайных величин $ \xi_1, \xi_2, \ldots, \xi_n $ называется вероятностная мера $ P_{\vec\xi} \colon\,\B_n \to [0,1] $, которая каждому борелевскому подмножеству $ A \subset \R^{n} $ сопоставляет вероятность того, что точка $ \vec\xi $ попадёт в это множество:
+ \end{align*} Тогда \textit{совместным распределением} случайных величин $ \xi_1, \xi_2, \ldots, \xi_n $ называется вероятностная борелевская мера $ P_{\vec\xi} \colon\,\B_n \to [0,1] $, которая каждому борелевскому подмножеству $ A \subset \R^{n} $ сопоставляет вероятность того, что точка $ \vec\xi $ попадёт в это множество:
  \begin{align*}
   P_{\vec\xi}(A) = P(\vec\xi \in A).
  \end{align*} 
 \end{df}
-\begin{remrk*}
- Как и для распределения одной случайной величины, легко видеть, что совместное распределение действительно является вероятностной борелевской мерой на $ \R^{n} $.
-\end{remrk*}
 \begin{remrk}
- Совместное распределение $ P_{\vec\xi} $ однозначно определяет распределения координат $ P_{\xi_1}, \ldots, P_{\xi_n} $, но не наоборот.
+ Как и для распределения одной случайной величины, легко видеть, что совместное распределение действительно является вероятностной борелевской мерой на $ \R^{n} $.
+\end{remrk}
+\begin{remrk}
+ Совместное распределение $ P_{\vec\xi} $ однозначно определяет распределения координат $ P_{\xi_1}, \ldots, P_{\xi_n} $, но обратное не верно.
 \end{remrk} 
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Действительно, 
  \begin{align*}
-  P_{\xi_j}(A) = P_{\vec\xi}(A \times \R^{n-1}).
- \end{align*} С другой стороны, пример \ref{example:joint_distribution_cannot_be_deduced_from_coordinate_distributions} показывает, что по распределениям координат нельзя восстановить совместное распределение.
+  P_{\xi_j}(A) = P_{\vec\xi}(\R^{j-1} \times A \times \R^{n-j}).
+ \end{align*} С другой стороны, пример \ref{example:joint_distribution_cannot_be_deduced_from_coordinate_distributions} показывает, что по распределениям координат нельзя однозначно восстановить совместное распределение.
 \end{proof}
 \begin{exmpl}
  \label{example:joint_distribution_cannot_be_deduced_from_coordinate_distributions}
  Пусть случайные величины $ \xi $ и $ \eta $ принимают значение $ 0 $ или $ 1 $ с вероятностью $ \frac{1}{2} $.
  \begin{itemize}
-  \item Предположим, что $ \xi $ и $ \eta $ независимы. Тогда случайный вектор $ (\xi, \eta) $ принимает одно из четырёх значений $ (0,0),(0,1),(1,0),(1,1) $ с равной вероятностью.
+  \item Предположим, что $ \xi $ и $ \eta $ <<независимы>>. Тогда случайный вектор $ (\xi, \eta) $ принимает одно из четырёх значений $ (0,0),(0,1),(1,0),(1,1) $ с равной вероятностью.
   \item Теперь предположим, что $ \xi = \eta $. Тогда случайный вектор $ (\xi,\eta) $ принимает одно из двух значений $ (0,0), (1,1) $ с равной вероятностью.
  \end{itemize}
 \end{exmpl}
 
-В примере \ref{example:joint_distribution_cannot_be_deduced_from_coordinate_distributions} мы впервые сказали, что случайные величины могут быть \textit{независимы}. Формализуем это понятие.
+\subsection{Независимые случайные величины.}
+
+В примере \ref{example:joint_distribution_cannot_be_deduced_from_coordinate_distributions} мы впервые сказали, что случайные величины могут быть \textit{независимы}. Определим это понятие.
 
 \begin{df}[независимость случайных величин]\
  Случайные величины $ \xi_1, \xi_2, \ldots, \xi_n$ называются \textit{независимыми}, если для любых борелевских подмножеств $ A_1, \ldots, A_n \subset \R $ верно
  \begin{align}
   \label{equation:independence_of_random_variables}
-  P(\xi_1 \in A_1) \cdot \ldots \cdot P(\xi_n \in A_n) = P(\xi_1 \in A_1, \ldots, \xi_n \in A_n).
+  P(\xi_1 \in A_1) \cdot \ldots \cdot P(\xi_n \in A_n) = P(\xi_1 \in A_1,\, \ldots,\, \xi_n \in A_n).
  \end{align}
 \end{df}
-\begin{claim*}
- Случайные величины $ \xi_1, \xi_2, \ldots, \xi_n $ независимы тогда и только тогда, когда для любых борелевских множеств $ A_1, \ldots, A_n \subset \R $ события $ [\xi_1 \in A_1], \ldots, [\xi_n \in A_n] $ независимы.
-\end{claim*}
+\begin{claim}
+ Случайные величины $ \xi_1, \xi_2, \ldots, \xi_n $ независимы тогда и только тогда, когда для любых борелевских множеств $ A_1, \ldots, A_n \subset \R $ события
+ \begin{align*}
+  \left\{\xi_1 \in A_1\right\}, \left\{ \xi_2 \in A_2 \right\}, \ldots, \left\{\xi_n \in A_n\right\}
+ \end{align*}
+ независимы.
+\end{claim}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  В сторону $(\Longleftarrow)$ очевидно. В сторону $(\Longrightarrow)$: рассмотрим любые борелевские подмножества $ A_{i_1}, \ldots, A_{i_k} \subset \R $, где $ i_1, \ldots, i_k \in [n] $ различны. Для всех индексов $ j \notin \left\{ i_1, \ldots, i_k \right\} $ доопределим $ A_j = \R $, тогда равенство \eqref{equation:independence_of_random_variables} превращается в
  \begin{align*}
@@ -200,26 +221,28 @@
   P_{\vec\xi}(A_1 \times \ldots \times A_n) &= P(\xi_1 \in A_1, \ldots, \xi_n \in A_n) =  \\
   &= P(\xi_1 \in A_1) \ldots P(\xi_n \in A_n) = \\
   &= P_{\xi_1}(A_1) \ldots P_{\xi_n}(A_n).
- \end{align*} С другой стороны, если есть равенство мер, то все те же равенства также верны.
+ \end{align*} С другой стороны, если есть равенство мер, то все равенства так же верны.
 \end{proof}
 
-Как и для распределений одной случайной величины имеет смысл ввести \textit{функцию распределения} совместных распределений. 
+\subsection{Совместная функция распределения.}
+
+Как и для распределений одной случайной величины, имеет смысл ввести \textit{функцию распределения} совместных распределений. 
 
 \begin{df}[совместная функция распределения] Пусть $ \vec\xi = (\xi_1, \ldots, \xi_n) $ --- случайный вектор. \textit{Совместной функцией распределения} случайных величин $ \xi_1, \ldots, \xi_n $ называется функция $ F_{\vec\xi} \colon\;\R^{n}\to[0,1] $:
  \begin{align*}
-  F_{\vec\xi}(\vec x) := P(\xi_1 \leqslant x_1, \ldots, \xi_n \leqslant x_n).
+  F_{\vec\xi}(\vec x) := P(\xi_1 \leqslant x_1,\, \ldots,\, \xi_n \leqslant x_n).
  \end{align*} 
 \end{df}
 
-\begin{remrk*}
+\begin{remrk}
  Пусть $ \vec\xi $, $ \vec\eta $ --- случайные вектора из $ n $ величин. По теореме Каратеодори равенство совместных распределений $ P_{\vec\xi} = P_{\vec\eta} $ равносильно равенству совместных функций распределения $ F_{\vec\xi} = F_{\vec\eta} $.
-\end{remrk*}
+\end{remrk}
 
 \begin{prop}[cвойства совместной функции распределения]\
  \begin{enumerate}
   \item Функция $ F_{\vec\xi} $ возрастает по каждой координате.
   \item $ \lim\limits_{x_1, \ldots, x_n \to +\infty}  F_{\vec\xi}(\vec x) = 1 $.
- \item $ \lim\limits_{x_1, \ldots, x_n \to -\infty} F_{\vec\xi}(\vec x) = 0 $.
+  \item $ \lim\limits_{x_i \to -\infty} F_{\vec\xi}(\vec x) = 0 $ для всякого $ i\in[n] $.
  \item Для всякого $ i \in [n] $ и для всяких $ x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n \in \R $ выполнено
   \begin{align*}
   \lim_{x_i \to +\infty} F_{\vec\xi}(\vec x) = F_{\xi_1, \ldots, \xi_{i-1}, \xi_{i+1}, \ldots, \xi_n}(x_1, \ldots, x_{i-1},x_{i+1},\ldots,x_n).
@@ -232,26 +255,28 @@
  Случайные величины $ \xi_1, \ldots, \xi_n $ независимы тогда и только тогда, когда для любого $ \vec x \in \R^{n} $ верно
  \begin{align}
   \label{equation:random_variable_indepencence_throught_distribtuion_function_eq}
-  F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n).
+  F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \cdot\ldots\cdot F_{\xi_n}(x_n).
  \end{align} 
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  По теореме \ref{theorem:random_variable_independence_through_distribution_measure_eq} достаточно показать, что \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq} эквивалентно \eqref{equation:random_variable_independence_through_distribution_measure_eq}. Из \eqref{equation:random_variable_independence_through_distribution_measure_eq} в \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq} очевидно: нужно подставить множества $ A_i = \left(-\infty, x_i\right]   $.
 
- Докажем теперь в сложную сторону. Будем полагать $ n = 2 $ (для больших $ n $ доказывается абсолютно так же, но записи станут громоздкими, не добавляя понимания), пусть случайные величины обозначены как $ \xi $ и $ \eta $. Равенство мер \eqref{equation:random_variable_independence_through_distribution_measure_eq} достаточно проверить на произвольной паре ячеек $ \left(a, b\right]   $, $ \left(c, d\right] $. Проверим:
+ Докажем теперь в сложную сторону. Будем полагать $ n = 2 $ (для больших $ n $ доказывается абсолютно так же, но записи станут громоздкими, не добавляя понимания), пусть случайные величины обозначены как $ \xi $ и $ \eta $. По теореме Каратеодори равенство мер \eqref{equation:random_variable_independence_through_distribution_measure_eq} достаточно проверить на произвольной паре ячеек $ \left(a, b\right]   $, $ \left(c, d\right] $. Проверим:
  \begin{align*}
   P_\xi \left(a, b\right] \cdot P_\eta \left(c, d\right] &= \left( F_\xi(b) - F_\xi(a) \right) \left( F_\eta(d) - F_\eta(c)  \right) = \\
   &= F_\xi(b)F_\eta(d) - F_\xi(b) F_\eta(c) - F_\xi(a) F_\eta(d) + F_\xi(a) F_\eta(c) = \\
   &= F_{(\xi,\eta)}(b, d) - F_{(\xi,\eta)}(b,c) + F_{(\xi,\eta)}(a,d) + F_{(\xi,\eta)}(a,c) = \\
   &= P_{(\xi,\eta)} \left( \left(a, b\right] \times \left(c, d\right]    \right).
- \end{align*} Последнее равенство верно по формуле включений-исключений (предложение \ref{proposition:inclusion_exclusion_formula}).
+ \end{align*} Последнее равенство верно по формуле включений-исключений \eqref{eq:inclusion_exclusion}.
 \end{proof}
 
+\subsection{Совместная плотность распределения.}
+
 \begin{df}
- Говорят, что случайный вектор $ \vec\xi = (\xi_1, \ldots, \xi_n) $ \textit{абсолютно непрерывен} (совместное распределение $ \xi_1,\ldots,\xi_n $ \textit{абсолютно непрерывно}), если существует неотрицательная измеримая функция $ p_{\vec\xi} \colon\, \R^{n}\to \left[0, +\infty\right)$, называемая \textit{плотностью совместного распределения} (\textit{совместной плотностью}), такая, что для любого $ \vec x \in \R^{n} $ верно
+ Говорят, что случайный вектор $ \vec\xi = (\xi_1, \ldots, \xi_n) $ \textit{абсолютно непрерывен} (совместное распределение $ \xi_1,\ldots,\xi_n $ \textit{абсолютно непрерывно}), если существует неотрицательная измеримая функция $ p_{\vec\xi} \colon\, \R^{n}\to \left[0, +\infty\right)$, называемая \textit{плотностью совместного распределения} (\textit{совместной плотностью}), такая, что для любой точки $ \vec x \in \R^{n} $ верно
  \begin{align}
   \label{equation:density_of_joint_distribution}
-  F_{\vec\xi}(\vec x) = \int\limits_{-\infty}^{x_1}  \ldots \int\limits_{-\infty}^{x_n} p_{\vec\xi}(\vec t) \, dt_n \ldots dt_1.
+  F_{\vec\xi}(\vec x) = \int_{-\infty}^{x_1}  \ldots \int_{-\infty}^{x_n} p_{\vec\xi}(\vec t) \, dt_n \ldots dt_1.
  \end{align} 
 \end{df}
 \begin{crly}
@@ -265,38 +290,40 @@
  По следствию \ref{corollary:inpendence_joint_F} достаточно показать, что \eqref{equation:independence_density} эквивалентно \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq}. Пусть выполнено \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq}: $ F_{\vec\xi}(\vec x) = F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) $. Покажем, что функция $ \vec t \mapsto p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $ подходит под определение плотности. Для любого $ \vec x \in \R^{n} $:
  \begin{align*}
   F_{\xi}(\vec x) &= F_{\xi_1}(x_1) \ldots F_{\xi_n}(x_n) = \left( \int_{-\infty}^{x_1} p_{\xi_1}(t_1)\,dt_1  \right) \ldots \left( \int_{-\infty}^{x_n} p_{\xi_n}(t_n)\,dt_n  \right) = \\
-  &= \int\limits_{-\infty}^{x_1} \ldots \int\limits_{-\infty}^{x_n} p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n)\,dt_n \ldots dt_1.
+  &= \int_{-\infty}^{x_1} \ldots \int_{-\infty}^{x_n} p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n)\,dt_n \ldots dt_1.
  \end{align*} Наоборот, если $ p_{\vec\xi}(\vec t) = p_{\xi_1}(t_1) \ldots p_{\xi_n}(t_n) $ --- совместная плотность, то верно то же самое равенство.
 \end{proof}
+
+\subsection{Свёртка мер.}
 
 Сделаем ещё одно отступление в теорию меры.
 
 \begin{df}[свёртка мер]
  Пусть есть две конечные борелевские меры $ \mu $ и $ \nu $ на $ \R $. \textit{Свёрткой} мер $ \mu $ и $ \nu $ называется борелевская мера $ \mu \ast \nu $ на $ \R $, определённая следующим образом:
  \begin{align*}
-  \mu \ast \nu(A) := \int\limits_{\R} \mu(A - x) \,d\nu(x).
+  \mu \ast \nu(A) := \int_{\R} \mu(A - y) \,d\nu(y).
  \end{align*} 
 \end{df}
-\begin{remrk*}
+\begin{remrk}
  Легко видеть, что свёртка мер действительно является мерой:
  \begin{align*}
-  \mu\ast\nu \left( \bigsqcup_{k=1}^{\infty}A_k \right) &= \int\limits_{\R} \mu \left( \bigsqcup_{k=1}^{\infty}A_k - x \right) d\nu(x) = \int\limits_{\R} \left( \sum_{k=1}^{\infty} \mu(A_k - x) \right) d\nu(x) = \\
-  &= \sum_{k=1}^{\infty} \int\limits_{\R} \mu(A_k - x) \,d\nu(x) = \sum_{k=1}^{\infty}\mu \ast \nu(A_k).
- \end{align*} Знак интеграла и суммы можно было поменять местами по теореме Леви.
-\end{remrk*}
+  \mu\ast\nu \left( \bigsqcup_{k=1}^{\infty}A_k \right) &= \int_{\R} \mu \left( \bigsqcup_{k=1}^{\infty}A_k - y \right) d\nu(y) = \int_{\R} \left( \sum_{k=1}^{\infty} \mu(A_k - y) \right) d\nu(y) = \\
+  &= \sum_{k=1}^{\infty} \int_{\R} \mu(A_k - y) \,d\nu(y) = \sum_{k=1}^{\infty}\mu \ast \nu(A_k).
+ \end{align*} Знак интеграла и суммы можно было менять местами по теореме Леви.
+\end{remrk}
 
-Перечислим некоторые свойства свертки мер.
+Рассмотрим некоторые свойства свертки мер.
 
 \begin{prop}
  \begin{align}
   \label{equation:measure_convolution_double_integral}
-  \mu\ast\nu(A) = \int\limits_{\R^{2}} \Ind_A(x + y)\,d\mu(x)\,d\nu(y).
+  \mu\ast\nu(A) = \int_{\R^{2}} \Ind_A(x + y)\,d\mu(x)\,d\nu(y).
  \end{align} 
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  \begin{align*}
-  \mu\ast\nu(A)&=\int\limits_{\R} \mu(A-y)\,d\nu(y) = \int\limits_{\R} \int\limits_{\R} \Ind_{A-y}  (x)\,d\mu(x)\,d\nu(y) = \\
-  &= \int\limits_{\R^{2}} \Ind_A(x+y)\,d\mu(x)\,d\nu(y). 
+  \mu\ast\nu(A)&=\int_{\R} \mu(A-y)\,d\nu(y) = \int_{\R} \int_{\R} \Ind_{A-y}  (x)\,d\mu(x)\,d\nu(y) = \\
+  &= \int_{\R^{2}} \Ind_A(x+y)\,d\mu(x)\,d\nu(y). 
  \end{align*} 
 \end{proof}
 
@@ -306,7 +333,7 @@
  \item Для конечных борелевских мер $ \mu_1, \ldots, \mu_n $ на $ \R $ верно
 \begin{align}
  \label{equation:measure_convolution_many}
- \mu_1 \ast \ldots \ast \mu_n (A) = \int\limits_{\R^{n}}\Ind_A(x_1 + x_2 + \ldots + x_n)\,d\mu_1(x_1) \ldots d\mu_n(x_n).   
+ \mu_1 \ast \ldots \ast \mu_n (A) = \int_{\R^{n}}\Ind_A(x_1 + x_2 + \ldots + x_n)\,d\mu_1(x_1) \ldots d\mu_n(x_n).   
 \end{align}
 \item Ассоциативность: $ \mu_1 \ast (\mu_2 \ast \mu_3) = (\mu_1 \ast \mu_2) \ast \mu_3 $. Очевидно из формулы \eqref{equation:measure_convolution_many}.
 \item Линейность: для всякого $ c \geqslant 0 $ верно
@@ -337,7 +364,7 @@
 \end{proof}
 
 
-А что будет, взять свёртку двух мер, имеющих плотность?
+А что будет, если взять свёртку двух мер, имеющих плотность?
 
 \begin{thm}
  \label{theorem:convolution_of_measures_with_density}
@@ -358,59 +385,116 @@
 \end{df}
 \begin{proof}[\normalfont\textsc{Доказательство теоремы \ref{theorem:convolution_of_measures_with_density}}] Рассмотрим функцию $ p(t) $, заданную равенством \eqref{equation:density_convolution_functions} и проверим, что она подходит в качестве плотности меры $ \mu \ast \nu $:
  \begin{align*}
-  \int\limits_{A} p(t)\,dt &= \int\limits_{A} \int\limits_{\R}p_\mu(t - u)\cdot p_\nu(u)\,du\,dt = \int\limits_{\R} \int\limits_{\R} \Ind_A(t) \cdot p_\mu(t-u) \cdot p_\nu(u)\,du\,dt.
- \end{align*} Сделав замену переменной $ v = t - u  $ получаем:
+  \int_{A} p(t)\,dt &= \int_{A} \int_{\R}p_\mu(t - u)\cdot p_\nu(u)\,du\,dt = \int_{\R} \int_{\R} \Ind_A(t) \cdot p_\mu(t-u) \cdot p_\nu(u)\,du\,dt.
+ \end{align*} По теореме Тонелли можно поменять местами $ du $ и $ dt $:
  \begin{align*}
-  \int\limits_{A} p(t)\,dt = \int\limits_{\R}\int\limits_{\R}\Ind_A(u + v) \cdot p_\mu(v)\cdot p_\nu(u)\,du\,dv.     
+  \int_{A} p(t)\,dt = \int_{\R} \int_{\R} \Ind_A(t) \cdot p_\mu(t-u) \cdot p_\nu(u)\,dt\,du. 
+ \end{align*} Сделав замену переменной $ v = t - u  $ во внутреннем интеграле, получаем:
+ \begin{align*}
+  \int_{A} p(t)\,dt = \int_{\R}\int_{\R}\Ind_A(u + v) \cdot p_\mu(v)\cdot p_\nu(u)\,dv\,du.
  \end{align*} Далее два раза воспользуемся формулой интеграла по мере имеющей плотность (теорема \ref{theorem:integral_on_measure_with_density}):
  \begin{align*}
-  \int\limits_{A} p(t)\,dt &= \int\limits_{\R} \left( \int\limits_{\R} \Ind_A(u+v) \cdot p_\nu(u)\,du  \right) p_\mu(v) \, dv = \\ &= \int\limits_{\R} \left( \int\limits_{\R} \Ind_A(u+v)\,d\nu(u)  \right) p_\mu(v)\,dv = \int\limits_{\R}  \int\limits_{\R} \Ind_A(u+v)\,d\nu(u)  \, d\mu(v) = \\
+  \int_{A} p(t)\,dt &= \int_{\R} \left( \int_{\R} \Ind_A(u+v) \cdot p_\mu(v)\,dv  \right) p_\nu(u)\,du =\\
+  &= \int_{\R} \left( \int_{\R} \Ind_A(u+v)\,d\mu(v)  \right) p_\nu(u)\,du = \\
+  &= \int_{\R} \int_{\R} \Ind_A(u+v)\,d\mu(v)\,d\nu(u)   = \\
   &= \mu \ast \nu(A).
- \end{align*} 
+ \end{align*}
 \end{proof}
 
-\begin{thm}
+\subsection{Распределение суммы независимых случайных величин.}
+
+\begin{thm}[распределение суммы независимых случайных величин]
  \label{theorem:distribution_of_sum_is_measure_convolution}
- Если cлучайные величины $ \xi $ и $ \eta $ независимы, то $ P_{\xi + \eta} = P_\xi \ast P_\eta $.
+ Пусть cлучайные величины $ \xi $ и $ \eta $ независимы. Тогда распределение их суммы является свёрткой их распределений:
+ \begin{align*}
+  P_{\xi + \eta} = P_\xi \ast P_\eta.
+ \end{align*}
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Возьмём любое борелевское множество $ A \subset \R $. Рассмотрим следующее множество:
  \begin{align*}
   B = \left\{ (x, y) \in \R^{2} \Mid x + y \in A \right\}.
- \end{align*} Вычислим теперь распределение $ \xi + \eta $:
+ \end{align*} Вычислим теперь распределение $ \xi + \eta $ на множестве $ A $:
  \begin{align*}
-  P_{\xi+\eta}(A) &= P(\xi + \eta \in A) = P((\xi,\eta)\in B) = P_{(\xi,\eta)}(B) = \int\limits_{\R^{2}} \Ind_B(x,y) \,dP_{(\xi,\eta)}(x,y).
+  P_{\xi+\eta}(A) &= P(\xi + \eta \in A) = P((\xi,\eta)\in B) = P_{(\xi,\eta)}(B) = \int_{\R^{2}} \Ind_B(x,y) \,dP_{(\xi,\eta)}(x,y).
  \end{align*} Раз $ \xi $ и $ \eta $ независимы, то по теореме \ref{theorem:random_variable_independence_through_distribution_measure_eq} имеем $ P_{(\xi,\eta)} = P_\xi \times P_\eta $, из чего следует
  \begin{align*}
-  P_{\xi+\eta}(A) &= \int\limits_{\R^{2}} \Ind_B(x,y)\,dP_\xi(x)\,dP_\eta(y) = \int\limits_{\R^{2}} \Ind_A(x + y) \,dP_\xi(x)\, dP_\eta(y) = \xi \ast \eta(A).
+  P_{\xi+\eta}(A) &= \int_{\R^{2}} \Ind_B(x,y)\,dP_\xi(x)\,dP_\eta(y) = \int_{\R^{2}} \Ind_A(x + y) \,dP_\xi(x)\, dP_\eta(y) = \xi \ast \eta(A).
  \end{align*} 
 \end{proof}
 
-\begin{exmpl}[свёртка с дискретным распределнием]
+\begin{exmpl}[свёртка с дискретным распределением]
  Пусть $ \mu $ --- конечная борелевская  мера на $ \R$, а
  \begin{align*}
   \nu = \sum_{k=1}^{\infty} p_k \delta_{x_k}, \qquad p_k \geqslant 0
- \end{align*} --- дискретная мера (считающая мера с коэффициентами). Например, если $ p_1 + p_2 + \ldots = 1 $, то $ \nu $ --- распределение дискретной случайной величины. Тогда
+ \end{align*} --- дискретная мера (считающая мера с коэффициентами). Например, если
  \begin{align*}
-  \mu \ast \nu(A) &= \int\limits_{\R} \mu(A - x) d\nu(x) = \sum_{k=1}^{\infty}p_k \mu(A - x_k).
+  p_1 + p_2 + \ldots = 1,
+ \end{align*} то $ \nu $ --- распределение дискретной случайной величины. Тогда
+ \begin{align*}
+  \mu \ast \nu(A) &= \int_{\R} \mu(A - x) \,d\nu(x) = \sum_{k=1}^{\infty}p_k\cdot \mu(A - x_k).
  \end{align*} 
 \end{exmpl}
-\begin{exmpl}[свёртка двух распределений Пуассона]
+\begin{exmpl}[свёртка двух независимых распределений Пуассона]
  Пусть $ \xi_1 \sim \Poisson(\lambda_1) $ и $ \xi_2 \sim \Poisson(\lambda_2) $, $ \xi_1 $  и $ \xi_2 $ независимы. Каково распределение $ \xi_1 + \xi_2 $?
 
  Найдём его, воспользовавшись теоремой \ref{theorem:distribution_of_sum_is_measure_convolution}:
  \begin{align*}
-  P_{\xi_1 + \xi_2}(\left\{ n \right\}) &= P_{\xi_1} \ast P_{\xi_2}(\left\{ n \right\}) = \int\limits_{\R^{2}}  \Ind_{\left\{ n \right\}}(x+y)\,dP_{\xi_1}\,dP_{\xi_2} = \\
-  &= \sum_{x=0}^{n} \frac{\lambda_1^{x}}{x!} e^{-\lambda_1} \cdot \int\limits_{\R} \Ind_{\left\{ n \right\}}(x+y) \, dP_{\xi_2} = \\
-  &= \sum_{x=0}^{n} \frac{\lambda_1^{x}}{x!}e^{-\lambda_1} \cdot \frac{\lambda_2^{n-x}}{(n-x)!}e^{-\lambda_2} = \frac{\left( \lambda_1 + \lambda_2 \right)^{n}}{n!}e^{-(\lambda_1 + \lambda_2)}.
+  P_{\xi_1 + \xi_2}(\left\{ n \right\}) &= P_{\xi_1} \ast P_{\xi_2}(\left\{ n \right\}) = \int_{\R^{2}}  \Ind_{\left\{ n \right\}}(x+y)\,dP_{\xi_1}(x)\,dP_{\xi_2}(y) = \\
+  &= \sum_{x=0}^{n} \frac{\lambda_1^{x}}{x!} e^{-\lambda_1} \cdot \int_{\R} \Ind_{\left\{ n \right\}}(x+y) \, dP_{\xi_2}(y) = \sum_{x=0}^{n} \frac{\lambda_1^{x}}{x!}e^{-\lambda_1} \cdot \frac{\lambda_2^{n-x}}{(n-x)!}e^{-\lambda_2} = \\
+  &= \frac{1}{n!} \sum_{x=0}^{n}\binom n x \cdot \lambda_1^{x} \cdot \lambda_2^{n-x} e^{-(\lambda_1 + \lambda_2)}= \frac{\left( \lambda_1 + \lambda_2 \right)^{n}}{n!}e^{-(\lambda_1 + \lambda_2)}.
  \end{align*} Таким образом, $ \xi_1 + \xi_2 \sim \Poisson(\lambda_1 + \lambda_2) $.
 \end{exmpl}
 
-\begin{exercs*}\
-\begin{enumerate}
- \item Пусть $ \xi_1, \xi_2 \sim \Exp(1) $, $ \xi_1 $ и $ \xi_2 $ независимы. Найти распределение $ \xi_1 + \xi_2 $.
- \item Пусть $ \xi_1 \sim \Norm(\mu_1, \sigma_1^{2}) $ и $ \xi_2 \sim \Norm(\mu_2, \sigma_2^{2}) $, $ \xi_1 $ и $ \xi_2 $ независимы. Доказать, что $ \xi_1 + \xi_2 \sim \Norm(\mu_1 + \mu_2, \sigma_1^{2} + \sigma_2^{2}) $.
-\end{enumerate}
-\end{exercs*}
+\begin{exmpl}[свёртка двух независимых стандартных экспоненциальных распределений]
+ Пусть $ \xi_1,\xi_2 \sim \Exp(1) $, $ \xi_1 $ и $ \xi_2 $ независимы. Какое распределение имеет $ \xi_1+\xi_2 $?
+
+ Плотность $ \xi_1 $ и $ \xi_2 $ равна
+ \begin{align*}
+  p_\xi(t) &= \begin{cases}
+   \lambda e^{-\lambda t}, \text{ если } t\geqslant 0,  \\
+   0, \text{ иначе. }
+  \end{cases} 
+ \end{align*}
+
+ По теореме \ref{theorem:distribution_of_sum_is_measure_convolution} и теореме \ref{theorem:convolution_of_measures_with_density} распределение $ \xi_1 + \xi_2 $ имеет следующую плотность:
+ \begin{align*}
+  p(t) &= \int_{\R} p_\xi(t - u) \cdot p_\xi(u)\,du = \int_{0}^{+\infty} p_\xi(t-u) \cdot e^{-u}\,du = \\
+  &= \int_{0}^{t} e^{u-t} \cdot e^{-u}\,du = \int_{0}^{t} e^{-t}\,du = te^{-t}.
+ \end{align*} При этом $ p(t) = 0 $ при $ t < 0 $, ведь под интегралом всегда будет $ 0 $.
+\end{exmpl}
+\begin{exmpl}[свёртка двух независимых нормальных распределений]
+ Пусть $ \xi_1 \sim \Norm(\mu_1,\sigma_1^{2}) $, $ \xi_2 \sim\Norm(\mu_2,\sigma_2^{2}) $, $ \xi_1 $ и $ \xi_2 $ независимы. Как распределена сумма $ \xi_1 + \xi_2 $?
+
+ Заранее для удобства вычислим следующий интеграл при $ A > 0 $, выделив полный квадрат.
+
+ \begin{align*}
+  \int_{\R} e^{-(Ax^{2} + Bx + C)} \,dx &= \int_{\R} e^{-A\left(x^{2} + \frac{B}{A}x + \frac{C}{A}\right)} \,dx = \int_{\R} e^{-A\left(x^{2} + 2 \cdot \frac{B}{2A} x + \frac{B^{2}}{4A^{2}} + \frac{C}{A} - \frac{B^{2}}{4A^{2}}\right)} \,dx = \\
+  &= \int_{\R}  e^{-A \left( \left( x + \frac{B}{2A} \right)^{2} - \frac{B^{2}-4AC}{4A^{2}} \right)}\,dx = e^{\frac{B^{2}-4AC}{4A}} \int_{\R} e^{-A \left( x + \frac{B}{2A} \right)^{2}} \,dx = \\
+  &= \begin{bmatrix}
+   y = x + \frac{B}{2A} & dy = dx
+  \end{bmatrix} = e^{\frac{B^{2}-4AC}{4A}} \int_{\R} e^{-Ay^{2}}\,dy  = \\
+  &= \begin{bmatrix}
+   z = \sqrt A \cdot y & dz = \sqrt A \, dy
+  \end{bmatrix} = e^{\frac{B^{2}-4AC}{4A}} \int_{\R} e^{-z^{2}} \frac{dz}{\sqrt A} = \\
+  &= \frac{\sqrt \pi}{\sqrt A} \exp \frac{B^{2}-4AC}{4A},
+ \end{align*} где в конце мы воспользовались интегралом Эйлера-Пуассона $ \int_{\R} e^{-x^{2}}\,dx = \sqrt \pi  $.
+ 
+ Далее, пользуясь теоремами \ref{theorem:distribution_of_sum_is_measure_convolution} и \ref{theorem:convolution_of_measures_with_density}, вычислим плотность $ p $ величины $ \xi_1+\xi_2 $:
+ \begin{align*}
+  &p(t) = \int_{\R} p_{\xi_1}(t-u)\cdot p_{\xi_2}(u)\,du = \int_{\R}  \frac{e^{-\frac{1}{2} \left( \frac{t-u-\mu_1}{\sigma_1} \right)^{2}}}{\sigma_1\sqrt{2\pi}} \cdot \frac{e^{-\frac{1}{2} \left( \frac{u-\mu_2}{\sigma_2} \right)^{2}}}{\sigma_2\sqrt{2\pi}}\,du = \\
+  =\;& \frac{1}{2\sigma_1 \sigma_2 \pi} \int_{\R} \exp \left[ -\frac{1}{2} \cdot \frac{(t-u-\mu_1)^{2}\sigma_2^{2} + (u-\mu_2)^{2}\sigma_1^{2}}{\sigma_1^{2}\sigma_2^{2}} \right] du = \\
+  =\;& \frac{1}{2\sigma_1 \sigma_2 \pi} \int_{\R} \exp \left[ -\frac{\sigma_2^{2}u^{2} - 2(t-\mu_1)\sigma_2^{2}u + (t-\mu_1)^{2}\sigma_2^{2} + \sigma_1^{2}u^{2} - 2\mu_2 \sigma_1^{2}u + \mu_2^{2}\sigma_1^{2}}{2\sigma_1^{2}\sigma_2^{2}} \right]du = \\
+  =\;& \frac{1}{2\sigma_1 \sigma_2 \pi} \int_{\R} \exp \left[ -\frac{(\sigma_1^{2}+\sigma_2^{2})u^{2} -2((t - \mu_1)\sigma_2^{2} + \mu_2 \sigma_1^{2})u + (t-\mu_1)^{2}\sigma_2^{2} + \mu_2^{2} \sigma_1^{2}}{2\sigma_1^{2}\sigma_2^{2}} \right] du = \\
+  =\;&\frac{1}{2\sigma_1\sigma_2\pi} \cdot \frac{\sqrt \pi}{\sqrt {\frac{\sigma_1^{2}+\sigma_2^{2}}{2\sigma_1^{2}\sigma_2^{2}}}}\exp \frac{ \frac{\left( (t-\mu_1)\sigma_2^{2} + \mu_2 \sigma_1^{2} \right)^{2}}{\sigma_1^{4}\sigma_2^{4}} - \frac{\sigma_1^{2}+\sigma_2^{2}}{\sigma_1^{2}\sigma_2^{2}} \cdot \frac{(t-\mu_1)^{2}\sigma_2^{2} + \mu_2^{2}\sigma_1^{2}}{\sigma_1^{2}\sigma_2^{2}}}{2 \frac{\sigma_1^{2}+\sigma_2^{2}}{\sigma_1^{2}\sigma_2^{2}}} = \\
+  =\;&\frac{1}{\sqrt{2\pi (\sigma_1^{2}+\sigma_2^{2})}}\exp \frac{((t-\mu_1)\sigma_2^{2} + \mu_2\sigma_1^{2})^{2} - (\sigma_1^{2}+\sigma_2^{2})((t-\mu_1)^{2}\sigma_2^{2} + \mu_2^{2}\sigma_1^{2})}{2\sigma_1^{2}\sigma_2^{2}(\sigma_1^{2}+\sigma_2^{2})} = \\
+  =\;&\frac{1}{\sqrt{2\pi (\sigma_1^{2}+\sigma_2^{2})}} \exp \frac{\scriptstyle{(t-\mu_1)^{2}\sigma_2^{4} + 2(t-\mu_1)\sigma_2^{2}\mu_2\sigma_1^{2} + \mu_2^{2}\sigma_1^{4}-(\sigma_1^{2}\sigma_2^{2}(t-\mu_1)^{2} + (t-\mu_1)^{2}\sigma_2^{4} + \sigma_1^{2}\sigma_2^{2}\mu_2^{2} + \mu_2^{2}\sigma_1^{4})}}{2\sigma_1^{2}\sigma_2^{2}(\sigma_1^{2}+\sigma_2^{2})} = \\
+  =\;&\frac{1}{\sqrt{2\pi (\sigma_1^{2}+\sigma_2^{2})}} \exp \frac{2\sigma_1^{2}\sigma_2^{2}(t-\mu_1)\mu_2 - \sigma_1^{2}\sigma_2^{2}(t-\mu_1)^{2} - \sigma_1^{2}\sigma_2^{2}\mu_2^{2}}{2\sigma_1^{2}\sigma_2^{2}(\sigma_1^{2}+\sigma_2^{2})} = \\
+  =\;&\frac{1}{\sqrt{2\pi (\sigma_1^{2}+\sigma_2^{2})}} \exp \left[ -\frac{(t-\mu_1)^{2} - 2(t-\mu_1)\mu_2 + \mu_2^{2}}{2(\sigma_1^{2}+\sigma_2^{2})} \right] = \\
+  =\;&\frac{1}{\sqrt{2\pi (\sigma_1^{2}+\sigma_2^{2})}} \exp \left[ -\frac{(t - (\mu_1+\mu_2))^{2}}{2 (\sigma_1^{2}+\sigma^{2})} \right].
+ \end{align*} Таким образом, $ \xi_1 + \xi_2 \sim \Norm(\mu_1 + \mu_2, \sigma_1^{2} + \sigma_2^{2}) $.
+
+ Тот же самый результат мы сможем получить менее громоздким способом, когда будем изучать характеристические функции случайных величин.
+\end{exmpl}
 
 \end{document}
