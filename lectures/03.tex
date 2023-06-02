@@ -144,10 +144,10 @@
   &= P(A_{i_1})  \ldots  P(A_{i_l})  P(\overline{A_n}).
  \end{align*} Независимость проверена.
 
- Наоборот, пусть есть неравенство \eqref{equation:remark:independent_complement} для любого набора $B_k$. Возьмём любой набор различных индексов $I = \left\{i_1, \ldots, i_l \right\} \subset [n]$. Пусть $[n] \setminus I = \left\{ j_1, \ldots, j_{n-l} \right\}$ --- оставшиеся индексы. Тогда по формуле полной вероятности:
+ Наоборот, пусть есть равенство \eqref{equation:remark:independent_complement} для любого набора $B_k$. Возьмём любой набор различных индексов $I = \left\{i_1, \ldots, i_l \right\} \subset [n]$. Пусть $[n] \setminus I = \left\{ j_1, \ldots, j_{n-l} \right\}$ --- оставшиеся индексы. Тогда по формуле полной вероятности:
  \begin{align*}
   P(A_{i_1} \cap \ldots \cap A_{i_l}) = \sum_{\{B_{j_t}\}_{t=1}^{n-l} } P(A_{i_1} \cap \ldots \cap A_{i_l} \cap B_{j_1} \cap \ldots \cap B_{j_{n-l}}),
- \end{align*} где сумма берётся по всем наборам $ \{B_{j_t}\}_{t=1}^{n-l} $ таким, что $B_{j_t} = A_{j_t}$ или $B_{j_t} = \overline{A_{j_t}}$. По неравенству \eqref{equation:remark:independent_complement}:
+ \end{align*} где сумма берётся по всем наборам $ \{B_{j_t}\}_{t=1}^{n-l} $ таким, что $B_{j_t} = A_{j_t}$ или $B_{j_t} = \overline{A_{j_t}}$. По равенству \eqref{equation:remark:independent_complement}:
  \begin{align*}
   P(A_{i_1} \cap \ldots \cap A_{i_l}) &= \sum_{\{B_{j_t}\}_{t=1}^{n-l} } P(A_{i_1}) \ldots P(A_{i_l}) \cdot P(B_{j_1}) \ldots P(B_{j_t}) = \\
   &= P(A_{i_1}) \ldots P(A_{i_l}) \cdot \sum_{\{B_{j_t}\}_{t=1}^{n-l} } P(B_{j_1}) \ldots P(B_{j_t}) = \\
