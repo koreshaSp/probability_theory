@@ -107,7 +107,9 @@
 \begin{proof}[\normalfont{Доказательство}]
   \begin{align*}
 	|E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
-	& \leqslant \underbrace{\sup_{|p - x| < \eps} |f(x) - f(p)|}_{\to 0, f\text{ - непр. }} + 2M \cdot \underbrace{P(|\xi_n - a| \geqslant \eps)}_{\to 0}
+	& \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
+	\varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \varlimsup_{n \to \infty} \sup_{|a - x| < \eps} |f(x) - f(a)| + \varlimsup_{n \to \infty} \underbrace{2M \cdot P(|\xi_n - a| \geqslant \eps)}_{=0} \implies  \\
+	\varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| \overset{\eps \to 0}{\to} 0
   \end{align*}
 \end{proof}
 
@@ -220,7 +222,7 @@
   = \frac{1}{6^{3}} t^{3}(1 - 3t^{6} + 3t^{12} - t^{18}) \cdot \frac{1}{(1-t)^{3}}.
  \end{align*} Но
  \begin{align*}
-  \frac{1}{(1-t)^{3}} = \sum_{n=0}^{\infty} \binom {n+2} n \cdot t^{n}.
+  \frac{1}{(1-t)^{3}} = \sum_{n=0}^{\infty} \binom {n+2} 2 \cdot t^{n}.
  \end{align*} Тогда
  \begin{align*}
   G_{\xi}(t) =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
