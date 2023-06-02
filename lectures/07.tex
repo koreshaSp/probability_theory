@@ -98,6 +98,56 @@
  Вопрос о скорости сходимости сложный. С псевдослучайными числами есть проблема.
 \end{exmpl}
 
+\begin{thm}
+	Пусть $a \in \R, \ f : \R \to \R$ --- ограниченна и непрерывна в точке $a$.
+
+	Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
+	Тогда $E f(\xi_n) \to f(a)$. 
+\end{thm}
+\begin{proof}[\normalfont{Доказательство}]
+  \begin{align*}
+	|E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
+	& \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
+	\varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \varlimsup_{n \to \infty} \sup_{|a - x| < \eps} |f(x) - f(a)| + \varlimsup_{n \to \infty} \underbrace{2M \cdot P(|\xi_n - a| \geqslant \eps)}_{=0} \implies  \\
+	\varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| \overset{\eps \to 0}{\to} 0
+  \end{align*}
+\end{proof}
+
+\begin{thm}[Вейерштрасса]
+  Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.  
+\end{thm}
+
+\begin{proof}[\normalfont\textsc{Доказательство Бернштейна}]
+  Без ограничений общности скажем что $a = 0, b = 1$. 
+
+  Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
+  И положим $\xi_n = \frac {S_n} {n}$.
+
+  Тогда по ЗБЧ \eqref{strong_law_of_large_numbers_for_bernoulli_scheme}:
+
+  \begin{align*}
+  	\xi_n \to p
+  \end{align*} почти наверное.
+
+  Распишем $E f(\xi_n)$:
+
+  \begin{align*}
+	E f(\xi_n) = \sum_{k = 0}^{n} f\left(\frac k n\right) P(S_n = k) = \sum_{k = 0}^{n} f\left(\frac k n\right) p^{k} (1-p)^{n - k}
+  \end{align*} --- многочлен Бернштейна.
+
+  Т.к. у нас функция $f$ непрерывна, то она и ограничена на $[0, 1]$, пусть $f \leqslant M$, тогда:
+
+  \begin{align*}
+	|E f(\xi_n) - f(p)| &\leqslant P(|\xi_n - p| < \eps) \cdot \sup_{|p - x| < \eps} |f(x) - f(p)| + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \leqslant \\
+	&\leqslant \underbrace{\sup_{|p - x| < \eps} |f(x) - f(p)|}_{\to 0, f\text{ - непр. }} + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \\
+	P(|\xi_n - p| \geqslant \eps) &= P(|\frac {S_n} n - p| \geqslant \eps) \leqslant \frac{D \frac {S_n} n} {\eps^2} = \frac{p \cdot (1 - p)}{n^2\eps^2} \leqslant \frac 1 {4 n^2 \eps^2} \to 0
+  \end{align*}
+
+  Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной. 
+
+
+\end{proof}
+
 \newpage
 \section{Производящие функции.}
 
@@ -172,7 +222,7 @@
   = \frac{1}{6^{3}} t^{3}(1 - 3t^{6} + 3t^{12} - t^{18}) \cdot \frac{1}{(1-t)^{3}}.
  \end{align*} Но
  \begin{align*}
-  \frac{1}{(1-t)^{3}} = \sum_{n=0}^{\infty} \binom {n+2} n \cdot t^{n}.
+  \frac{1}{(1-t)^{3}} = \sum_{n=0}^{\infty} \binom {n+2} 2 \cdot t^{n}.
  \end{align*} Тогда
  \begin{align*}
   G_{\xi}(t) =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
