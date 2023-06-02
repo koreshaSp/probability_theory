@@ -99,12 +99,13 @@
 \end{exmpl}
 
 \begin{thm}
-	Пусть $a \in \R, \ f : \R \to \R$ --- ограниченна и непрерывна в точке $a$.
+	Пусть $a \in \R, \ f : \R \to \R$ --- ограничена и непрерывна в точке $a$.
 
 	Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
 	Тогда $E f(\xi_n) \to f(a)$. 
 \end{thm}
 \begin{proof}[\normalfont{Доказательство}]
+	Пусть $M: |f(x)| < M, \forall x$.
   \begin{align*}
 	|E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
 	& \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
