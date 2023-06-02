@@ -289,7 +289,7 @@
  .\end{align*} 
 \end{notatn*}
 
-Так, интегральная теорема Муавра-Лапласа утверждает
+Так, интегральная теорема \ref{theorem:intergram_theorem_muavr_laplas} Муавра-Лапласа утверждает
 \begin{align*}
  \lim_{n \to \infty} P \left( a < \frac{S_n-np}{\sqrt{npq}} \leqslant b \right) =\Phi(b)-\Phi(a).
 \end{align*}
@@ -303,39 +303,37 @@
  .\end{align*}
 \end{thm}
 
-\begin{remrk*}
+\begin{remrk}
  Константу $\frac{1}{2}$ можно заменить на $0.469$.
-\end{remrk*}
+\end{remrk}
 
-\begin{remrk*}
- Показатель степени $n$ (то есть $\frac{1}{2}$) нельзя улучшить.
-\end{remrk*}
+\begin{remrk}
+ Показатель степени $n$ в знаменателе (то есть $\frac{1}{2}$) нельзя уменьшить. Рассмотрим следующий пример.
+\end{remrk}
 
-
-
-\begin{exmpl*}
- Пусть $p = q = 1 / 2$ и  $2n$ испытаний. Чему равна
+\begin{exmpl}
+ Пусть в схеме Бернулли $p = q = 1 / 2$ и $2n$ испытаний.
  \begin{align*}
-  P(S_{2n} = n) = \binom {2n} n \left( \frac{1}{2} \right)^{2n} \sim \frac{4^{n}}{\sqrt{\pi n}} \left( \frac{1}{2} \right)^{2n} = \frac{1}{\sqrt{\pi n}}
- \end{align*} 
+  P(S_{2n} = n) = \binom {2n} n \left( \frac{1}{2} \right)^{2n} \sim \frac{4^{n}}{\sqrt{\pi n}} \left( \frac{1}{2} \right)^{2n} = \frac{1}{\sqrt{\pi n}}.
+ \end{align*} Тогда
+ \begin{align*}
+  P \left( \frac{S_{2n} - 2np}{\sqrt{2npq}} \leqslant 0 \right) &= P(S_{2n} \leqslant n) = P(S_{2n} < n) + P(S_{2n} = n) = \\
+  &= P(S_{2n} > n) + P(S_{2n} = n) = \frac{1 + P(S_{2n} = n)}{2} = \\
+  &= \frac{1}{2} + \frac{1}{2 \sqrt{\pi n}} + o \left( \frac{1}{\sqrt{n}} \right).
+ \end{align*} Так как $ \Phi(0) = \int_{-\infty}^{0} e^{-t^{2} / 2}\,dt = 1 / 2 $, то
+ \begin{align*}
+  \left|P \left( \frac{S_{2n}-2np}{\sqrt{2npq}} \leqslant 0 \right) - \Phi(0) \right| = \frac{1}{2\sqrt{\pi n}} + o \left( \frac{1}{\sqrt n} \right).
+ \end{align*} Таким образом, уменьшить показатель степени действительно нельзя.
+\end{exmpl}
 
- А какая вероятность
+\begin{remrk}
+ Предположим, что $ y \in \Z $ и нам необходимо приближенно вычислить $ P(S_n \leqslant y) $. По интегральной теореме \ref{theorem:intergram_theorem_muavr_laplas} Муавра-Лапласа
  \begin{align*}
-  P(S_{2n} \leqslant n) &= P(S_{2n} < n) + P(S_{2n} = n) = P(S_{2n} > n) + P(S_{2n} = n) = \\
-  &= \frac{1 + P(S_{2n} = n)}{2} = \frac{1}{2} + \frac{1}{\sqrt{\pi n}} + o \left( \frac{1}{\sqrt{n}} \right)
- \end{align*} По теореме \ref{theorem:intergram_theorem_muavr_laplas}
+  P(S_n \leqslant y) = P\left(\frac{S_n - np}{\sqrt{npq}} \leqslant \frac{y - np}{\sqrt{npq}}\right) \approx \Phi \left( \frac{y-np}{\sqrt{npq}} \right)
+ .\end{align*} Но число $S_n$ также целое, как и $ y $. Поэтому, можно получить более точное вычисление, сдвинув $ y $ на $ 1 / 2 $:
  \begin{align*}
-  P\left(\frac{S_{2n} - \frac{1}{2} \cdot 2n}{\sqrt{2n \cdot \frac{1}{2} \cdot \frac{1}{2}}} \leqslant 0\right) \to \Phi(0) = \frac{1}{2}.
- \end{align*} 
-\end{exmpl*}
-
-\begin{remrk*}
- \begin{align*}
-  P(S_n \leqslant y) = P\left(\frac{S_n - np}{\sqrt{npq}} \leqslant \underbrace{\frac{y - np}{\sqrt{npq}}}_{x}\right) \approx \Phi(x)
- .\end{align*} $S_n$ --- это дискретная штука. Если  $y \in \Z$, то
- \begin{align*}
-  P(S_n \leqslant y) = P\left(S_n \leqslant y + \frac{1}{2}\right) \approx \Phi \left( \frac{y + \frac{1}{2} - np}{\sqrt{npq}} \right)
- \end{align*} --- более точная формула.
-\end{remrk*}
+  P(S_n \leqslant y) = P\left(S_n \leqslant y + \frac{1}{2}\right) \approx \Phi \left( \frac{y + \frac{1}{2} - np}{\sqrt{npq}} \right).
+ \end{align*}
+\end{remrk}
 
 \end{document}
