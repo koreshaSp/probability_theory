@@ -365,7 +365,7 @@
  \end{align*} Далее два раза воспользуемся формулой интеграла по мере имеющей плотность (теорема \ref{theorem:integral_on_measure_with_density}):
  \begin{align*}
   \int\limits_{A} p(t)\,dt &= \int\limits_{\R} \left( \int\limits_{\R} \Ind_A(u+v) \cdot p_\nu(u)\,du  \right) p_\mu(v) \, dv = \\ &= \int\limits_{\R} \left( \int\limits_{\R} \Ind_A(u+v)\,d\nu(u)  \right) p_\mu(v)\,dv = \int\limits_{\R}  \int\limits_{\R} \Ind_A(u+v)\,d\nu(u)  \, d\mu(v) = \\
-  &= \mu \ast \nu(A).
+													 &= \left[\text{по \eqref{equation:measure_convolution_double_integral}} \right] =  \mu \ast \nu(A).
  \end{align*} 
 \end{proof}
 
