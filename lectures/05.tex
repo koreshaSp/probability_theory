@@ -390,7 +390,7 @@
     $ \xi \sim \Norm(\mu,\sigma^{2}) $. Тогда
     \begin{align*}
      p_\xi(t) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^{2}}.
-    \end{align*} Если $ \eta \sim \Norm(0,1) $, то $ \xi = \sigma \eta + a \sim \Norm(\mu,\sigma^{2}) $.
+    \end{align*} Если $ \eta \sim \Norm(0,1) $, то $ \xi = \sigma \eta + \mu \sim \Norm(\mu,\sigma^{2}) $.
     \begin{align*}
      &F_\xi(x) = P(\xi \leqslant x) = P(\sigma\eta + \mu \leqslant x) = P\left(\eta \leqslant \frac{x-\mu}{\sigma}\right) = F_{\eta}\left( \frac{x-\mu}{\sigma} \right) = \\
      &= \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{\frac{x-\mu}{\sigma}} e^{-t^{2} / 2}\,dt. \\
@@ -398,7 +398,7 @@
     \end{align*} Тогда
     \begin{align*}
      &E\xi = \E(\sigma \eta + \mu)  = \sigma \E\eta + \mu = \mu.\\
-     &D\xi = \D(\sigma\eta + a) = \sigma^{2}\D\eta = \sigma^{2}.
+     &D\xi = \D(\sigma\eta + \mu) = \sigma^{2}\D\eta = \sigma^{2}.
     \end{align*} 
    \end{exmpl}
 

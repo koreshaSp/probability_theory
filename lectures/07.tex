@@ -99,12 +99,13 @@
 \end{exmpl}
 
 \begin{thm}
-	Пусть $a \in \R, \ f : \R \to \R$ --- ограниченна и непрерывна в точке $a$.
+	Пусть $a \in \R, \ f : \R \to \R$ --- ограничена и непрерывна в точке $a$.
 
 	Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
-	Тогда $E f(\xi_n) \to f(a)$. 
+	Тогда $E f(\xi_n) \to f(a)$.
 \end{thm}
 \begin{proof}[\normalfont{Доказательство}]
+	Пусть $M: |f(x)| < M, \forall x$.
   \begin{align*}
 	|E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
 	& \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
@@ -114,11 +115,11 @@
 \end{proof}
 
 \begin{thm}[Вейерштрасса]
-  Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.  
+  Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.
 \end{thm}
 
 \begin{proof}[\normalfont\textsc{Доказательство Бернштейна}]
-  Без ограничений общности скажем что $a = 0, b = 1$. 
+  Без ограничений общности скажем что $a = 0, b = 1$.
 
   Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
   И положим $\xi_n = \frac {S_n} {n}$.
@@ -143,7 +144,7 @@
 	P(|\xi_n - p| \geqslant \eps) &= P(|\frac {S_n} n - p| \geqslant \eps) \leqslant \frac{D \frac {S_n} n} {\eps^2} = \frac{p \cdot (1 - p)}{n^2\eps^2} \leqslant \frac 1 {4 n^2 \eps^2} \to 0
   \end{align*}
 
-  Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной. 
+  Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной.
 
 
 \end{proof}

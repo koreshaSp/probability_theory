@@ -3,256 +3,468 @@
 \begin{document}
 
 \part{Элементарная теория вероятностей.}
+
 \section{Классическая модель теории вероятностей.}
 
-\begin{df*}
- Пусть $\Omega = \left\{ \omega_1, \ldots, \omega_n \right\}$ --- конечное множество, называемое \textit{пространством элементарных исходов}. Его элементы $ \omega \in \Omega $ называются \textit{элементарными исходами}. Интуитивно
+\subsection{Элементарные исходы и вероятность.}
+\label{subsection:def_of_elem_model}
+
+\begin{df}
+ \label{def:elementary_prob_space}
+ \textit{Пространством элементарных исходов} будем называть конечное множество $\Omega = \left\{ \omega_1, \ldots, \omega_n \right\}$. Его элементы $ \omega_i \in \Omega $ будем называть \textit{элементарными исходами}.
+
+ Интуиция у этого определения следующая.
  \begin{itemize}
-  \item $\omega_i$ равновозможны;
-  \item $\omega_i$ не совместны;
-  \item одно из $\omega_i$ всегда реализуется.
+  \item Один из элементарных исходов $ \omega_i \in \Omega $ всегда реализуется.
+  \item Элементарные исходы \textit{не совместны}: два разных элементарных исхода не могут реализоваться одновременно.
+  \item Элементарные исходы $ \omega_i\in\Omega $ равновозможны: они реализуется с одинаковой вероятностью.
  \end{itemize}
-\end{df*}
+\end{df}
 \begin{exmpl*}
- Игральный кубик. Честная монетка.
+ Честная монетка: пространство $ \Omega = \left\{ \omega_0, \omega_1 \right\} $, где $ \omega_1 $ --- выпал орёл, а $ \omega_0 $ --- выпала решка.
+ Игральный кубик: пространство $ \Omega = \left\{ \omega_1, \omega_2, \omega_3, \omega_4, \omega_5, \omega_6 \right\} $, где $ \omega_k $ --- выпало число $ k $ ($ 1\leqslant k \leqslant 6 $).
 \end{exmpl*}
 
 \begin{df}
- \textit{Случайное событие}  --- это произвольное подмножество $A \subset \Omega$. \textit{Вероятностью} случайного события $A$ называется число
-
+ \textit{Случайным событием} называется произвольное подмножество $A \subset \Omega$. \textit{Вероятностью} случайного события $A$ называется число
  \begin{align*}
   P(A) = \frac{\# A}{\# \Omega}
- ,\end{align*} где $\# B$ --- количество элементов в конечном множестве $B$.
+ ,\end{align*} где $\# B$ обозначает количество элементов в конечном множестве $B$.
 \end{df}
 
-\begin{prop*}
- Свойства вероятности:
- \begin{enumerate}
-  \item $P(\varnothing) = 0$; $P(\Omega) = 1$; $0 \leqslant P(A) \leqslant 1$.
-  \item Если $A \subset B$, то $P(A) \leqslant P(B)$.
-  \item Если $A \cap B = \varnothing$ (события \textit{не совместны}), то
-   \begin{align}
-    \label{equation:finite_additivity_of_classic_probability}
-    P(A \sqcup B) = P(A) + P(B)
-   .\end{align} 
-  \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
- \end{enumerate}
-\end{prop*}
-Оказывается, что из \eqref{equation:finite_additivity_of_classic_probability} следует всё остальное. Действительно, для пункта 2:
-\begin{align*}
- P(B) = P(B \setminus A) + P(A) \geqslant 0 + P(A),
-\end{align*}  а для пункта 3:
+Мы дали формальное определение вероятности в её классическом варианте. Обсудим простейшие свойства вероятности.
 
-\begin{crly*}
- $P(A \cup B) \leqslant P(A) + P(B)$.
-\end{crly*}
-
-\begin{proof}
-	\[
-		P(A \cup B) = P((A \cup B) \setminus B) + P(B) = P(A \setminus B) + P(B) \ge P(A) + P(B)
-	\]
-\end{proof}
-
-\begin{df*}
- $\overline A = \Omega \setminus A$.
-\end{df*}
-\begin{prop*}
- $P(\overline A) = 1 - P(A)$.
-\end{prop*}
-
-\begin{proof}
-	$P(A) + P(\overline A) = \frac{\#A}{\#\Omega} + \frac{\#\overline A}{\#\Omega} = 1$     
-\end{proof}
-	
-\begin{prop}[формула включений-исключений]
- \label{proposition:inclusion_exclusion_formula}
- \begin{align*}
-  P(A_1 \cup A_2 \cup \ldots \cup A_m) &= \sum_{i=1}^{m} P(A_i) - \sum_{i < j} P(A_i \cap A_j) + \sum_{i < j < k}  P(A_i \cap A_j \cap A_k) + \ldots \\
-  &\ldots + (-1)^{m - 1} P(A_1 \cap \ldots \cap A_m)
- .\end{align*} 
+\begin{prop}\
+ \begin{itemize}
+  \item $ P(\varnothing)=0 $.
+  \item $ P(\Omega) = 1 $.
+  \item $ 0 \leqslant P(A) \leqslant 1 $ для всех $ A \subset \Omega $.
+ \end{itemize}
 \end{prop}
-\begin{proof}
- По индукции. База ($m=1$) очевидно. Переход $m \to m + 1$. Обозначим $B = A_1 \cup \ldots \cup A_m$. Тогда
+
+\begin{remrk}
+ Элементарный исход $ \omega_i \in \Omega $ можно отождествить со случайным событием $ \left\{ \omega_i \right\} \subset \Omega $. Тогда интуицию определения \ref{def:elementary_prob_space} можно формализовать:
+ \begin{itemize}
+  \item Один из элементарных исходов всегда реализуется:
+   \begin{align*}
+    P(\left\{ \omega_1 \right\} \cup \ldots \cup \left\{ \omega_n \right\}) = 1.
+   \end{align*}
+  \item Элементарные исходы не совместны:
+   \begin{align*}
+    P(\left\{ \omega_i \right\} \cap \left\{ \omega_j \right\}) = 0, \qquad i \neq j.
+   \end{align*}
+  \item Элементарные исходы равновозможны:
+   \begin{align*}
+    P(\left\{ \omega_1 \right\}) = \ldots = P(\left\{ \omega_n \right\}) = \frac{1}{n}.
+   \end{align*}
+ \end{itemize}
+\end{remrk}
+
+\begin{prop}
+ Если события $ A $ и $ B $ \textit{не совместны}, то есть $ A \cap B = \varnothing $, то
+ \begin{align}
+  \label{eq:elem_prob_additivity}
+  P(A \sqcup B) = P(A) + P(B).
+ \end{align}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Это непосредственно следует из аналогичного равенство для мощностей конечных множеств:
  \begin{align*}
- P(B \cup A_{m+1}) \underbrace{=}_{\text{по предположению инд.}} P(B)+ P(A_{m+1}) - P(B \cap A_{m+1})
- .\end{align*} $P(B)$ раскроем по предположению индукции. Обозначим $B_k = A_k \cap A_{m+1}$. Тогда  $B \cap A_{m+1} = B_1 \cup \ldots \cup B_k$ . Снова по предположению индукции. Получаем:
- \begin{align*}
-	&= \underbrace{\sum_{i=1}^{m} P(A_i) - \sum_{i < j \leqslant m} P(A_i \cap A_k) + \ldots}_{P(B)}
-	+\\&+ P(A_{m+1})
-	- \underbrace{\left( \sum_{k=1}^{m} P(A_k \cap A_{m+1})
-	- \sum_{i < j \leqslant m} P(A_i \cap A_j \cap A_{m+1}) + \ldots \right)}_{P(B \cap A_{m + 1})}
-	=\\&=\sum_{i = 1}^{m + 1} P(A_i) - \sum_{i < j \le m + 1} P(A_i \cap A_j) + \ldots + (-1)^m P(A_1 \cap \ldots \cap A_{m + 1})
- \end{align*} 
+  \#(A\sqcup B) = \#A+\# B.
+ \end{align*}
 \end{proof}
 
+Свойство \eqref{eq:elem_prob_additivity} называется \textit{конечной аддитивностью} вероятности. Оказывается, это свойство является ключевым: из него по сути будут следовать все остальные свойства. Разумеется, его легко обобщить на произвольное конечное число непересекающихся событий:
+\begin{align*}
+ P(A_1 \sqcup A_2 \sqcup \ldots \sqcup A_k) = P(A_1) + P(A_2) + \ldots + P(A_k).
+\end{align*}
+
+Забегая вперёд, в более общей модели теории вероятностей это свойство будет иметь обобщение --- \textit{счётную аддитивность}, которая уже будет зашита в само определение.
+
+\begin{crly}[монотонность вероятности]
+ Если $ A \subset B \subset \Omega $, то
+ \begin{align*}
+  P(A) \leqslant P(B).
+ \end{align*}
+\end{crly}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ По аддитивности \eqref{eq:elem_prob_additivity} и неотрицательности
+ \begin{align*}
+  P(B) = P(A) + P(B \setminus A) \geqslant P(A).
+ \end{align*}
+\end{proof}
 
 \begin{df}
- \textit{Условная вероятность:} если $A \neq \varnothing$, то
- \begin{align*}
-  P(B \mid A) = \frac{\# (A \cap B)}{\# A}
- \end{align*} --- \textit{вероятность события $B$ при условии события $A$}. Можно её записать так:
- \begin{align*}
-  P(B \mid A) = \frac{P(A \cap B)}{P(A)}
- \end{align*} при условии $P(A) > 0$.
+ \textit{Дополнением} случайного события $ A \subset \Omega $ называется случайное событие $\overline A = \Omega \setminus A$.
 \end{df}
-\begin{prop*}\
+\begin{prop}
+ \begin{align}
+  \label{eq:prob_of_compl}
+  P(\overline A) = 1 - P(A).
+ \end{align}
+\end{prop}
+\begin{proof}
+ Действительно, по аддитивности
+ \begin{align*}
+  P(A) + P(\overline A) = P(\Omega) = 1.
+ \end{align*}
+\end{proof}
+
+\subsection{Формула включений-исключений.}
+
+\begin{crly}
+ \begin{align}
+  \label{eq:elem_prob_of_union}
+  P(A \cup B) = P(A) + P(B) - P(A \cap B).
+ \end{align}
+\end{crly}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Действительно, по конечной аддитивности \eqref{eq:elem_prob_additivity}
+ \begin{align*}
+  &P(A) + P(B) - P(A \cap B) = \\
+  =\;&P(A \setminus B) + P(A \cap B) + P(B \setminus A) + P(A \cap B) - P(A\cap B) = \\
+  =\;&P(A \setminus B) + P(A\cap B) + P(B \setminus A) = \\
+  =\;&P(A \cup B).
+ \end{align*}
+\end{proof}
+
+У формулы \eqref{eq:elem_prob_of_union} для вероятности объединения двух событий есть довольное полезное обобщение на произвольное конечное число событий, называемое \textit{формулой включений-исключений}.
+
+\begin{prop}[формула включений-исключений]
+ \label{proposition:inclusion_exclusion_formula}
+ Пусть $ A_1, A_2, \ldots, A_m \subset \Omega $ --- конечное число случайных событий. Тогда вероятность того, что произойдёт хотя бы одно из них, равна
+ \begin{equation}
+  \begin{aligned}
+   \label{eq:inclusion_exclusion_formula}
+   P\left( \bigcup_{i=1}^{m} A_i \right) &= \sum_{i=1}^{m} P(A_i) - \sum_{i < j} P(A_i \cap A_j) + \sum_{i < j < k}  P(A_i \cap A_j \cap A_k) - \ldots \\
+   &\ldots + (-1)^{m + 1} P\left( \bigcap_{i=1}^{m} A_i \right).
+  \end{aligned}
+ \end{equation} 
+\end{prop}
+\begin{proof}
+ Докажем индукцией по $ m $. База: $ m=1 $ --- очевидно, а $ m=2 $ --- это в точности формула \eqref{eq:elem_prob_of_union}.
+
+ Переход $ m \to m + 1 $. Обозначим
+ \begin{align*}
+  B = A_1 \cup \ldots \cup A_m.
+ \end{align*} Тогда по формуле \eqref{eq:elem_prob_of_union}
+ \begin{align*}
+  P \left( \bigcup_{i=1}^{m+1} A_i \right) = P(B \cup A_{m+1}) = P(B) + P(A_{m+1}) - P(B \cap A_{m+1}).
+ \end{align*} Слагаемое $P(B)$ мы раскроем по предположению индукции, применённое к событиям $ A_1, \ldots, A_m $.
+
+ Обозначим $B_i = A_i \cap A_{m+1}$, $ 1 \leqslant i \leqslant m $. Тогда $B \cap A_{m+1} = B_1 \cup \ldots \cup B_m$, и слагаемое $ -P(B \cap A_{m+1}) $ также можно раскрыть по предположению индукции, применённое к событиям $ B_1, \ldots, B_m $. Итого получаем:
+ \begin{align*}
+  &P \left( \bigcup_{i=1}^{m+1}A_i \right) = \\
+  =\;&\sum_{i=1}^{m}P(A_i) - \sum_{i < j \leqslant m} P(A_i \cap A_j) + \ldots + (-1)^{m+1}P \left( \bigcap_{i=1}^{m}A_i \right) + \\
+  +\;&P(A_{m+1}) \; - \\
+  -\;&\left( \sum_{i=1}^{m} P(A_i \cap A_{m+1}) - \sum_{i < j \leqslant m} P(A_i \cap A_j \cap A_{m+1}) + \ldots + (-1)^{m+1}P \left( \bigcap_{i=1}^{m+1} A_i \right) \right) = \\
+  =\;&\sum_{i=1}^{m+1}P(A_i) - \sum_{i < j}P(A_i \cap A_j) + \ldots + (-1)^{m+2}P \left( \bigcap_{i=1}^{m+1}A_i \right).
+ \end{align*}
+\end{proof}
+
+Формулу \eqref{eq:inclusion_exclusion_formula} включений-исключений можно также записать более компактно, в терминах множеств индексов:
+\begin{align*}
+ P \left( \bigcup_{i=1}^{m} A_i \right) = \sum_{\varnothing \neq I \subset [m]} (-1)^{\# I + 1} P \left( \bigcap_{i \in I} A_i \right).
+\end{align*}
+
+Часто формула-включений исключений появляется в симметричном варианте, когда события $ A_1, \ldots, A_m $ мы считаем <<плохими>>, и нам нужно посчитать вероятность того, что ни одно из них не произойдёт:
+\begin{align}
+ \label{eq:inclusion_exclusion_formula_compl}
+ &P \left( \bigcap_{i=1}^{m} \overline{A_i} \right) = P(\Omega) - \sum_{i=1}^{m}P(A_i) + \sum_{i < j} P(A_i \cap A_j) + \ldots + (-1)^{m} P \left( \bigcap_{i=1}^{m}A_i \right).
+\end{align} \eqref{eq:inclusion_exclusion_formula_compl} следует из обычной формулы включений-исключений и равенства \eqref{eq:prob_of_compl}. Запись \eqref{eq:inclusion_exclusion_formula_compl} в терминах множеств индексов имеет ещё более естественный вид:
+\begin{align*}
+ P \left( \bigcap_{i=1}^{m}\overline{A_i} \right)=\sum_{I \subset [m]} (-1)^{\# I} P \left( \bigcap_{i \in I}A_i \right).
+\end{align*}
+
+\subsection{Неравенство union bound.}
+
+Довольно часто нам не нужно вычислять вероятность объединения событий точно, а лишь оценить сверху. Здесь крайне полезным оказывается следующее неравенство, имеющее каноническое называние <<\textit{union bound}>> (или <<\textit{неравенство Буля}>>).
+
+\begin{prop}[union bound]
+ \begin{align}
+  \label{eq:union_bound}
+  P \left( \bigcup_{i=1}^{m}A_i \right) \leqslant \sum_{i=1}^{m} P(A_i).
+ \end{align}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Для $ m=2 $ неравенство имеет вид
+ \begin{align}
+  \label{eq:union_bound_2}
+  P(A \cup B) \leqslant P(A) + P(B)
+ \end{align} и непосредственно следует из \eqref{eq:elem_prob_of_union}. Для произвольного $ m $ доказываем по индукции с помощью \eqref{eq:union_bound_2}:
+ \begin{align*}
+  P(A_1 \cup \ldots \cup A_m) \leqslant P(A_1 \cup \ldots \cup A_{m-1}) + P(A_m) \leqslant \sum_{i=1}^{m} P(A_i).
+ \end{align*}
+\end{proof}
+
+Union bound неожиданно часто оказывается полезным. Яркий пример --- теорема \ref{thm:erdos_mozer} Эрдёша-Мозера.
+
+\subsection{Условная вероятность.}
+
+\begin{df}[условная вероятность]
+ \label{df:conditinal_probability}
+ Пусть $ A \subset \Omega $ --- случайное событие, такое, что $ P(A) > 0 $ (что эквивалентно $ A \neq \varnothing $ в нашей модели). Тогда \textit{вероятностью события $ B \subset \Omega $ при условии $ A $} называется  число
+ \begin{align*}
+  P(B \mid A) = \frac{P(B \cap A)}{P(A)} = \frac{\# (B \cap A)}{\# A}.
+ \end{align*}
+\end{df}
+
+Условная вероятность в своей сути осуществляет операцию сужения пространства $ \Omega $ элементарных исходов на событие $ A $. В частности, для всякого события $ B $ имеет место
+\begin{align*}
+ P(B \mid \Omega) = P(B).
+\end{align*}
+
+\begin{prop}[свойства условной вероятности]\
  \begin{enumerate}
   \item Если $B \supset A$, то $P(B \mid A) = 1$.
   \item $P(\varnothing \mid A) = 0$.
-  \item Если $B_1 \cap B_2 = 0$, то $P(B_1 \sqcup B_2 \mid A) = P(B_1 \mid A) + P(B_2 \mid A) $.
-
-   Рассмотреть события $A \cap B_1$ и $A \cap B_2$ и применить аддитивность.
+  \item Если $B_1 \cap B_2 = \varnothing$, то $P(B_1 \sqcup B_2 \mid A) = P(B_1 \mid A) + P(B_2 \mid A) $.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Рассмотреть события $A \cap B_1$ и $A \cap B_2$ и применить аддитивность в исходном пространстве.
+   \end{proof}
   \item $P(B \mid A) + P(\overline B \mid A) = 1$.
  \end{enumerate} 
- \begin{remrk*}
-  $P(B \mid A) + P(B \mid \overline A) \neq 1$. Например: $B = \Omega$, $A$ --- любое непустое. Тогда левая часть равна $2$.
- \end{remrk*}
-\end{prop*}
+\end{prop}
+
+\begin{remrk*}
+ $P(B \mid A) + P(B \mid \overline A) \neq 1$. Например: $B = \Omega$, $A$ --- любое непустое события. Тогда левая часть равна $2$.
+\end{remrk*}
+
+Бывает так, что вероятность некоторого события $ B $ сложно вычислить саму по себе, но легко вычислить вероятности $ B $ при условии некоторых событий $ A_i $, которые образуют конечное разбиение пространства элементарных исходов. В этом случае полезна \textit{формула полной вероятности}.
 
 \begin{prop}[формула полной вероятности]
- Пусть $\Omega = \bigsqcup_{k=1}^{m} A_k$, причём $P(A_k) > 0$. Тогда
+ Пусть есть есть разбиение пространства элементарных исходов на конечное число событий:
+ \begin{align*}
+  \Omega = \bigsqcup_{k=1}^{m} A_k,
+ \end{align*} причём $P(A_k) > 0$ для всех $ k $. Тогда
  \begin{align}
   \label{equation:total_probability_formula}
   P(B) = \sum_{k=1}^{m} P(B \mid A_k) \cdot P(A_k)
  .\end{align} 
 \end{prop}
-\begin{proof} По конечной аддитивности:
+\begin{proof} По конечной аддитивности верно
  \begin{align*}
   P(B) = \sum_{k=1}^{m} P(B \cap A_k) = \sum_{k=1}^{m} \frac{P(B \cap A_k) \cdot P(A_k)}{P(A_k)} = \sum_{k=1}^{m} P(B \mid A_k) \cdot P(A_k).
  \end{align*} 
 \end{proof}
+
 \begin{exmpl*}
- Есть две урны. В первой урне есть $3$ белых и $5$ чёрных шаров, а во второй --- $5$ белых и $5$ чёрных. Из первой урны мы не глядя достаём два шара и перекладываем во вторую. Затем достаём один шар из второй урны. Какова вероятность того, что он белый?
+ Есть две урны. В первой урне находятся $3$ белых и $5$ чёрных шаров, а во второй --- $5$ белых и $5$ чёрных. Из первой урны мы не глядя достаём два шара и перекладываем во вторую. Затем мы достаём один шар из второй урны. Какова вероятность того, что он белый?
 
- Если сейчас заняться формальным определением, то всё будет очень неприятно. Но можно просто применить формулу \eqref{equation:total_probability_formula} полной вероятности.
+ Если сейчас заняться формализмом и попытаться определить пространство элементарных исходов и всё остальное, и попытаться честно вычислить искомую вероятность, то решение окажется очень неприятным. Однако, можно просто применить формулу \eqref{equation:total_probability_formula} полной вероятности.
 
- Пусть $B$ --- событие <<вынули белый шар>>. Пусть $A_i$ --- событие <<$i$ белых шаров переложили из первой урны во вторую>>. Соответственно, $\Omega = A_0 \sqcup A_1 \sqcup A_2$. Тогда:
+ Пусть $B$ --- событие <<в конце вынули белый шар>>. Вероятность $ B $ саму по себе вычислять трудно, поэтому мы придумаем некоторое разбиение пространства элементарных исходов и воспользуемся формулой полной вероятности. 
+
+ Пусть $A_i$ --- событие <<из первой урны во вторую мы переложили $i$ белых шаров>>. Соответственно, мы получаем разбиение
  \begin{align*}
-  P(B) &= P(B \mid A_0) P(A_0) + P(B \mid A_1) P(A_1) + P(B \mid A_2) P(A_2).
- \end{align*} При этом 
+  \Omega = A_0 \sqcup A_1 \sqcup A_2,
+ \end{align*} ведь перекладывая два шара мы можем переложить либо $ 0 $, либо $ 1 $, либо $ 2 $ белых шара.
+
+ Тогда, по формуле \eqref{equation:total_probability_formula} полной вероятности получаем
+ \begin{align*}
+  P(B) &= P(B \mid A_0) \cdot P(A_0) + P(B \mid A_1) \cdot P(A_1) + P(B \mid A_2) \cdot P(A_2).
+ \end{align*} Вычислим вероятности событий из разбиения:
  \begin{align*}
   P(A_0) &= \frac{\binom 5 2}{\binom 8 2} = \frac{5 \cdot 4}{8 \cdot 7} = \frac{5}{14}, \\
   P(A_1) &= \frac{3 \cdot 5}{\binom 8 2} = \frac{15}{28}, \\
   P(A_2) &= \frac{\binom 3 2}{\binom 8 2} = \frac{3 \cdot 2}{8 \cdot 7} = \frac{3}{28}.
- \end{align*} Далее,
+ \end{align*} Вычислим условные вероятности:
  \begin{align*}
   P(B \mid A_0) = \frac{5}{12}, & &P(B \mid A_1) = \frac{6}{12} = \frac{1}{2}, & &P(B \mid A_2) = \frac{7}{12}
- .\end{align*} Ответ:
+ .\end{align*} Итого, ответ равен
  \begin{align*}
   P(B)  = \frac{5}{12} \cdot \frac{5}{14} + \frac{1}{2} \cdot \frac{15}{28} + \frac{7}{12} \cdot \frac{3}{28} = \frac{23}{48}.
  \end{align*} 
 
 \end{exmpl*}
 
+\subsection{Формула Байеса.}
+
+Наверное, самая важная формула в теории вероятностей, имеющая невероятное число приложений в статистике, машинном обучении и прочих областях --- это \textit{формула Байеса}.
+
 \begin{prop}[формула Байеса]
- Пусть $P(A) > 0$ и  $P(B) > 0$. Тогда
+ Пусть $ A, B \subset \Omega $ --- события, такие, что $P(A) > 0$ и  $P(B) > 0$. Тогда
  \begin{align}
   \label{equation:bayes_formula}
-  P(A \mid B) = \frac{P(B \mid A)P(A)}{P(B)}.
+  P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}.
  \end{align} 
 \end{prop}
-\begin{proof} $\frac{P(B \mid A)P(A)}{P(B)} = \frac{\frac{P(A \cap B)}{P(A)}P(A)}{P(B)} = \frac{P(A \cap B)}{P(B)} = P(A \mid B)$
+\begin{proof} Напрямую следует из определения \ref{df:conditinal_probability} условной вероятности:
+ \begin{align*}
+  \frac{P(B \mid A) \cdot P(A)}{P(B)} = \frac{\frac{P(A \cap B)}{P(A)} \cdot P(A)}{P(B)} = \frac{P(B \cap A)}{P(B)} = P(A \mid B).
+ \end{align*}
 \end{proof}
-\begin{exmpl*}
- Одно из первых приложений формулы Байеса --- медицинский тест на болезнь. Пусть $A$ --- это <<человек болен>>, а $B$ --- это <<тест положителен>>. При этом могут быть как и false positive, так и false negative. Оказывается, что если болезнь весьма редкая, а тестов много, то почти все тесты будут ложно положительными (это забыли во время коронавируса).
-\end{exmpl*}
+
+В формуле Байеса событие $ A $ называется \textit{гипотезой} (\textit{hypothesis}), а событие $ B $ называется \textit{наблюдением} (\textit{evidence}), и часто используют соответствующие обозначения $ A = H $ и  $ B = E $:
+\begin{align*}
+ P(H \mid E) = \frac{P(E \mid H)}{P(E)} \cdot P(H).
+\end{align*} При этом, вероятность $ P(H) $ называется  \textit{априорной вероятностью} гипотезы $ H $, а вероятность $ P(H\mid E) $ ---  \textit{апостериорной вероятностью} $ H $. Таким образом, формула Байеса показывает, как нам нужно скорректировать вероятность гипотезы $ H $, если вдруг наступило событие $ E $: её нужно домножить на $ \frac{P(E\mid H)}{P(E)} $.
+
+Формулу Байеса можно также встретить в ином виде.
 
 \begin{thm}[Байеса]
- Пусть $\Omega = \bigsqcup_{k=1}^{m} A_k$, $P(A_k) > 0$ и $P(B) > 0$. Тогда
+ Пусть пространство элементарных исходов разбито на конечное число событий:
  \begin{align*}
-  P(A_k \mid B) = \frac{P(B \mid A_k)P(A_k)}{\sum_{j=1}^{m} P(B \mid A_j)P(A_j)}
- .\end{align*} 
+  \Omega = \bigsqcup_{k=1}^{m} H_k,
+ \end{align*} $ P(H_k) > 0 $. Пусть $ E $  --- событие, такое что $ P(E)>0 $. Тогда для всех $ k $ верно
+ \begin{align*}
+  P(H_k \mid E) = \frac{P(E \mid H_k) \cdot P(H_k)}{ \sum_{j=1}^{m} P(E \mid H_j) \cdot P(H_j)}.
+ \end{align*}
+
+ В частности, для случая $ m=2 $,  $ \Omega = H \sqcup \overline H $, верно
+ \begin{align*}
+  P(H \mid E) = \frac{P(E \mid H) \cdot P(H)}{P(E \mid H) \cdot P(H) + P(E \mid \overline H) \cdot P(\overline H)}.
+ \end{align*}
 \end{thm}
 
-\begin{proof}
-	Распишем $P(A_k \mid B)$ по формуле Байеса \eqref{equation:bayes_formula}, а затем распишем $P(B)$ в знаменателе по формуле полной вероятности \eqref{equation:total_probability_formula}
-
-	\[
-		P(A_K \mid B) = \frac{P(B \mid A_k)P(A_k)}{P(B)} = \frac{P(B \mid A_k)P(A_k)}{\sum_{j = 1}^m P(B \mid A_j)P(A_j)}
-	\]  
-
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Левую часть $ P(H_k \mid E) $ распишем по формуле Байеса \eqref{equation:bayes_formula}, а затем знаменатель $ P(E) $ распишем по формуле полной вероятности \eqref{equation:total_probability_formula}:
+ \begin{align*}
+  P(H_k \mid E) = \frac{P(E \mid H_k) \cdot P(H_k)}{P(E)} = \frac{P(E \mid H_k) \cdot P(H_k)}{\sum_{j=1}^{m} P(E \mid H_j) \cdot P(H_j)}.
+ \end{align*}
 \end{proof}
 
+Человек достаточно плохо оценивает вероятности. Например, здесь люди склонны путать гипотезу $ H $ и наблюдение $ E $, и за вероятность $ P(H \mid E) $ часто принимают вероятность $ P(E \mid H) $, что в корне неверно.
+
 \begin{exmpl*}
- Пусть есть две монеты: одна из них симметричная, а вторая с вероятностью $1 / 3$ выдаёт решку, а с $2 / 3$ --- орёл. Мы взяли случайную монету, подбросили, и выпал орёл. Найти вероятность того, что монета симметричная.
+ Одно из первых приложений формулы Байеса --- медицинский тест на болезнь. 
 
- Пусть $A$ --- <<монета симметричная>>, $B$ --- выпал орёл. Тогда
- \begin{align*}
-  P(A \mid B) = \frac{P(B\mid A)P(A)}{P(B \mid A)P(A) + P(B \mid \overline A) P(\overline A)}
- .\end{align*} $P(A) = P(\overline A) = 1 / 2$.  $P(B \mid A) = 1 / 2$.  $P(B \mid \overline A) = 2 / 3$. Тогда
- \begin{align*}
-  P(A \mid B) = \frac{1 / 2}{1 / 2 + 2 / 3} = \frac{1 / 2}{7 / 6} = \frac{3}{7}
- .\end{align*} 
+ Пусть есть некоторая болезнь, и есть достаточно хороший тест на неё. Тест хороший, но тем не менее не идеальный:
+ \begin{itemize}
+  \item Если человек здоров, то с вероятностью $ 5 \% $ тест скажет, что человек болен (false positive).
+  \item Если человек болен, то с вероятностью $ 10 \% $ тест скажет, что человек здоров (false negative).
+ \end{itemize}
 
+ С первого взгляда, тест достаточно хороший, ведь он ошибается лишь с вероятностью $ 5-10 \% $. Однако, предположим что эта болезнь весьма редкая: случайный человек болен лишь с вероятностью $ 1\% $. Пусть теперь есть человек, для которого тест дал положительный результат. С какой вероятностью тогда этот человек болен?
+
+ Вычислим эту вероятность с помощью формулы Байеса. Пусть гипотеза $H$ --- это событие <<человек болен>>, а наблюдение $E$ --- это событие <<тест положителен>>. Тогда по формуле Байеса вероятность того, что человек болен при условии положительного теста, равна
+ \begin{align*}
+  P(H \mid E) &= \frac{P(E \mid H) \cdot P(H)}{P(E\mid H) \cdot P(H) + P(E\mid \overline H) \cdot P(\overline H)} = \\
+  &= \frac{0.9 \cdot 0.01}{0.9 \cdot 0.01 + 0.05 \cdot 0.99} \approx 0.15.
+ \end{align*}
+
+ Таким образом, с вероятностью около $ 85\% $ этот человек с положительным тестом на самом деле здоров!
 \end{exmpl*}
 
-Независимые события. Событие $B$ \textit{не зависит} от $A$, если $P(B) = P(B \mid A)$. Но
+\begin{exmpl*}
+ Пусть есть две монеты: одна из них честная (орёл и решка выпадают с одинаковой вероятностью), а вторая с вероятностью $1 / 3$ выдаёт решку, а с $2 / 3$ --- орёл. Мы взяли случайную монету из двух, подбросили, и выпал орёл. Найти вероятность того, что мы выбрали честную монету.
+
+ Пусть $H$ --- <<монета симметричная>>, $E$ --- <<выпал орёл>>. Тогда
+ \begin{align*}
+  P(H\mid E) = \frac{P(E\mid H) \cdot P(H)}{P(E\mid H) \cdot P(H) + P(E\mid \overline H) \cdot P(\overline H)}.
+ \end{align*} Здесь $ P(H) = P(\overline H) = 1/2 $ , $ P(E \mid H) = 1 / 2 $ , а $ P(E \mid \overline H) = 2 / 3 $. Тогда
+ \begin{align*}
+  P(H\mid E) = \frac{\frac{1}{2} \cdot \frac{1}{2}}{\frac{1}{2} \cdot \frac{1}{2} + \frac{2}{3} \cdot \frac{1}{2}} = \frac{1 / 2}{7 / 6} = \frac{3}{7}.
+ \end{align*}
+\end{exmpl*}
+
+\subsection{Независимость событий.}
+
+В предыдущем разделе мы изучили формулу Байеса, которая показывает, как изменяется вероятность события $ A $ при наступлении события $ B $, иными словами, как связаны вероятности $ P(A \mid B) $ и $ P(A) $.
+
+Может оказаться так, что вероятность события $ A $ не меняется при наступлении события $ B $, то есть верно равенство $ P(A \mid B) = P(A) $. В таком случае говорят, что событие $ A $ \textit{не зависит} от события $ B $. Действительно, ведь вероятность события $ A $ не зависит от того, наступило ли событие $ B $ или не наступило.
+
+Однако, такое определение требует дополнительное условие $ P(B) > 0 $, что не очень удобно: мы хотим, чтобы события нулевой вероятности также были независимы с любым другим событием. По определению условной вероятности условие $ P(A \mid B) = P(A) $ равносильно
 \begin{align*}
- P(B \mid A) = \frac{P(A\cap B)}{P(A)}
-.\end{align*} Поэтому удобнее определять через произведение вероятностей.
+ \frac{P(A \cap B)}{P(B)} = P(A) \iff P(A \cap B) = P(A) \cdot P(B).
+\end{align*} Поэтому, независимость событий проще определять через произведение вероятностей.
 
-\begin{df}
- $A$ и $B$ --- \textit{независимые события}, если $P(A \cap B) = P(A)P(B)$.
+\begin{df}[независимость двух событий]
+ \label{def:elem_independent}
+ Говорят, что два события $ A $ и $ B $ \textit{независимы}, если
+ \begin{align*}
+  P(A \cap B) = P(A) \cdot P(B).
+ \end{align*}
 \end{df}
-\begin{df}
- События $A_1, A_2, \ldots, A_m$ \textit{независимы в совокупности}, если
+
+В приложениях независимость событий часто является предположением, а не свойством, требующем доказательства. Например, при нескольких бросках монетки мы предполагаем, что броски независимы (то есть события <<выпал орёл при первом броске>> и <<выпал орёл при втором броске>> независимы).
+
+Бывает, приходится говорить о независимости более, чем двух событий. Здесь есть два разных понятия: \textit{попарная независимость}, когда любые два события из набора независимы, и, так называемся, \textit{независимость в совокупности}, которую мы сейчас и определим.
+
+\begin{df}[независимость в совокупности]\
+
+ Говорят, что события $A_1, A_2, \ldots, A_m$ \textit{независимы в совокупности}, если для любых различных индексов $i_1, i_2, \ldots, i_k \in [m]$ верно
  \begin{align*}
-  P(A_{i_1} \cap A_{i_2} \cap \ldots \cap A_{i_k}) = P(A_{i_1}) P(A_{i_2}) \ldots P(A_{i_k})
- \end{align*} для любых наборов различных индексов $i_1, i_2, \ldots, i_k$.
+  P(A_{i_1} \cap A_{i_2} \cap \ldots \cap A_{i_k}) = P(A_{i_1}) \cdot P(A_{i_2}) \cdot \ldots \cdot P(A_{i_k}).
+ \end{align*} 
 \end{df}
-Соглашение: по умолчанию \textit{независимость} означает <<независимость в совокупности>>.
-\begin{remrk*}
- Независимость в совокупности --- это не то же самое, что и попарная независимость (хотя из первого следует второе).
-\end{remrk*}
-\begin{exmpl*}
- Подбросили дважды игральный кубик. Пусть $A$ --- <<при первом броске выпало чётное число>>, $B$ --- <<при втором броске выпало чётное число>>. Пусть $C$ --- <<выпала чётная сумма>>. $\Omega = \left\{ (i,j) \mid 1 \leqslant i,j \leqslant 6 \right\}$.
+
+Ясно, что из независимости в совокупности следует попарная независимость. Но обратное не верно!
+
+\begin{remrk}
+ Из попарной независимости не следует независимость в совокупности.
+\end{remrk}
+\begin{exmpl}
+ Сделаем два независимых броска честной монетки. Для удобства бросок монетки выдаёт число $ 0 $ или число $ 1 $ с вероятностью $ 1 / 2 $. Пусть $ A $ --- событие <<при первом броске выпал $ 0 $>>, $ B $ --- <<при втором броске выпал $ 0 $>>, а $ S $ --- <<сумма выпавших чисел чётная>>. Тогда события $ A, B, S $ попарно независимы:
  \begin{align*}
-  P(A) = P(B) = P(C) = \frac{1}{2} \\
-  P(A \cap B) = \frac{1}{4} = P(A) P(B) \\
-  P(A \cap C) = P(B \cap C) = P(A \cap B) = \frac{1}{4}
- .\end{align*} Попарная независимость есть. Но
+  &P(A) = P(B) = P(S) = \frac{1}{2}, \\
+  &P(A \cap B) = \frac{1}{4} = P(A) \cdot P(B), \\
+  &P(A \cap S) = \frac{1}{4} = P(A) \cdot P(S), \\
+  &P(B \cap S) = \frac{1}{4} = P(B) \cdot P(S).
+ \end{align*} Однако, события $ A,B,S $ не являются независимыми в совокупности:
  \begin{align*}
-  P(A \cap B \cap C) = \frac{1}{4} \neq P(A)P(B)P(C)
- .\end{align*} Независимости в совокупности нет!
-\end{exmpl*}
+  P(A \cap B \cap S) = \frac{1}{4} \neq \frac{1}{8} = P(A) \cdot P(B) \cdot P(S).
+ \end{align*}
+\end{exmpl}
+
+\begin{conventn*}
+ Когда мы будем говорить, что события $ A_1, A_2, \ldots, A_m $ \textit{независимы}, по умолчанию мы будем иметь в виду независимость в совокупности. Попарную независимость мы будем иметь в виду, только если скажем так явно.
+\end{conventn*}
+
+\subsection{Вероятностный метод.}
+
+Приведём пример применения элементарной теории вероятности в комбинаторике, называемый \textit{вероятностным методом}. Этот метод позволяет доказать существование объекта с некоторым свойством неконструктивно, то есть не предъявляя такой объект. Много доказательств утверждений в совершенно разных областях с помощью вероятностного метода были в своё время получены Эрдёшом.
 
 \begin{thm}[Эрдёша-Мозера]
- Есть одно-круговой турнир, где играют $n$ волейбольных команд. Каждая сыграла с каждой. Пусть $k$ --- наибольшее число, для которого заведомо можно найти такие команды  $A_1, \ldots, A_k$, что $A_i$ выиграла у $A_j$ если $i < j$.
+ \label{thm:erdos_mozer}
+ Пусть $ n $ команд  участвуют в турнире: каждая команда  играет с каждой другой командой ровно один раз, и по результатам каждой игры одна команда выигрывает другую.
+
+ Пусть $k$ --- наибольшее число, для которого заведомо (то есть для любого исхода всех игр) можно найти такие команды  $A_1, \ldots, A_k$, что $A_i$ выиграла у $A_j$ при всех $i < j$.
 
  Тогда $k \leqslant 1 + \left\lfloor 2 \log_2 n  \right\rfloor$.
 \end{thm}
 \begin{proof}
- Вероятностный метод. Рассмотрим случайный турнир (всего турниров $2^{\binom n 2}$).
+ Всего исходов турнира ровно $ 2^{\binom n 2} $. Рассмотрим случайный исход турнира.
+
+ Для любых команд $ A $ и $B $ верно
  \begin{align*}
   P(A \text{ выиграла у } B) = 1 / 2
- .\end{align*} 
+ .\end{align*}
+
+ Для $ k $ команд $A_1,A_2,\ldots,A_k$ за $ S(A_1, A_2, \ldots, A_k) $  обозначим событие <<команды $ A_1,A_2,\ldots,A_k $ подходят>>, то есть <<$ A_i $ выиграла у $ A_j $ при всех $ i < j $>>. Тогда для любых команд $ A_1,A_2,\ldots,A_k $ 
  \begin{align*}
-  P(\text{команды } A_1, \ldots, A_k \text{ подходят}) &= \frac{1}{2^{\binom k 2}} \\
-  P(\text{какие-то $k$ команд подходят}) &\leqslant \sum_{\text{набор из $k$ команд}} P(A_1, \ldots, A_k \text{ подходят }) = \\
-  &= \binom n k \cdot k!  \cdot \frac{1}{2^{k(k-1) / 2}}
-.\end{align*} Предположим, что $k \geqslant 2 + \left\lfloor 2 \log_2 n \right\rfloor $. Тогда 
+  P(S(A_1,\ldots,A_k)) = \frac{1}{2^{\binom k 2}},
+ \end{align*} ведь для фиксированных исходов всех остальных игр, только один из исходов $ \binom k 2 $ игр между всеми парами команд $ A_1,A_2,\ldots,A_k $  подходит.
+
+ За $ S $ обозначим событие <<какие-то из $ k $ команд подходят>>. Тогда по неравенству union bound \eqref{eq:union_bound}:
+ \begin{align}
+  \label{eq:erdos_mozer_union_bound}
+  P(S) \leqslant \sum_{A_1,\ldots,A_k} P(S(A_1,\ldots,A_k)) = \binom n k \frac{k!}{2^{k(k-1) / 2}}.
+ \end{align} Предположим, что $ k \geqslant 2 + \left\lfloor 2\log_2 n \right\rfloor  $. Продолжим неравенство \eqref{eq:erdos_mozer_union_bound}:
  \begin{align*}
-  \leqslant \frac{n (n-1) \ldots (n-k+1)}{2^{k(k-1) / 2}} < \frac{n^{k}}{\left(2^{\frac{k-1}{2}}\right)^{k}} = \left(\frac{n}{2^{\frac{k-1}{2}}}\right)^{k} \le 1	
-	\\ 	(\text{так как } 2^{\frac{k - 1}{2}} \ge 2^{\frac{1 + \left\lfloor 2 \log_2 n \right\rfloor}{2}} \ge 2^{\frac{2 \log_2 n}{2}} = 2^{\log_2 n} = n) 
- .\end{align*} 
-	
- Тогда
+  P(S) \leqslant \frac{n (n-1) \ldots (n-k+1)}{2^{k(k-1) / 2}} < \frac{n^{k}}{\left(2^{\frac{k-1}{2}}\right)^{k}} = \left(\frac{n}{2^{\frac{k-1}{2}}}\right)^{k} \leqslant 1,
+ \end{align*} так как
  \begin{align*}
-  P(\text{никакие $k$ команд не подходят}) > 0
- .\end{align*} Следовательно, существует турнир, в котором никакие $k$ команд не подходят.
+  2^{\frac{k-1}{2}} \geqslant n \iff \frac{k-1}{2} \geqslant \log_2 n \iff k \geqslant 1 + 2  \log_2 n \impliedby k \geqslant 2 + \left\lfloor 2 \log_2 n \right\rfloor.
+ \end{align*}
+
+ Таким образом, $ P(\overline S) > 0$. Следовательно, существует турнир, в котором никакие $k$ команд не подходят.
 \end{proof}
 
-\begin{df*}
- 
-Небольшое обобщение модели: пусть $\Omega = \left\{ \omega_1, \ldots, \omega_n \right\}$, и $P(\omega_j) = p_j \in (0,1]$, причём $p_1 + \ldots + p_n = 1$. Тогда определим
-\begin{align*}
- P(A) = \sum_{\omega_j \in A} p_j
-.\end{align*}
-\end{df*}
+\subsection{Не равновероятные элементарные исходы.}
 
-Чтобы все свойства были верными, нужно проверить лишь конечную аддитивность:
+Элементарную модель теории вероятностей, определённую в разделе \ref{subsection:def_of_elem_model}, можно слегка обобщить, разрешив элементарным исходам принимать разные вероятности. Это обобщение нам понадобится в следующем параграфе.
+
+\begin{df}
+ Пусть $\Omega = \left\{ \omega_1,\omega_2, \ldots, \omega_n \right\}$ --- пространство элементарных исходов. Пусть элементарным исходам $ \omega_1, \omega_2, \ldots, \omega_n $ поставлены в соответствие их вероятности $ p_1, p_2, \ldots, p_n \in [0,1] $, причём $p_1 + p_2 + \ldots + p_n = 1$. Тогда \textit{вероятностью} случайного события $ A \subset \Omega $ называется число
+ \begin{align*}
+  P(A) = \sum_{\omega_j \in A} p_j
+ .\end{align*}
+\end{df}
+
+Для обобщённой модели также верны все свойства, доказанные в этом параграфе, ведь все они следуют из конечной аддитивности:
 \begin{align*}
- P(A \sqcup B) = P(A) + P(B)
-,\end{align*} что очевидно.
+ P(A \sqcup B) = P(A) + P(B),
+\end{align*} которая также верна. Аккуратно проверять это мы не будем, ведь все равно мы скоро определим более общую модель теории вероятностей, и для неё мы все проверим заново.
 
 \end{document}
