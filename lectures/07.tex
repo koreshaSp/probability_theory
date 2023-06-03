@@ -63,7 +63,7 @@
  \begin{align*}
   &\E S_n^{4} = \E \left( \eta_1 + \ldots + \eta_n \right)^{4} = \\
   = &\sum_{k=1}^{n}\E\eta_k^{4} + \ldots \sum_{i \in I} \eta_k^{3} \eta_j + \ldots \sum \E \eta_k^{2} \eta_j^{2} + \sum \E \eta^{2}_k \eta_j \eta_i + \ldots \sum \eta_k \eta_j \eta_i \eta_l
- \end{align*} Но $ \E(\eta_k^{3} \eta_j) = \E(\eta_k)^{3} \E \eta_j = \ldots \cdot 0 + 0 $. Тогда
+ \end{align*} Но $ \E(\eta_k^{3} \eta_j) = \E(\eta_k)^{3} \E \eta_j = \ldots \cdot 0 = 0 $. Тогда
  \begin{align*}
   \E S_n^{4} = \sum_{k=1}^{n}\E \eta_k^{4} + 6 \sum_{i < j} \E \eta_i^{2} \cdot \E \eta_j^{2} = 6 \sum_{i < j} \E \eta_i^{2} \cdot \E \eta_j^{2} + O(n).
  \end{align*}
@@ -77,6 +77,7 @@
 \end{proof}
 
 \begin{crly}[усиленный закон больших чисел для схем Бернулли]
+	\label{crly:strong_law_of_large_numbers_for_bernoulli_scheme}
  Пусть $ S_n $ --- количество успехов в схеме Бернулли с вероятностью успеха  $ p $ и  $ n $ испытаниями. Тогда $ \frac{S_n}{n} \to p $  почти наверное.
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
@@ -124,7 +125,7 @@
   Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
   И положим $\xi_n = \frac {S_n} {n}$.
 
-  Тогда по ЗБЧ \eqref{strong_law_of_large_numbers_for_bernoulli_scheme}:
+  Тогда по усиленному ЗБЧ для схемы Бернулли \eqref{crly:strong_law_of_large_numbers_for_bernoulli_scheme}:
 
   \begin{align*}
   	\xi_n \to p
