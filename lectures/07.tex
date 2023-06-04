@@ -63,7 +63,7 @@
  \begin{align*}
   &\E S_n^{4} = \E \left( \eta_1 + \ldots + \eta_n \right)^{4} = \\
   = &\sum_{k=1}^{n}\E\eta_k^{4} + \ldots \sum_{i \in I} \eta_k^{3} \eta_j + \ldots \sum \E \eta_k^{2} \eta_j^{2} + \sum \E \eta^{2}_k \eta_j \eta_i + \ldots \sum \eta_k \eta_j \eta_i \eta_l
- \end{align*} Но $ \E(\eta_k^{3} \eta_j) = \E(\eta_k)^{3} \E \eta_j = \ldots \cdot 0 + 0 $. Тогда
+ \end{align*} Но $ \E(\eta_k^{3} \eta_j) = \E(\eta_k)^{3} \E \eta_j = \ldots \cdot 0 = 0 $. Тогда
  \begin{align*}
   \E S_n^{4} = \sum_{k=1}^{n}\E \eta_k^{4} + 6 \sum_{i < j} \E \eta_i^{2} \cdot \E \eta_j^{2} = 6 \sum_{i < j} \E \eta_i^{2} \cdot \E \eta_j^{2} + O(n).
  \end{align*}
@@ -77,6 +77,7 @@
 \end{proof}
 
 \begin{crly}[усиленный закон больших чисел для схем Бернулли]
+	\label{crly:strong_law_of_large_numbers_for_bernoulli_scheme}
  Пусть $ S_n $ --- количество успехов в схеме Бернулли с вероятностью успеха  $ p $ и  $ n $ испытаниями. Тогда $ \frac{S_n}{n} \to p $  почти наверное.
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
@@ -86,7 +87,7 @@
  \end{align*}
 \end{proof}
 
-\begin{thm}[усиленный закон больших чисел в форме Колмогорова]
+\begin{thm}[усиленный закон больших чисел в форме Колмогорова(без доказательства)]
  Пусть $ \xi_1, \xi_2, \ldots $  независимы и одинаково распределены. Пусть $ S_n  = \xi_1 + \xi_2 + \ldots + \xi_n $. Тогда $ \frac{S_n}{n} \to a $ тогда и только тогда, когда $ a = \E \xi_1 $.
 \end{thm}
 
@@ -102,7 +103,7 @@
 	Пусть $a \in \R, \ f : \R \to \R$ --- ограничена и непрерывна в точке $a$.
 
 	Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
-	Тогда $E f(\xi_n) \to f(a)$. 
+	Тогда $E f(\xi_n) \to f(a)$.
 \end{thm}
 \begin{proof}[\normalfont{Доказательство}]
 	Пусть $M: |f(x)| < M, \forall x$.
@@ -115,16 +116,16 @@
 \end{proof}
 
 \begin{thm}[Вейерштрасса]
-  Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.  
+  Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.
 \end{thm}
 
 \begin{proof}[\normalfont\textsc{Доказательство Бернштейна}]
-  Без ограничений общности скажем что $a = 0, b = 1$. 
+  Без ограничений общности скажем что $a = 0, b = 1$.
 
   Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
   И положим $\xi_n = \frac {S_n} {n}$.
 
-  Тогда по ЗБЧ \eqref{strong_law_of_large_numbers_for_bernoulli_scheme}:
+  Тогда по усиленному ЗБЧ для схемы Бернулли \eqref{crly:strong_law_of_large_numbers_for_bernoulli_scheme}:
 
   \begin{align*}
   	\xi_n \to p
@@ -144,7 +145,7 @@
 	P(|\xi_n - p| \geqslant \eps) &= P(|\frac {S_n} n - p| \geqslant \eps) \leqslant \frac{D \frac {S_n} n} {\eps^2} = \frac{p \cdot (1 - p)}{n^2\eps^2} \leqslant \frac 1 {4 n^2 \eps^2} \to 0
   \end{align*}
 
-  Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной. 
+  Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной.
 
 
 \end{proof}
