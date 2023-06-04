@@ -502,4 +502,45 @@
  \end{enumerate}
 \end{proof}
 
+\begin{prop}[арифметические свойства плотности]
+ Пусть случайная величина $ \xi $ абсолютно непрерывна. Тогда
+ \begin{enumerate}
+  \item Случайная величина $ \xi + c $, где $ c \in \R $ --- константа, абсолютно непрерывна, и выполнено
+   \begin{align*}
+    p_{\xi + c}(t) = p_\xi(t - c).
+   \end{align*}
+  \item Случайная величина $ c\xi $, где $ c > 0 $, абсолютно непрерывна, и выполнено
+   \begin{align*}
+    p_{c\xi}(t) = \frac{p_\xi(t / c)}{c}.
+   \end{align*}
+  \item Случайная величина $ -\xi $ абсолютно непрерывна, и выполнено
+   \begin{align*}
+    p_{-\xi}(t) = p_\xi(-t).
+   \end{align*}
+ \end{enumerate}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]\
+ \begin{enumerate}
+  \item В самом деле,
+   \begin{align*}
+    F_{\xi+c}(x) = F_\xi(x - c) = \int_{-\infty}^{x - c} p_\xi(t)\,dt = \begin{bmatrix}
+     t = u - c & dt = du
+    \end{bmatrix} = \int_{-\infty}^{x} p_\xi(u - c)\,du,
+   \end{align*} поэтому функция $ t \mapsto p_\xi(t - c) $  подходит под определение плотности случайной величины $ \xi + c $.
+  \item Аналогично,
+   \begin{align*}
+    F_{c\xi}(x) = F_{\xi}(x / c) = \int_{-\infty}^{x / c} p_\xi(t)\,dt = \begin{bmatrix}
+     t = u / c & dt = du / c
+    \end{bmatrix} = \int_{-\infty}^{x} \frac{p_\xi(u / c)}{c}\,du,
+   \end{align*} поэтому функция $ t \mapsto \frac{p_\xi(t / c)}{c} $  --- плотность $ c\xi $.
+  \item Наконец,
+   \begin{align*}
+    F_{-\xi}(x) &= P(\xi \geqslant -x) = \int_{-x}^{+\infty} p_\xi(t)\,dt = \begin{bmatrix}
+     t = -u & dt = -du
+    \end{bmatrix} = \\
+    &= \int_{x}^{-\infty} p_\xi(-u)\,(-du) = \int_{-\infty}^{x} p_\xi(-u)\,du,
+   \end{align*} поэтому функция $ t \mapsto p_\xi(-t) $ --- плотность $ -\xi $.
+ \end{enumerate}
+\end{proof}
+
 \end{document}
