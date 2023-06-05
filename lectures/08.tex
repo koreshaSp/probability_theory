@@ -1,35 +1,50 @@
 % 2023.04.04 lecture 08
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-\begin{exmpl}\
-\begin{enumerate}
-  \item Найдём характеристическую функцию нормально распределённой случайной величины $ \xi \sim \Norm(0,1) $:
+\begin{exmpl}[характеристическая функция нормального распределения]
+  Найдём сначала характеристическую функцию стандартного нормального распределения $ \xi \sim \Norm(0,1) $:
    \begin{align*}
-    \phi_\xi(t) &= \E (e^{it\xi} ) = \frac{1}{\sqrt{2\pi}} \int\limits_{\R} e^{itx}  \cdot e^{-x^{2} / 2}\,dx = \frac{e^{-t^{2} / 2}}{\sqrt{2\pi} } \underbrace{\int\limits_{\R} e^{-(x-it)^{2} / 2} \,dx}_{I} = 
-   \end{align*}
-\begin{figure}[ht]
+    \varphi_\xi(t) &= \E e^{it\xi}  = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{itx}  \cdot e^{-x^{2} / 2}\,dx = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx)}\,dx  = \\
+    &=\frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx - t^{2} + t^{2})}\,dx   = \frac{e^{-t^{2} / 2}}{\sqrt{2\pi} } \int_{\R} e^{-(x-it)^{2} / 2} \,dx.
+   \end{align*} Вычислим интеграл
+   \begin{align*}
+    I = \int_{\R} e^{-(x-it)^{2} / 2}\,dx = \lim_{R \to +\infty}  \int_{-R-it}^{R-it} e^{-z^{2} / 2}\,dz
+   \end{align*} методами комплексного анализа: проинтегрируем функцию $ f(z) = e^{-z^{2} / 2} $ по контуру $ \Gamma_R $ --- границе прямоугольника с вершинами в точках $ R, -R, -R - it, R - it $.
+   \begin{figure}[ht]
     \centering
-	\incfig[0.5]{characteristic_function_normall}
-	\caption{Рисунок контура по которому интегрируем.}
+    \incfig[0.9]{characteristic_function_normall}
+    \caption{Контур интегрирования $ \Gamma_R $.}
     \label{fig:characteristic_function_normall}
-\end{figure}
+   \end{figure}
+
+   С одной стороны, так как $ f $ --- целая функция и не имеет особенностей внутри контура, то
+   \begin{align}
+    \label{eq:norm_char_func:integral_zero}
+    \varointctrclockwise_{\Gamma_R} f\,dz = 0.
+   \end{align} С другой стороны,
+   \begin{align}
+    \label{eq:norm_char_func:integral_contour}
+    \varointctrclockwise_{\Gamma_R} f\,dz = \int_{-R-it}^{R-it} f\,dz + \int_{R - it}^{R} f\,dz + \int_{R}^{-R} f\,dz + \int_{-R}^{-R-it} f\,dz.
+   \end{align}
+
+   Оценим интегралы по вертикальным отрезкам при $ R \to \infty $:
    \begin{align*}
-	I = \int\limits_{\R} e^{-(x-it)^{2} / 2} \,dx = \lim_{R \to \infty} \int\limits_{-R-it}^{R-it} e^{-z^{2} / 2}\,dz
-   \end{align*} Здесь комплексный анализ
+    \left| \int_{R-it}^{R} e^{-z^{2} / 2}\,dz \right| &\leqslant t \cdot \max_{-t \leqslant y \leqslant 0} \left| e^{-(R+iy)^{2} / 2} \right| = t \cdot \left| e^{-(R+\OO(1))^{2} / 2} \right| \to 0,\\
+    \left| \int_{-R}^{-R-it} e^{-z^{2} / 2}\,dz \right| &\leqslant t \cdot \max_{-t \leqslant y \leqslant 0} \left| e^{-(-R+iy)^{2} / 2} \right| = t \cdot \left| e^{-(-R+\OO(1))^{2} / 2} \right| \to 0.
+   \end{align*} Совмещая полученное с \eqref{eq:norm_char_func:integral_zero} и \eqref{eq:norm_char_func:integral_contour}, получаем
    \begin{align*}
-	0 = \varointctrclockwise \limits_{\Gamma_R}  e^{-z^{2} / 2}\,dz = \underbrace{\int\limits_{-R-it}^{R-it}}_{\to I}  + \underbrace{\int\limits_{R-it}^{R}}_{\to 0}  + \underbrace{\int\limits_{R}^{-R}}_{\to -\sqrt{2\pi}} + \underbrace{\int\limits_{-R}^{-R-it}}_{\to 0}
-   \end{align*} Получаем
-   \begin{align*}
-    I = \sqrt{2\pi}.
-   \end{align*} Тогда
+    I = \lim_{R \to +\infty}  \int_{-R}^{R} e^{-x^{2} / 2}\,dx = \int_{\R} e^{-x^{2} / 2}\,dx  = \sqrt{2\pi}.
+   \end{align*}
+
+   Итого, характеристическая функция стандартного нормального распределения $ \Norm(0,1) $ равна
    \begin{align*}
     \varphi_\xi(t) = e^{-t^{2} / 2}.
    \end{align*}
-  \item Если $ \eta \sim \Norm(a, \sigma^{2}) $. Тогда $ \eta = a + \sigma \xi $, где $ \xi \sim \Norm(0,1) $. Значит
+
+   Теперь пусть $ \eta \sim \Norm(\mu, \sigma^{2}) $. Тогда $ \eta = \sigma \xi + \mu $, где $ \xi \sim \Norm(0,1) $. По свойствам \ref{prop:char_func_plus_const} и \ref{prop:char_func_times_const} предложения \ref{prop:char_func_properties} получаем, что характеристическая функция нормального распределения $ \Norm(\mu,\sigma^{2}) $ равна
    \begin{align*}
-    \varphi_\eta(t) = \varphi_{a + \sigma \xi}(t) = e^{iat} \varphi_\xi(\sigma t) = e^{iat - \sigma^{2}t^{2} / 2}.
+    \varphi_\eta(t) = \varphi_{\sigma \xi + \mu}(t) = e^{it \mu} \varphi_\xi(\sigma t) = e^{it \mu - \sigma^{2}t^{2} / 2}.
    \end{align*}
- \end{enumerate}
 \end{exmpl}
 
 \begin{thm}
@@ -59,7 +74,7 @@
   \left| \frac{e^{ihx}-1}{h} \right| \leqslant \frac{2}{\left| h \right|} \leqslant 2 \left| x \right|.
  \end{align*} Если же $ \left| h \right| \leqslant \frac{1}{\left| x \right|} $, то
  \begin{align*}
-	 \left| \frac{e^{ihx}-1}{h} \right| = \left| \frac{1 + O(ihx) - 1}{h} \right| = O(x) \leqslant C \left| x \right|.
+  \left| \frac{e^{ihx}-1}{h} \right| = \left| \frac{1 + O(ihx) - 1}{h} \right| = O(x) \leqslant C \left| x \right|.
  \end{align*} так как функция непрерывна от $ hx $, задана на компакте. Так или иначе
  \begin{align*}
   \left| (ix)^{k}e^{itx}\frac{e^{ihx}-1}{h} \right| \leqslant C \left| x \right|^{k+1}. 
@@ -148,15 +163,15 @@
  \end{align*} 
 
  \begin{itemize}
-	\item $x > 1 \implies T(x + 1), T(x - 1) \to +\infty$, а так как интеграл сходящийся, то стремление может быть только к нулю. 
-	\item $-1 < x < 1 \implies \int_{T(x - 1)}^{T(x + 1)} \frac{\sin v}{dv} \, dv \to \int_{-\infty}^{+\infty} \frac{2 \sin v}{v}\,dv = 4 \int_0^{+\infty} \frac{\sin v}{v} \, dv = 2\pi$ 
-	\item $x = 1  \implies \int_{T(X - 1)}^{T(X + 1)} \frac{2 \sin v}{v}\,dv \to \int_0^{+\infty} \frac{2 \sin v}{v} \, dv = \pi$
-	\item $x < -1 $ и $x = -1$  аналогично. 
+  \item $x > 1 \implies T(x + 1), T(x - 1) \to +\infty$, а так как интеграл сходящийся, то стремление может быть только к нулю. 
+  \item $-1 < x < 1 \implies \int_{T(x - 1)}^{T(x + 1)} \frac{\sin v}{dv} \, dv \to \int_{-\infty}^{+\infty} \frac{2 \sin v}{v}\,dv = 4 \int_0^{+\infty} \frac{\sin v}{v} \, dv = 2\pi$ 
+  \item $x = 1  \implies \int_{T(X - 1)}^{T(X + 1)} \frac{2 \sin v}{v}\,dv \to \int_0^{+\infty} \frac{2 \sin v}{v} \, dv = \pi$
+  \item $x < -1 $ и $x = -1$  аналогично. 
  \end{itemize}
-	
+
  \begin{align*}
- 	= \begin{cases}    0, \text{ если } x > 1, x < -1  \\    \pi, \text{ если } x = 1, x = -1 \\    2\pi, \text{ если } -1 < x < 1   \end{cases}
- 	= 2\pi \cdot \Ind_{[-1,1]}(x) 
+  = \begin{cases}    0, \text{ если } x > 1, x < -1  \\    \pi, \text{ если } x = 1, x = -1 \\    2\pi, \text{ если } -1 < x < 1   \end{cases}
+  = 2\pi \cdot \Ind_{[-1,1]}(x) 
  \end{align*} почти всюду, т. к. $P_{\xi}(\{a\}) = P_{\xi}(\{b\}) = 0$. Тогда
 
  \begin{align*}
@@ -166,26 +181,26 @@
   F(y) = \int\limits_{-\infty}^{y} \frac{2\sin v}{v}\,dv. 
  \end{align*}
 
-  Как свести общий случай к $ a = -1 $, $ b = 1 $? Пусть \begin{align*}
-   \xi = \frac{a+b}{2} + \frac{b-a}{2}\cdot\eta
-  \end{align*} Тогда
-  \begin{align*}
+ Как свести общий случай к $ a = -1 $, $ b = 1 $? Пусть \begin{align*}
+  \xi = \frac{a+b}{2} + \frac{b-a}{2}\cdot\eta
+ \end{align*} Тогда
+ \begin{align*}
   \left\{ a \leqslant \xi \leqslant b \right\} \Longleftrightarrow \left\{ -1 \leqslant \eta \leqslant 1 \right\}.
-  \end{align*} Значит,
-  \begin{align*}
-   P(a \leqslant \xi \leqslant b) &= P(-1 \leqslant \eta \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\varphi_\eta(t)\,dt = \\
-	 & \overset{?}{=} \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it}\varphi_\xi(t)\,dt 
-  \end{align*}
+ \end{align*} Значит,
+ \begin{align*}
+  P(a \leqslant \xi \leqslant b) &= P(-1 \leqslant \eta \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\varphi_\eta(t)\,dt = \\
+  & \overset{?}{=} \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it}\varphi_\xi(t)\,dt 
+ \end{align*}
 
-	Покажем, что на месте $\overset{?}{=}$ действительно есть равенство. Для этого раскроем $\varphi_{\xi} $ по правилу $\varphi_\xi(t) = e^{i \frac{a+b}{2}t}\varphi_\eta\left(\frac{b-a}{2}t\right)$ и выплнем преобразования:	
+ Покажем, что на месте $\overset{?}{=}$ действительно есть равенство. Для этого раскроем $\varphi_{\xi} $ по правилу $\varphi_\xi(t) = e^{i \frac{a+b}{2}t}\varphi_\eta\left(\frac{b-a}{2}t\right)$ и выплнем преобразования:	
 
-	\begin{align*}
-		\int\limits_{-T}^{T} \frac{e^{-iat} - e^{ibt}}{it} \varphi_{\xi}(t)\,dt &= \int\limits_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it}e^{i \frac{a+b}{2} t} \cdot \varphi_\eta \left( \frac{b-a}{2}t \right)\,dt = \\
-   &= \int\limits_{-T}^{T} \frac{e^{i \frac{b-a}{2}t} -e^{-i \frac{b-a}{2} t}}{it} \varphi_\eta \left( \frac{b-a}{2}t \right)dt = \\
-   &= \left[s = \frac{b - a}{2} t\right] = \\
-   &= \int\limits_{- \frac{b-a}{2}T}^{\frac{b-a}{2}T} \frac{e^{is}-e^{-is}}{is}\varphi_\eta(s)\,ds 
-	\end{align*}
-	Устремляем $T$ в бесконечность и получаем, что равенство $\overset{?}{=}$ верно.
+ \begin{align*}
+  \int\limits_{-T}^{T} \frac{e^{-iat} - e^{ibt}}{it} \varphi_{\xi}(t)\,dt &= \int\limits_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it}e^{i \frac{a+b}{2} t} \cdot \varphi_\eta \left( \frac{b-a}{2}t \right)\,dt = \\
+  &= \int\limits_{-T}^{T} \frac{e^{i \frac{b-a}{2}t} -e^{-i \frac{b-a}{2} t}}{it} \varphi_\eta \left( \frac{b-a}{2}t \right)dt = \\
+  &= \left[s = \frac{b - a}{2} t\right] = \\
+  &= \int\limits_{- \frac{b-a}{2}T}^{\frac{b-a}{2}T} \frac{e^{is}-e^{-is}}{is}\varphi_\eta(s)\,ds 
+ \end{align*}
+ Устремляем $T$ в бесконечность и получаем, что равенство $\overset{?}{=}$ верно.
 \end{proof}
 
 Сделаем выводы из <<первой навороченной теоремы про характеристические функции>>.
@@ -196,8 +211,8 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Обозначим
  \begin{align*}
- A = \left\{ x \in \R \Mid P_\xi(\left\{ x \right\}) > 0 \right\}
-\end{align*} Тогда множество $ A $ не более, чем счётное (счётное объединение конечных множеств $\{x \in \R \mid P_{\xi}(\{x\}) > \frac{1}{n}\}$). Значит, почти все точки хорошие. Мы знаем, что $ \varphi_\xi $ однозначно определяет вероятности
+  A = \left\{ x \in \R \Mid P_\xi(\left\{ x \right\}) > 0 \right\}
+ \end{align*} Тогда множество $ A $ не более, чем счётное (счётное объединение конечных множеств $\{x \in \R \mid P_{\xi}(\{x\}) > \frac{1}{n}\}$). Значит, почти все точки хорошие. Мы знаем, что $ \varphi_\xi $ однозначно определяет вероятности
  \begin{align*}
   P_\xi([a,b]) = P_\eta( \left[a, b\right)),
  \end{align*} если $ a,b \notin A $.
@@ -217,7 +232,7 @@
  \begin{align*}
   P_\xi \left(a, b\right] = \lim P_\xi \left(a, b_n\right]   
  \end{align*} --- определяется однозначно. Меры совпадают на ячейках $  \implies $ совпадают всюду.
- 
+
 \end{proof}
 \begin{crly}
  Если $ \int_{\R} \left| \varphi_\xi(t) \right|\,dt < +\infty  $, то $ F_\xi $ имеет плотность
@@ -228,7 +243,7 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Из абсолютной сходимости интеграла $ \int_{\R} \left| \varphi_\xi(t) \right|\,dt  $ следует что
  \begin{align*}
- \int\limits_{\R} \underbrace{\frac{e^{-iat}-e^{-ibt}}{it}}_{\text{огр.}} \varphi_\xi(t)\,dt
+  \int\limits_{\R} \underbrace{\frac{e^{-iat}-e^{-ibt}}{it}}_{\text{огр.}} \varphi_\xi(t)\,dt
  \end{align*} абсолютно сходится. Тогда
  \begin{align*}
   P(a \leqslant \xi \leqslant b) = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{ibt}}{it}\varphi_\xi(t)\,dt. 
