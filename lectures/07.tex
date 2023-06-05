@@ -4,177 +4,243 @@
 
 \subsection{Законы больших чисел.}
 
+Предположим, есть некоторый эксперимент, который мы повторяем много раз. То есть, у нас есть последовательность независимых случайных величин $ \xi_1,\xi_2, \ldots $, где $ \xi_k $ --- результат $ k $-го повторения эксперимента. Обозначим через $ S_n $ сумму результатов первых  $ n $  повторений:
+\begin{align*}
+ S_n = \xi_1 + \xi_2+\ldots+\xi_n.
+\end{align*} Тогда $ \frac{S_n}{n} $ равно среднему результату эксперимента на случайной выборке из $ n $  повторений эксперимента.
+
+\textit{Законы больших чисел} утверждают, что средний результат эксперимента $ \frac{S_n}{n} $ близок к ожидаемому результату эксперимента. В случае, когда эксперименты одинаковые, то есть величины $ \xi_k $ одинаково распределены, утверждается, что средний результат  $ \frac{S_n}{n} $  близок к математическому ожиданию одного повторения эксперимента $ \E \xi_1 $. В общем случае утверждается, что $ \frac{S_n}{n} $ близко к ожидаемому среднему результату $ \E \frac{S_n}{n} $.
+
+Здесь имеются следующие соглашения по наименованию утверждений.
+
+\textit{Закон больших чисел} (ЗБЧ) --- это утверждение следующего вида: при некоторых условиях величина $ \frac{S_n}{n}-\E \frac{S_n}{n} $ сходится к нулю по вероятности.
+
+\textit{Закон больших чисел в форме такого-то} --- это указание на условия.
+
+\textit{Усиленный закон больших чисел} --- при некоторых условиях $ \frac{S_n}{n}-\E \frac{S_n}{n} $ стремится к нулю почти наверное.
+
 \begin{thm}[%
  закон больших чисел]
- Пусть $ \xi_1, \xi_2, \ldots $ --- попарно некореллированные случайные величины с ограниченной дисперсией: $ \D \xi_n \leqslant M $. Пусть $ S_n = \xi_1 + \ldots + \xi_n $. Тогда
+ \label{theorem:law_of_large_numbers}
+ Пусть $ \xi_1, \xi_2, \ldots $ --- попарно некореллированные случайные величины с равномерно ограниченной дисперсией: $ \D \xi_n \leqslant M $. Обозначим $ S_n = \xi_1 + \ldots + \xi_n $. Тогда величина $ \frac{S_n}{n}-\E \frac{S_n}{n} $  сходится к нулю по вероятности:
  \begin{align*}
-  P\left(\left| \frac{S_n}{n} - \E \frac{S_n}{n} \right| \geqslant \eps\right) \to 0
- \end{align*} при $ n \to \infty $.
+  \lim_{n \to \infty} P\left(\left| \frac{S_n}{n} - \E \frac{S_n}{n} \right| \geqslant \eps\right) = 0.
+ \end{align*}
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Запишем неравенство Чебышева:
+ Воспользуемся неравенством Чебышева \eqref{equation:chebyshev_inequality}:
  \begin{align*}
   P \left( \left| \frac{S_n}{n} - \E \frac{S_n}{n} \right| \geqslant \eps \right) \leqslant \frac{\D \frac{S_n}{n}}{\eps ^{ 2}} = \frac{\D S_n}{\eps^{2} n^{2}} = \frac{1}{\eps^{2} n^{2}} \sum_{k=1}^{n}\D\xi_k \leqslant \frac{nM}{n^{2}\eps^{2}} \to 0.
- \end{align*}
+ \end{align*} Здесь мы пользовались равенством
+ \begin{align*}
+  \D S_n = \sum_{k=1}^{n}\D\xi_k,
+ \end{align*} которое следует из \eqref{eq:variance_sum_many} и попарной некоррелированности величин $ \xi_k $.
 \end{proof}
 
 \begin{crly}[закон больших чисел в форме Чебышева]
- Пусть $ \xi_1, \xi_2, \ldots $  --- независимые одинаково распределённые случайные величины с конечной дисперсией. Пусть $ a = \E \xi_1 $. Тогда
+ \label{corallry:law_of_large_numbers_chebyshev}
+ Пусть $ \xi_1, \xi_2, \ldots $  --- независимые одинаково распределённые случайные величины с конечной дисперсией. Обозначим $ a = \E \xi_1 $ --- математическое ожидание одной случайной величины. Тогда величина $ \frac{S_n}{n} $ сходится к $ a $ по вероятности:
  \begin{align*}
-  \frac{S_n}{n} \to a
- \end{align*} по вероятности.
+  \lim_{n \to \infty} P \left( \left| \frac{S_n}{n}-a \right|\geqslant\eps \right)=0.
+ \end{align*}
 \end{crly}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Применить закон больших чисел (теорему \ref{theorem:law_of_large_numbers}). Попарная некоррелированность следует из независимости, равномерная ограниченность дисперсии следует из одинакового распределения (и, конечно, существования конечной дисперсии у этого распределения). Наконец,
+ \begin{align*}
+  \E \frac{S_n}{n} = \frac{\E \sum_{k=1}^{n}\xi_k}{n} = \frac{\sum_{k=1}^{n}a}{n} = a,
+ \end{align*} поэтому сходимость к тому, чему требуется.
+\end{proof}
 
 \begin{crly}[закон больших чисел для схемы Бернулли]
- Рассмотрим схему Бернулли с вероятностью $ p $, $ S_n $ --- количество успехов среди $ n $ испытаний. Тогда $ \frac{S_n}{n} \to p $.
+ Рассмотрим схему Бернулли с вероятностью успеха $ p \in (0,1) $. Обозначим через $ S_n $ количество успехов среди $ n $ испытаний. Тогда $ \frac{S_n}{n} $ сходится к $ p $ по вероятности:
+ \begin{align*}
+  \lim_{n \to \infty} P \left( \left| \frac{S_n}{n} - p \right| \geqslant \eps \right) = 0.
+ \end{align*}
 \end{crly}
-
-\begin{conventn*}
- <<Закон больших чисел>> --- это утверждение вида <<при каких-то условиях верно $ P \left( \left| \frac{S_n}{n} - \E \frac{S_n}{n} \right| \geqslant \eps \right) \to 0 $>>.
-
- <<Закон больших чисел в форме такого-то>> --- это указание на условия.
-
- <<Усиленный закон больших чисел>> --- при каких-то условиях есть сходимость почти всюду. Одну из версий мы сейчас обсудим.
-\end{conventn*}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Применить ЗБЧ в форме Чебышева (следствие \ref{corallry:law_of_large_numbers_chebyshev}).
+\end{proof}
 
 \begin{thm}[усиленный закон больших чисел]
- Пусть $ \xi_1, \xi_2, \ldots $ независимы. Пусть четвёртый центральный момент равномерно ограничен: $ \E (\xi_k - \E\xi_k)^{4} \leqslant M $. Обозначим $ S_n = \xi_1 + \ldots + \xi_n $. Тогда
+ \label{theorem:strong_law_of_large_numbers}
+ Пусть $ \xi_1,\xi_2, \ldots $ --- независимые случайные величины, четвёртый центральный момент которых равномерно ограничен:
+ \begin{align*}
+  \E (\xi_k-\E\xi_k)^{4} \leqslant M.
+ \end{align*} Обозначим $ S_n = \xi_1 + \ldots + \xi_n $. Тогда
  \begin{align*}
   \frac{S_n}{n} - \E \frac{S_n}{n} \to 0
- \end{align*} почти всюду.
+ \end{align*} почти наверное.
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Рассмотрим новые случайные величины $ \eta_k = \xi_k - \E\xi_k $. Тогда $ \E\eta_k = 0 $, $ \E \eta_k^{4} \leqslant M $. Нужно доказать, что
+ Для простоты избавимся от смещения в случайных величинах: рассмотрим величины
+ \begin{align*}
+  \eta_k = \xi_k - \E\xi_k.
+ \end{align*} Тогда $ \E\eta_k = 0 $, $ \E \eta_k^{4} \leqslant M $ для всех $ k \geqslant 1 $, и нам нужно доказать, что
  \begin{align*}
   \frac{S_n}{n} \to 0
- \end{align*} почти везде, где $ S_n = \eta_1 + \ldots + \eta_n $. То есть можно считать, что $ \E \xi_k = 0 $ для всех $ k $.
+ \end{align*} почти наверное, где $ S_n = \eta_1 + \ldots + \eta_n $.
 
- Рассмотрим событие
+ Зафиксируем число $ \eps > 0 $, рассмотрим события
  \begin{align*}
-  A_n = \left\{ \left| \frac{S_n}{n} \right| > \eps \right\}.
- \end{align*} Рассмотрим верхний предел:
+  A_n^{(\eps)} = \left\{ \left| \frac{S_n}{n} \right| \geqslant \eps \right\}
+ \end{align*} и их верхний предел
  \begin{align*}
-  A = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} A_k
- \end{align*} Пусть $ \omega \notin A $. Тогда $ \omega \notin A_n $ при больших $ n $, значит $ \left| \frac{S_n(w)}{n} \right| \leqslant \eps $  при больших $ n $ . Нужно доказать, что $ P(A) = 0 $ для всех  $ \eps $, и тогда мы победим. По лемме Бореля-Кантелли нужно показать, что
- \begin{align*}
-  \sum_{n=1}^{\infty} P(A_n) < \infty.
- \end{align*} По неравенству Маркова
- \begin{align*}
-  P(A_n) = P \left( \left( \frac{S_n}{n} \right)^{4} \geqslant \eps^{4} \right) \leqslant \frac{\E \left( \frac{S_n}{n} \right)^{4}}{\eps^{4}} = \frac{\E S_n^{4}}{\eps^{4} n^{4}}.
- \end{align*} Поэтому, достаточно доказать, что $ \E S_n^{4} = O(n^{2}) $ (ведь ряд $ \sum \frac{1}{n^{2}} $ сходится).
- \begin{align*}
-  &\E S_n^{4} = \E \left( \eta_1 + \ldots + \eta_n \right)^{4} = \\
-  = &\sum_{k=1}^{n}\E\eta_k^{4} + \ldots \sum_{i \in I} \eta_k^{3} \eta_j + \ldots \sum \E \eta_k^{2} \eta_j^{2} + \sum \E \eta^{2}_k \eta_j \eta_i + \ldots \sum \eta_k \eta_j \eta_i \eta_l
- \end{align*} Но $ \E(\eta_k^{3} \eta_j) = \E(\eta_k)^{3} \E \eta_j = \ldots \cdot 0 + 0 $. Тогда
- \begin{align*}
-  \E S_n^{4} = \sum_{k=1}^{n}\E \eta_k^{4} + 6 \sum_{i < j} \E \eta_i^{2} \cdot \E \eta_j^{2} = 6 \sum_{i < j} \E \eta_i^{2} \cdot \E \eta_j^{2} + O(n).
+  A^{(\eps)} = \bigcap_{n=1}^{\infty} \bigcup_{k\geqslant n} A_k^{(\eps)}.
  \end{align*}
- По неравенству Гёльдера
+
+ Предположим, что $ \omega \notin A^{(\eps)} $. Тогда $ \omega \notin A_n^{(\eps)} $ при всех достаточно больших $ n $. Следовательно, при достаточно больших $ n $ верно $ \left| S_n(\omega)/n \right| < \eps $. Если мы докажем, что для всякого $ \eps > 0 $ выполнено  $ P(A^{(\eps)}) = 0 $, то для события
  \begin{align*}
-  \E(\eta_k^{2} \eta_j^{2}) \leqslant (\E \eta_k^{4})^{\frac{1}{2}}(\E \eta_j^{4})^{\frac{1}{2}} \leqslant M
+  A = \bigcup_{n=1}^{\infty} A^{(1 / n)}
+ \end{align*} мы получим $ P(A) = 0 $. Тогда с вероятностью  $ 1 $  для каждого $ \eps $ будет выполнено  $ \left| \frac{S_n}{n} \right| < \eps $ при больших $ n $, то есть мы получим сходимость $ \frac{S_n}{n} \to 0 $  почти наверное.
+
+ Докажем $ P(A^{(\eps)}) = 0 $ для произвольного $ \eps > 0 $. По лемме \ref{lemma:borel_cantelli} Бореля-Кантелли достаточно доказать сходимость ряда
+ \begin{align}
+  \label{eq:uzbch_series}
+  \sum_{n=1}^{\infty} P(A_n) < \infty.
+ \end{align} Оценим каждое слагаемое по неравенству Маркова \eqref{equation:markov_inequality}:
+ \begin{align*}
+  P(A_n) = P \left[ \left( \frac{S_n}{n} \right)^{4} \geqslant \eps^{4} \right] \leqslant \frac{\E \left( \frac{S_n}{n} \right)^{4}}{\eps^{4}} = \frac{\E S_n^{4}}{\eps^{4} n^{4}}.
+ \end{align*} 
+
+ Нам достаточно доказать, что $ \E S_n^{4} = \OO(n^{2}) $, ведь тогда мы получим $ P(A_n) = \OO(1 / n^{2})$, и ряд \eqref{eq:uzbch_series} будет оценен сверху сходящимся рядом $ C \sum_{n=1}^{\infty} \frac{1}{n^{2}}$. Раскроем $ \E S_n^{4} $:
+ \begin{align*}
+  \E S_n^{4} = \E (\eta_1 + \ldots + \eta_n)^{4} = \sum_{i=1}^{n} \sum_{j=1}^{n} \sum_{k=1}^{n} \sum_{l=1}^{n} \E (\eta_i \eta_j \eta_k \eta_l).
+ \end{align*} Заметим, что если в слагаемом $ \E(\eta_i \eta_j \eta_k \eta_l) $ некоторая величина $ \eta_s $ входит только один раз, то по независимости величин слагаемое будет равно $ \E \eta_s \cdot (\ldots) = 0 $. Таким образом, выживут лишь следующие слагаемые:
+ \begin{align*}
+  \E S_n^{4} = \sum_{k=1}^{n}\E\eta_k^{4} + 6 \sum_{i < j} \E\eta_i^{2} \cdot \E\eta_j^{2}.
+ \end{align*} Но слагаемые в каждой сумме ограничены: для четвертых моментов $ \E\eta_k^{4} \leqslant M $ по условию, а для вторых моментов можно воспользоваться неравенством Ляпунова \eqref{eq:lyapunov_inequality}:
+ \begin{align*}
+  \left(\E \eta_k^{2} \right)^{1 / 2} \leqslant \left( \E\eta_k^{4} \right)^{1 / 4} \implies \E\eta_k^{2} \leqslant (\E\eta_k^{4})^{1 / 2} \leqslant \sqrt M.
  \end{align*} Тогда
  \begin{align*}
-  \E S_n^{4} = O(n^{2}).
- \end{align*}
+  \E\S_n^{4} = \sum_{k=1}^{n} \OO(1) + 6 \sum_{i < j} \OO(1) = \OO(n^{2}),
+ \end{align*} что и требовалось доказать.
 \end{proof}
 
 \begin{crly}[усиленный закон больших чисел для схем Бернулли]
+ \label{strong_law_of_large_numbers_for_bernoulli_scheme}
  Пусть $ S_n $ --- количество успехов в схеме Бернулли с вероятностью успеха  $ p $ и  $ n $ испытаниями. Тогда $ \frac{S_n}{n} \to p $  почти наверное.
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Достаточно проверить ограниченность четвёртого момента:
+ Воспользуемся усиленным законом больших чисел (теорема \ref{theorem:strong_law_of_large_numbers}). Достаточно проверить ограниченность четвёртого момента:
  \begin{align*}
   \E \xi_k^{4} = \E \xi_k = p.
  \end{align*}
 \end{proof}
+
+Следующий факт мы оставим без доказательства.
 
 \begin{thm}[усиленный закон больших чисел в форме Колмогорова]
  Пусть $ \xi_1, \xi_2, \ldots $  независимы и одинаково распределены. Пусть $ S_n  = \xi_1 + \xi_2 + \ldots + \xi_n $. Тогда $ \frac{S_n}{n} \to a $ тогда и только тогда, когда $ a = \E \xi_1 $.
 \end{thm}
 
 \begin{exmpl}[Метод Монте-Карло]
-Есть ограниченная фигура $ \Phi $ на плоскости. Пусть про любую конкретную точку мы можем ответить, принадлежит ли данная точка фигуре. Мы хотим примерно вычислить её площадь.
+ Есть ограниченная фигура $ \Phi $ на плоскости. Пусть про любую конкретную точку мы можем ответить, принадлежит ли данная точка фигуре. Мы хотим приблизительно вычислить её площадь.
 
- Давайте кидать случайную точку в прямоугольник. $ \xi_k = 1 $, если точка попала, и $ \xi_k = 0 $, если не попала. Это схема Бернулли с вероятностью $ p = \frac{S(\Phi)}{S(\Pi)} $, где $ \Pi $ --- прямоугольник. Тогда по УЗБЧ  $ \frac{S_n}{n} \to p $  почти наверное. Поэтому, почти наверное наша последовательность $ \frac{S_n}{n} $ стремится к $ p $.
+ Давайте кидать случайную точку в прямоугольник $ \Pi $, ограничивающий $ \Phi $. Положим $ \xi_k = 1 $, если точка попала, и $ \xi_k = 0 $, если не попала. Это схема Бернулли с вероятностью $ p = \frac{S(\Phi)}{S(\Pi)} $. По усиленному закону больших чисел (теорема \ref{theorem:strong_law_of_large_numbers}) почти наверное выполнено стремление
+ \begin{align*}
+  \frac{S_n}{n} \to p.
+ \end{align*}
 
- Вопрос о скорости сходимости сложный. С псевдослучайными числами есть проблема.
+ Вопрос о скорости сходимости сложный: есть проблемы с псевдослучайными числами.
 \end{exmpl}
 
-\begin{thm}
-	Пусть $a \in \R, \ f : \R \to \R$ --- ограничена и непрерывна в точке $a$.
+\subsection{Доказательство Бернштейна теоремы Вейерштрасса.}
 
-	Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
-	Тогда $E f(\xi_n) \to f(a)$. 
+На лекциях этого не было.
+
+\begin{thm}
+ Пусть $a \in \R, \ f : \R \to \R$ --- ограничена и непрерывна в точке $a$.
+
+ Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
+ Тогда
+ \begin{align*}
+  \E f(\xi_n) \to f(a).
+ \end{align*}
 \end{thm}
 \begin{proof}[\normalfont{Доказательство}]
-	Пусть $M: |f(x)| < M, \forall x$.
-  \begin{align*}
-	|E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
-	& \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
-	\varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \varlimsup_{n \to \infty} \sup_{|a - x| < \eps} |f(x) - f(a)| + \varlimsup_{n \to \infty} \underbrace{2M \cdot P(|\xi_n - a| \geqslant \eps)}_{=0} \implies  \\
-	\varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| \overset{\eps \to 0}{\to} 0
-  \end{align*}
+ Пусть $M: |f(x)| < M, \forall x$.
+ \begin{align*}
+  |E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
+  & \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
+  \varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \varlimsup_{n \to \infty} \sup_{|a - x| < \eps} |f(x) - f(a)| + \varlimsup_{n \to \infty} \underbrace{2M \cdot P(|\xi_n - a| \geqslant \eps)}_{=0} \implies  \\
+  \varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| \overset{\eps \to 0}{\to} 0
+ \end{align*}
 \end{proof}
 
 \begin{thm}[Вейерштрасса]
-  Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.  
+ Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.  
 \end{thm}
 
 \begin{proof}[\normalfont\textsc{Доказательство Бернштейна}]
-  Без ограничений общности скажем что $a = 0, b = 1$. 
+ Без ограничений общности скажем что $a = 0, b = 1$. 
 
-  Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
-  И положим $\xi_n = \frac {S_n} {n}$.
+ Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
+ И положим $\xi_n = \frac {S_n} {n}$.
 
-  Тогда по ЗБЧ \eqref{strong_law_of_large_numbers_for_bernoulli_scheme}:
+ Тогда по УЗБЧ для схем Бернулли \ref{strong_law_of_large_numbers_for_bernoulli_scheme}:
 
-  \begin{align*}
-  	\xi_n \to p
-  \end{align*} почти наверное.
+ \begin{align*}
+  \xi_n \to p
+ \end{align*} почти наверное.
 
-  Распишем $E f(\xi_n)$:
+ Распишем $E f(\xi_n)$:
 
-  \begin{align*}
-	E f(\xi_n) = \sum_{k = 0}^{n} f\left(\frac k n\right) P(S_n = k) = \sum_{k = 0}^{n} f\left(\frac k n\right) p^{k} (1-p)^{n - k}
-  \end{align*} --- многочлен Бернштейна.
+ \begin{align*}
+  E f(\xi_n) = \sum_{k = 0}^{n} f\left(\frac k n\right) P(S_n = k) = \sum_{k = 0}^{n} f\left(\frac k n\right) p^{k} (1-p)^{n - k}
+ \end{align*} --- многочлен Бернштейна.
 
-  Т.к. у нас функция $f$ непрерывна, то она и ограничена на $[0, 1]$, пусть $f \leqslant M$, тогда:
+ Т.к. у нас функция $f$ непрерывна, то она и ограничена на $[0, 1]$, пусть $f \leqslant M$, тогда:
 
-  \begin{align*}
-	|E f(\xi_n) - f(p)| &\leqslant P(|\xi_n - p| < \eps) \cdot \sup_{|p - x| < \eps} |f(x) - f(p)| + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \leqslant \\
-	&\leqslant \underbrace{\sup_{|p - x| < \eps} |f(x) - f(p)|}_{\to 0, f\text{ - непр. }} + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \\
-	P(|\xi_n - p| \geqslant \eps) &= P(|\frac {S_n} n - p| \geqslant \eps) \leqslant \frac{D \frac {S_n} n} {\eps^2} = \frac{p \cdot (1 - p)}{n^2\eps^2} \leqslant \frac 1 {4 n^2 \eps^2} \to 0
-  \end{align*}
+ \begin{align*}
+  |E f(\xi_n) - f(p)| &\leqslant P(|\xi_n - p| < \eps) \cdot \sup_{|p - x| < \eps} |f(x) - f(p)| + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \leqslant \\
+  &\leqslant \underbrace{\sup_{|p - x| < \eps} |f(x) - f(p)|}_{\to 0, f\text{ - непр. }} + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \\
+  P(|\xi_n - p| \geqslant \eps) &= P(|\frac {S_n} n - p| \geqslant \eps) \leqslant \frac{D \frac {S_n} n} {\eps^2} = \frac{p \cdot (1 - p)}{n^2\eps^2} \leqslant \frac 1 {4 n^2 \eps^2} \to 0
+ \end{align*}
 
-  Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной. 
-
-
+ Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной. 
 \end{proof}
 
 \newpage
 \section{Производящие функции.}
 
-\begin{df}
- Пусть $ \xi \colon\, \Omega \to \left\{ 0, 1, 2, 3, \ldots \right\} $ --- дискретная случайная величина. \textit{Производящей функцией для $ \xi $} называется ряд
+\subsection{Производящая функция.}
+
+\begin{df}[производящая функция вероятностей]
+ \textit{Производящей функцией вероятностей} дискретной случайной величины $ \xi\colon\,\Omega\to \left\{ 0,1,2,\ldots \right\} $ называется степенной ряд
  \begin{align*}
-  G_\xi(t) = \sum_{n=0}^{\infty}P(\xi = n) \cdot t^{n}
- \end{align*} где $ \left| t \right| \leqslant 1 $.
+  G_\xi(t) = \sum_{n=0}^{\infty}P(\xi = n) \cdot t^{n}.
+ \end{align*}
 \end{df}
 
-\begin{prop}\
+\begin{remrk*}
+ Производящая функция зависит только от распределения случайной величины. 
+\end{remrk*}
+
+\begin{prop}[свойства производящих функций]\
  \begin{enumerate}
-  \item $G_\xi(t) = \E t^{\xi}$
-  \item $ G_\xi(1) = 1 $, и ряд сходится при $ \left| t \right| \leqslant 1 $.
-	  \begin{proof}[\normalfont\textsc{Доказательство}]
-	  	\begin{align*}
-			\left| \sum_{n = 0}^\infty P(\xi = n) \cdot t^{n} \right| = \sum_{n = 0}^\infty P(\xi = n) \cdot \underbrace{|t^{n}|}_{\leq 1} \leqslant \sum_{n = 0}^\infty P(\xi = n) = 1
-	  	\end{align*}
-	  \end{proof}
-  \item $ G'_\xi(1) = \E \xi $. Действительно,
-   \begin{align*}
-    \E \xi = \sum_{n=1}^{\infty} n P(\xi = n) \\
-    G'_\xi(t) = \sum_{n=1}^{\infty} nt^{n-1} P(\xi = n).
-   \end{align*} формулы совпадают при $ t = 1 $. Если одно из них равно $ \infty $, то и второе тоже.
+  \item $G_\xi(t) = \E t^{\xi}$.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Действительно,
+    \begin{align*}
+     \E t^{\xi} = \int_{\R} x\,dP_\xi(x) = \sum_{x=0}^{\infty} P(\xi=x) \cdot t ^{x} = G_\xi(t).
+    \end{align*}
+   \end{proof}
+  \item $ G_\xi(1) = 1 $, и ряд $ G_\xi(t) $ сходится при $ \left| t \right| \leqslant 1 $.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    \begin{align*}
+     G_\xi(1) &= \sum_{n=0}^{\infty}P(\xi=n) = 1,\\
+     \left| G_\xi(t) \right| &\leqslant \left| \sum_{n = 0}^\infty P(\xi = n) \cdot t^{n} \right| = \sum_{n = 0}^\infty P(\xi = n) \cdot \underbrace{|t|^{n}}_{\leq 1} \leqslant \sum_{n = 0}^\infty P(\xi = n) = 1.
+    \end{align*}
+   \end{proof}
+  \item $ G'_\xi(1) = \E \xi $. 
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    Действительно,
+    \begin{align*}
+     G_\xi'(t) &= \sum_{n=1}^{\infty}nP(\xi = n) \cdot t^{n-1},\\
+     \E\xi &= \sum_{n=1}^{\infty} nP(\xi=n) = G_\xi'(1).
+    \end{align*}
+   \end{proof}
   \item $ \E\xi^{2} = G''_\xi(1) + G'_\xi(1) $.
    \begin{proof}[\normalfont\textsc{Доказательство}]
     \begin{align*}
@@ -183,6 +249,11 @@
     \end{align*}
    \end{proof}
   \item $ \D\xi = G''_\xi(1) + G'_\xi(1) - G'_\xi(1)^{2} $.
+   \begin{proof}[\normalfont\textsc{Доказательство}]
+    \begin{align*}
+     \D\xi &= \E\xi^{2} - (\E\xi)^{2} = G_\xi''(1) + G_\xi'(1) - G_\xi'(1)^{2}.
+    \end{align*}
+   \end{proof}
   \item Если $ \xi $ и $ \eta $ независимы, то $ G_{\xi + \eta}(t) = G_{\xi}(t) \cdot G_\eta(t) $.
    \begin{proof}[\normalfont\textsc{Доказательство}]
     Если $ \xi $ и $ \eta $ независимы, то и $ t^{\xi}  $ и $ t^{\eta} $ независимы. Тогда
@@ -193,111 +264,189 @@
  \end{enumerate}
 \end{prop}
 
-\begin{exmpl}
- Рассмотрим равномерное распределение на $  \left\{ 0,1,\ldots,n-1 \right\} $. Тогда производящая функция равна
+\subsection{Примеры применения производящих функций.}
+
+\begin{exmpl}[производящая функция и моменты дискретного равномерного распределения]
+ Рассмотрим равномерное распределение на $  \left\{ 0,1,\ldots,n-1 \right\} $. Его производящая функция вероятностей равна
  \begin{align*}
   U_n(t) = \frac{1 + t + t^{2} + \ldots + t^{n-1}}{n} = \frac{t^{n}-1}{t-1} \cdot \frac{1}{n}.
- \end{align*} Положим $ t = 1 + s $. Тогда
+ \end{align*} Сделаем замену переменной $ t = 1 + s $:
  \begin{align*}
-  U_n(1 + s) = \frac{(1+s)^{n} - 1}{sn} = \sum_{k=1}^{n} \frac{\binom n k}{n} \cdot s^{k-1}.
- \end{align*} Значит,
+  U_n(1 + s) = \frac{(1+s)^{n} - 1}{sn} = \sum_{k=1}^{n} \binom n k  \cdot \frac{s^{k-1}}{n}.
+ \end{align*} Найдём матожидание:
  \begin{align*}
-  \E \xi = U'_n(1) = \frac{\binom n 2}{n} = \frac{n-1}{2}.
- \end{align*}
- \begin{align*}
-  U''_n(1) = 2 \frac{\binom n 3}{n} = \frac{(n-1)(n-2)}{3}.
- \end{align*} Тогда
- \begin{align*}
-  \D \xi &= \frac{(n-1)(n-2)}{3} + \frac{n-1}{2} - \left( \frac{n-1}{2} \right)^{2} = \\
-  &= \frac{n - 1}{12} \left( 4n - 8 + 6 - 3(n - 1) \right) = \frac{n^{2}-1}{12}.
- \end{align*}
-\end{exmpl}
+  \E \xi = U'_n(1) = \left.(U_n(1 + s))'_s\right|_{s=0} = \binom n 2 \cdot \frac{1}{n} = \frac{n-1}{2}.
+  \end{align*} Продифференцируем второй раз:
+  \begin{align*}
+   U_n''(1) = \left.(U_n(1 + s))''\right|_{s=0} = \binom n 3 \cdot \frac{2}{n} = \frac{(n-1)(n-2)}{3}.
+   \end{align*} Наконец, найдём дисперсию:
+   \begin{align*}
+    \D \xi &= \frac{(n-1)(n-2)}{3} + \frac{n-1}{2} - \left( \frac{n-1}{2} \right)^{2} = \\
+    &= \frac{n - 1}{12} \left( 4n - 8 + 6 - 3(n - 1) \right) = \frac{n^{2}-1}{12}.
+   \end{align*}
+  \end{exmpl}
 
 \begin{exmpl}[задача Галилея]
- Есть три кубика. Мы их подбросили и посчитали сумму на них. Найти вероятность того, что сумма равна десяти.
+ Есть три игральных кубика. Мы их подбросили и посчитали сумму на них. Найти вероятность того, что сумма оказалась равна десяти.
 
- Пусть случайная величина $ \xi $ --- сколько выпало на кубике. Тогда
+ Вычислять эту вероятность наивным способом очень муторно. Мы решим эту задачу проще с помощью производящих функций.
+
+ Пусть случайная величина $ \xi $ --- сколько выпало на кубике. Её производящая функция вероятностей равна
  \begin{align*}
   G_\xi(t) = \frac{t + t^{2} + \ldots + t^{6}}{6} = \frac{(t^{6}-1)t}{6(t-1)}.
- \end{align*} Нужно найти
+ \end{align*} Пусть $ \xi_1,\xi_2,\xi_3 $ --- три независимых подбрасываний кубика. Производящая функция вероятностей их суммы $ \sigma = \xi_1 + \xi_2 + \xi_3 $ равна
  \begin{align*}
-  G_{\xi_1 + \xi_2 + \xi_3}(t) = (G_\xi(t))^{3} = \frac{1}{6^{3}} \cdot \frac{(t^{6}-1)^{3}t^{3}}{(t-1)^{3}} = \\
-  = \frac{1}{6^{3}} t^{3}(1 - 3t^{6} + 3t^{12} - t^{18}) \cdot \frac{1}{(1-t)^{3}}.
+  G_{\sigma}(t) &= (G_\xi(t))^{3} = \frac{1}{6^{3}} \cdot \frac{(t^{6}-1)^{3}t^{3}}{(t-1)^{3}} = \\
+  &= \frac{1}{6^{3}} \cdot t^{3}(1 - 3t^{6} + 3t^{12} - t^{18}) \cdot \frac{1}{(1-t)^{3}}.
  \end{align*} Но
  \begin{align*}
-  \frac{1}{(1-t)^{3}} = \sum_{n=0}^{\infty} \binom {n+2} 2 \cdot t^{n}.
+  \frac{1}{(1-t)^{3}} = \left( \sum_{n=0}^{\infty}t^{n} \right)^{3} = \sum_{n=0}^{\infty} \binom {n+2} 2 \cdot t^{n}.
  \end{align*} Тогда
  \begin{align*}
-  G_{\xi}(t) =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
- \end{align*} Значит, коэффициент при $ t^{10} $ это
+  G_{\sigma}(t) =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
+ \end{align*} Значит, коэффициент $ G_\sigma(t) $ при $ t^{10} $ равен
  \begin{align*}
-  \frac{1}{6^{3}} \left( \binom 9 7 - 3 \binom 3 2 \right) = \frac{1}{6^{3}} \left( 36 - 9 \right) = \frac{27}{6^{3}} = \frac{1}{8}.
+  \frac{1}{6^{3}} \left[ \binom 9 7 - 3 \binom 3 2 \right] = \frac{1}{6^{3}} \left( 36 - 9 \right) = \frac{27}{6^{3}} = \frac{1}{8}.
  \end{align*}
 \end{exmpl}
 
 \newpage
 \part{Метод характеристических функций.}
+
 \section{Характеристические функции.}
-\begin{df}
+
+\subsection{Комплекснозначные случайные величины.}
+
+Для того, чтобы определить характеристическую функцию случайной величины, нам понадобится рассматривать случайные величины, которые могут принимать комплексные значения. Это лишь технический момент: комплекснозначная случайная величина есть ни что иное, как пара вещественнозначных случайных величин (вещественная и мнимая части).
+
+\begin{df}[комплекснозначная случайная величина]
  Пусть $ (\Omega, \mathcal F, P) $ --- вероятностное пространство.
- \textit{Комплекснозначной случайной величиной} называется измеримая функция $ \xi \colon\, \Omega \to \CC $, то есть такая функция, что $ \Real \xi $ и $ \Imaginary \xi $ --- измеримые вещественнозначные функции (обычные случайные величины).
+ \textit{Комплекснозначной случайной величиной} называется измеримая функция $ \xi \colon\, \Omega \to \CC $, то есть такая функция, что $ \Real \xi $ и $ \Imaginary \xi $ --- измеримые вещественнозначные функции (вещественнозначные случайные величины).
  \begin{align*}
   \E \xi = \E (\Real \xi) + i \cdot \E (\Imaginary \xi).
  \end{align*}
 \end{df}
-\begin{prop}[комплексная линейность]
+
+Дадим определение математического ожидания комплекснозначной случайной величины. Единственным отличием от обычного матожидания будет то, что мы будем рассматривать интеграл Лебега комплекснозначной функции.
+
+\begin{df}[математическое ожидание комплекснозначной случайной величины]
+ \label{def:complex_ev}
+ Пусть $ \xi\colon\,\Omega\to\CC $ --- комплекснозначная случайная величина. \textit{Математическим ожиданием} $ \xi $ называется число
  \begin{align*}
-  \E(a\xi + b\eta) = a \E \xi + b \E \eta,
- \end{align*} где $ a,b \in \CC $.
+  \E\xi = \E(\Real \xi) + i \cdot \E(\Imaginary \xi) = \int_{\Omega} \xi(\omega)\,dP.
+ \end{align*}
+\end{df}
+\begin{prop}[комплексная линейность матожидания]
+ \begin{align*}
+  \E(a\xi + b\eta) = a \E \xi + b \E \eta
+ \end{align*} для любых комплекснозначных случайных величин $ \xi $, $ \eta $, и чисел $ a,b\in\CC $.
 \end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Следует из линейности интеграла Лебега для комплекснозначных функций.
+\end{proof}
 \begin{prop}
  $ \left| \E \xi \right| \leqslant \E \left| \xi \right| $.
 \end{prop}
 \begin{proof}[\normalfont\textsc{Доказательство}]
+ Аналогичное неравенство верно для интегралов Лебега от комплекснозначных функций, но мы докажем заново.
+
  Возьмём такое $ a \in \CC $, $ \left| a \right| = 1 $, что $ \left| \E \xi \right| = a \cdot \E \xi = \E(a\xi) $. Но
  \begin{align*}
-  \left| \E\xi \right| = \E(a\xi) = \E(\Real(a\xi)) + \underbrace{i\E(\Imaginary(a\xi))}_{0} = \E(\Real(a\xi)) \leqslant \E \left| \Real(a\xi) \right| \leqslant \E \left| a\xi \right| = \E \left| \xi \right|.
- \end{align*} По сути мы воспользовались основной оценкой интеграла для комплекснозначных функций.
+  \left| \E\xi \right| = \E(a\xi) = \E(\Real(a\xi)) + \underbrace{i \cdot \E(\Imaginary(a\xi))}_{0} = \E(\Real(a\xi)) \leqslant \E \left| \Real(a\xi) \right| \leqslant \E \left| a\xi \right| = \E \left| \xi \right|.
+ \end{align*}
 \end{proof}
 
-\begin{df}
- $ \cov(\xi,\eta) := \E((\xi-\E\xi) \overline{(\eta - \E\eta)}) $, $ \D\xi = \cov(\xi,\xi) = \E \left| \xi - \E\xi \right|^{2} $.
+\begin{df}[ковариация комплекснозначных случайных величин]
+ \label{def:complex_cov}
+ Пусть $ \xi $, $ \eta $ --- комплекснозначные случайные величины, имеющие матожидания. \textit{Ковариацией} случайных величин $ \xi $ и $ \eta $ называется число
+ \begin{align*}
+  \cov(\xi,\eta) = \E\left((\xi-\E\xi) \overline{(\eta - \E\eta)}\right),
+ \end{align*} если оно, конечно, существует.
 \end{df}
 
-\begin{df}[характеристическая функция]
- \textit{Характеристической функцией} вещественнозначной случайной величины $ \xi : \Omega \to \R $ называется функция $ \varphi_\xi \colon\, \R \to \CC $
+\begin{remrk*}
+ В замечании \ref{remark:cov_geometric_intuition} о геометрическом смысле ковариации мы замяли тот факт, что рассматриваемое пространство содержало только вещественнозначные случайные величины, и, строго говоря, это пространство не являлось гильбертовым.
+
+ Теперь же мы можем рассмотреть пространство несмещённых комплекснозначных случайных величин, и комплексная ковариация из определения \ref{def:complex_cov} даст нам уже корректное комплексное скалярное произведение, а мы получим настоящее гильбертово пространство.
+\end{remrk*}
+
+\begin{df}[дисперсия]
+ \label{def:complex_variance}
+ \textit{Дисперсией} комплекснозначной случайной величины $ \xi $  называется число
  \begin{align*}
-  \varphi_\xi(t) = \E ( e^{it\xi} ).
- \end{align*}, где $ t \in \R $.
+  \D\xi = \cov(\xi,\xi) = \E \left| \xi-\E\xi \right|^{2}.
+ \end{align*}
 \end{df}
-\begin{prop}\
+
+\begin{remrk*}
+ В определении \ref{def:complex_variance} нельзя написать $ \D\xi = \E (\xi-\E\xi)^{2} $, поскольку $ z^{2} = \left| z \right|^{2} $ не выполнено в $ \CC $!
+\end{remrk*}
+
+\subsection{Характеристические функции.}
+
+\begin{df}[характеристическая функция]
+ \textit{Характеристической функцией} вещественнозначной случайной величины $ \xi \colon\, \Omega \to \R $ называется функция $ \varphi_\xi \colon\, \R \to \CC $, заданная формулой
+ \begin{align*}
+  \varphi_\xi(t) = \E  e^{it\xi} ,
+ \end{align*} где математическое ожидание в правой части берётся от комплекснозначной случайной величины $ e^{it\xi} $ (в смысле определения \ref{def:complex_ev}).
+\end{df}
+
+\begin{remrk*}
+ Характеристическая функция зависит лишь от распределения случайной величины. Как мы покажем позже, верно и обратное: по характеристической функции однозначно можно восстановить распределение.
+\end{remrk*}
+
+\begin{prop}[простейшие свойства характеристической функции]
+ \label{prop:char_func_properties}
+ Пусть $ \xi $ --- вещественнозначная случайная величина. Тогда
  \begin{enumerate}
-  \item $ \varphi_{\xi}(0) = 1 $
-  \item $ \left|\varphi_\xi(t) \right| \leqslant 1 $
-  \item $ \varphi_{a\xi + b}(t) = e^{ibt}\varphi_\xi(at) $
-   \begin{proof}[\normalfont\textsc{Доказательство}]
-    \begin{align*}
-     \varphi_{a\xi+b}(t) = \E (e^{ia\xi t + ibt}) = e^{ibt} \E(e^{ia\xi t}) = e^{ibt} \cdot \varphi_{a\xi}(t).
-    \end{align*}
-   \end{proof}
-  \item Если $ \xi $ и $ \eta $ независимы, то $ \varphi_{\xi + \eta}(t) = \varphi_\xi(t) \cdot \varphi_\eta(t) $.
-   \begin{proof}[\normalfont\textsc{Доказательство}]
-    $ \varphi_{\xi+\eta}(t) = \E e^{it(\xi + \eta)} = \E (e^{it\xi} \cdot e^{it\eta}) = \E(e^{it\xi}) \cdot \E(e^{it\eta})$ 
-   \end{proof}
-\item Если $ \xi_1, \ldots, \xi_k $ независимы, то $ \varphi_{\xi_1 + \ldots + \xi_k}(t) = \varphi_{\xi_1}(t) \cdot \ldots \cdot \varphi_{\xi_k}(t) $.
-  \item $ \overline{\varphi_\xi(t)} = \varphi_\xi(-t) $
-   \begin{proof}[\normalfont\textsc{Доказательство}]
-	   $\overline{\varphi_\xi (t)} = \overline{\E e^{it\xi}} = \E e^{-it\xi} = \varphi_\xi(-t)$ 
-   \end{proof}
-  \item $ \varphi_\xi(t) $ равномерно непрерывна на $\R$ .
-   \begin{proof}[\normalfont\textsc{Доказательство}]
-    \begin{align*}
-     \left| \varphi_\xi(t + h) - \varphi_\xi(t) \right| &= \left|\E e^{i(t+h)\xi} - \E e^{it\xi} \right| = \left| \E (e^{i(t+h)\xi} - e^{it\xi}) \right| \leqslant \\
-     &\leqslant \E \left| e^{i(t+h)\xi} - e^{it\xi} \right| = \E \left| e^{ih\xi} - 1 \right| \to 0
-    \end{align*} при $ h \to 0 $. Теорема Лебега о мажорируемой сходимости, мажоранта равна двум.
-   \end{proof}
+  \item $ \varphi_\xi(0) = 1 $.
+  \item $ \left| \varphi_\xi(t) \right| \leqslant 1 $.
+  \item \label{prop:char_func_plus_const} $ \varphi_{\xi + c}(t) = e^{itc}\varphi_\xi(t) $, $ c \in \R $.
+  \item \label{prop:char_func_times_const} $ \varphi_{a\xi}(t) = \varphi_\xi(at) $, $ a\in\R $.
+  \item $ \varphi_{\xi}(-t) = \overline{\varphi_\xi(t)} $.
  \end{enumerate}
 \end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]\
+ \begin{enumerate}
+  \item $ \varphi_\xi(0) = \E e^{it \cdot 0} = \E 1 = 1 $.
+  \item $ \left| \varphi_\xi(t) \right| = \left| \E e^{it\xi} \right| \leqslant \E \left| e^{it\xi} \right| = \E 1 = 1 $.
+  \item $ \varphi_{\xi+c}(t) = \E e^{it(\xi + c)} = e^{itc} \E e^{it\xi} = e^{itc} \varphi_\xi(t)$.
+  \item $ \varphi_{a\xi}(t) = \E e^{ita\xi} = \varphi_\xi(at) $.
+  \item $ \varphi_{\xi}(-t) = \E e^{-it\xi} = \E \overline{e^{it\xi}} = \overline{\E e^{it\xi}} = \overline{\varphi_\xi(t)} $.
+ \end{enumerate}
+\end{proof}
+
+\begin{prop}[характеристическая функция суммы независимых случайных величин]
+ Если вещественнозначные случайные величины $ \xi $ и $ \eta $ независимы, то
+ \begin{align*}
+  \varphi_{\xi+\eta}(t) = \varphi_\xi(t) \cdot \varphi_\eta(t).
+ \end{align*}
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ \begin{align*}
+  \varphi_{\xi+\eta}(t) = \E e^{it(\xi+\eta)} = \E (e^{it\xi} \cdot e^{it\eta}) = \E e^{it\xi} \cdot \E e^{it\eta} = \varphi_\xi(t) \cdot \varphi_\eta(t).
+ \end{align*}
+\end{proof}
+
+\begin{crly}
+ Если вещественнозначные случайные величины $ \xi_1, \ldots, \xi_n $ независимы, то
+ \begin{align*}
+  \varphi_{\xi_1 + \ldots + \xi_n}(t) = \varphi_{\xi_1}(t) \cdot \ldots \cdot \varphi_{\xi_n}(t).
+ \end{align*}
+\end{crly}
+
+\begin{prop}
+ Характеристическая функция $ \varphi_\xi(t) $ равномерно непрерывна на $ \R $.
+\end{prop}
+\begin{proof}
+ Для любой точки $ t \in \R $ при $ h \to 0 $ верно
+ \begin{align*}
+  \left| \varphi_\xi(t + h) - \varphi_\xi(t) \right| &= \left|\E e^{i(t+h)\xi} - \E e^{it\xi} \right| = \left| \E (e^{i(t+h)\xi} - e^{it\xi}) \right| \leqslant \\
+  &\leqslant \E \left| e^{i(t+h)\xi} - e^{it\xi} \right| = \E \left| e^{ih\xi} - 1 \right| \to 0.
+ \end{align*} Стремление $ \E \left| e^{ih\xi}-1 \right| \to 0 $ верно по теореме Лебега о мажорируемой сходимости, так как выполнено стремление $ \left|e^{ih\xi} - 1 \right| \to 0 $ всюду. Мажоранта: константа $ g = 2 $.
+
+ Непрерывность равномерная, так как скорость сходимости $ \E \left| e^{ih\xi}-1 \right| $, очевидно, не зависит от $ t $.
+\end{proof}
 
 \end{document}
 
