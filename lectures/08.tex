@@ -1,280 +1,409 @@
 % 2023.04.04 lecture 08
+
 \documentclass[../main.tex]{subfiles}
+
 \begin{document}
+
 \begin{exmpl}[характеристическая функция нормального распределения]
-  Найдём сначала характеристическую функцию стандартного нормального распределения $ \xi \sim \Norm(0,1) $:
-   \begin{align*}
-    \varphi_\xi(t) &= \E e^{it\xi}  = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{itx}  \cdot e^{-x^{2} / 2}\,dx = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx)}\,dx  = \\
-    &=\frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx - t^{2} + t^{2})}\,dx   = \frac{e^{-t^{2} / 2}}{\sqrt{2\pi} } \int_{\R} e^{-(x-it)^{2} / 2} \,dx.
-   \end{align*} Вычислим интеграл
-   \begin{align*}
-    I = \int_{\R} e^{-(x-it)^{2} / 2}\,dx = \lim_{R \to +\infty}  \int_{-R-it}^{R-it} e^{-z^{2} / 2}\,dz
-   \end{align*} методами комплексного анализа: проинтегрируем функцию $ f(z) = e^{-z^{2} / 2} $ по контуру $ \Gamma_R $ --- границе прямоугольника с вершинами в точках $ R, -R, -R - it, R - it $.
-   \begin{figure}[ht]
-    \centering
-    \incfig[0.9]{characteristic_function_normall}
-    \caption{Контур интегрирования $ \Gamma_R $.}
-    \label{fig:characteristic_function_normall}
-   \end{figure}
+ Найдём сначала характеристическую функцию стандартного нормального распределения $ \xi \sim \Norm(0,1) $:
+ \begin{align*}
+  \varphi_\xi(t) &= \E e^{it\xi}  = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{itx}  \cdot e^{-x^{2} / 2}\,dx = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx)}\,dx  = \\
+  &=\frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx - t^{2} + t^{2})}\,dx   = \frac{e^{-t^{2} / 2}}{\sqrt{2\pi} } \int_{\R} e^{-(x-it)^{2} / 2} \,dx.
+ \end{align*} Вычислим интеграл
+ \begin{align*}
+  I = \int_{\R} e^{-(x-it)^{2} / 2}\,dx = \lim_{R \to +\infty}  \int_{-R-it}^{R-it} e^{-z^{2} / 2}\,dz
+ \end{align*} методами комплексного анализа: проинтегрируем функцию $ f(z) = e^{-z^{2} / 2} $ по контуру $ \Gamma_R $ --- границе прямоугольника с вершинами в точках $ R, -R, -R - it, R - it $.
+ \begin{figure}[ht]
+  \centering
+  \incfig[0.9]{characteristic_function_normall}
+  \caption{Контур интегрирования $ \Gamma_R $.}
+  \label{fig:characteristic_function_normall}
+ \end{figure}
 
-   С одной стороны, так как $ f $ --- целая функция и не имеет особенностей внутри контура, то
-   \begin{align}
-    \label{eq:norm_char_func:integral_zero}
-    \varointctrclockwise_{\Gamma_R} f\,dz = 0.
-   \end{align} С другой стороны,
-   \begin{align}
-    \label{eq:norm_char_func:integral_contour}
-    \varointctrclockwise_{\Gamma_R} f\,dz = \int_{-R-it}^{R-it} f\,dz + \int_{R - it}^{R} f\,dz + \int_{R}^{-R} f\,dz + \int_{-R}^{-R-it} f\,dz.
-   \end{align}
+ С одной стороны, так как $ f $ --- целая функция и не имеет особенностей внутри контура, то
+ \begin{align}
+  \label{eq:norm_char_func:integral_zero}
+  \varointctrclockwise_{\Gamma_R} f\,dz = 0.
+ \end{align} С другой стороны,
+ \begin{align}
+  \label{eq:norm_char_func:integral_contour}
+  \varointctrclockwise_{\Gamma_R} f\,dz = \int_{-R-it}^{R-it} f\,dz + \int_{R - it}^{R} f\,dz + \int_{R}^{-R} f\,dz + \int_{-R}^{-R-it} f\,dz.
+ \end{align}
 
-   Оценим интегралы по вертикальным отрезкам при $ R \to \infty $:
-   \begin{align*}
-    \left| \int_{R-it}^{R} e^{-z^{2} / 2}\,dz \right| &\leqslant t \cdot \max_{-t \leqslant y \leqslant 0} \left| e^{-(R+iy)^{2} / 2} \right| = t \cdot \left| e^{-(R+\OO(1))^{2} / 2} \right| \to 0,\\
-    \left| \int_{-R}^{-R-it} e^{-z^{2} / 2}\,dz \right| &\leqslant t \cdot \max_{-t \leqslant y \leqslant 0} \left| e^{-(-R+iy)^{2} / 2} \right| = t \cdot \left| e^{-(-R+\OO(1))^{2} / 2} \right| \to 0.
-   \end{align*} Совмещая полученное с \eqref{eq:norm_char_func:integral_zero} и \eqref{eq:norm_char_func:integral_contour}, получаем
-   \begin{align*}
-    I = \lim_{R \to +\infty}  \int_{-R}^{R} e^{-x^{2} / 2}\,dx = \int_{\R} e^{-x^{2} / 2}\,dx  = \sqrt{2\pi}.
-   \end{align*}
+ Оценим интегралы по вертикальным отрезкам при $ R \to \infty $:
+ \begin{align*}
+  \left| \int_{R-it}^{R} e^{-z^{2} / 2}\,dz \right| &\leqslant t \cdot \max_{-t \leqslant y \leqslant 0} \left| e^{-(R+iy)^{2} / 2} \right| = t \cdot \left| e^{-(R+\OO(1))^{2} / 2} \right| \to 0,\\
+  \left| \int_{-R}^{-R-it} e^{-z^{2} / 2}\,dz \right| &\leqslant t \cdot \max_{-t \leqslant y \leqslant 0} \left| e^{-(-R+iy)^{2} / 2} \right| = t \cdot \left| e^{-(-R+\OO(1))^{2} / 2} \right| \to 0.
+ \end{align*} Совмещая полученное с \eqref{eq:norm_char_func:integral_zero} и \eqref{eq:norm_char_func:integral_contour}, получаем
+ \begin{align*}
+  I = \lim_{R \to +\infty}  \int_{-R}^{R} e^{-x^{2} / 2}\,dx = \int_{\R} e^{-x^{2} / 2}\,dx  = \sqrt{2\pi}.
+ \end{align*}
 
-   Итого, характеристическая функция стандартного нормального распределения $ \Norm(0,1) $ равна
-   \begin{align*}
-    \varphi_\xi(t) = e^{-t^{2} / 2}.
-   \end{align*}
+ Итого, характеристическая функция стандартного нормального распределения $ \Norm(0,1) $ равна
+ \begin{align*}
+  \varphi_\xi(t) = e^{-t^{2} / 2}.
+ \end{align*}
 
-   Теперь пусть $ \eta \sim \Norm(\mu, \sigma^{2}) $. Тогда $ \eta = \sigma \xi + \mu $, где $ \xi \sim \Norm(0,1) $. По свойствам \ref{prop:char_func_plus_const} и \ref{prop:char_func_times_const} предложения \ref{prop:char_func_properties} получаем, что характеристическая функция нормального распределения $ \Norm(\mu,\sigma^{2}) $ равна
-   \begin{align*}
-    \varphi_\eta(t) = \varphi_{\sigma \xi + \mu}(t) = e^{it \mu} \varphi_\xi(\sigma t) = e^{it \mu - \sigma^{2}t^{2} / 2}.
-   \end{align*}
+ Теперь пусть $ \eta \sim \Norm(\mu, \sigma^{2}) $. Тогда $ \eta = \sigma \xi + \mu $, где $ \xi \sim \Norm(0,1) $. По свойствам \ref{prop:char_func_plus_const} и \ref{prop:char_func_times_const} предложения \ref{prop:char_func_properties} получаем, что характеристическая функция нормального распределения $ \Norm(\mu,\sigma^{2}) $ равна
+ \begin{align*}
+  \varphi_\eta(t) = \varphi_{\sigma \xi + \mu}(t) = e^{i \mu t} \varphi_\xi(\sigma t) = e^{i \mu t - \frac{\sigma^{2}t^{2}}{2}}.
+ \end{align*}
 \end{exmpl}
 
-\begin{thm}
- Если $ \E \left| \xi \right|^{n} < +\infty $, то
+\subsection{Связь характеристической функции с моментами.}
+
+\begin{thm}[гладкость характеристической функции случайной величины с моментами]
+ \label{theorem:moments_imply_char_func_smoothness}
+ Пусть $ \xi $ --- вещественнозначная случайная величина, имеющая $ n $-е моменты:
  \begin{align*}
-  \varphi_\xi^{(k)}(t) = \E((i\xi)^{k}e^{it\xi})
- \end{align*} при $ k = 0, 1, \ldots, n $. В частности,
+  \E \left| \xi \right|^{n} < +\infty.
+ \end{align*} Тогда её характеристическая функция $ \varphi_\xi(t) $ является $ C^{n} $-гладкой на $ \R $, и для каждого $ k = 0, 1, \ldots, n $ выполнено
  \begin{align*}
-  \varphi_\xi^{(k)}(0) = i^{k} \E\xi^{k}.
+  \varphi_\xi^{(k)}(t) = i^{k} \cdot \E (\xi^{k} e^{it\xi})
+ \end{align*} при всех $ t \in \R $. В частности,
+ \begin{align*}
+  \varphi_\xi^{(k)}(0) = i^{k} \cdot \E\xi^{k}.
  \end{align*}
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Индукция по $ k $. База --- определение характеристической функции.
+ Докажем индукцией по $ k $.
 
- Переход $ k \mapsto k + 1 $.
+ База: $ \varphi_\xi^{(0)}(t) = \E e^{it\xi} $ --- определение характеристической функции.
+
+ Переход $ k \mapsto k + 1 $, где $ k +1 \leqslant n $. Для каждой точки $ t \in \R $ вычислим производную функции $ \varphi_\xi^{(k)} $  в точке $ t $ по определению:
  \begin{align*}
-  \varphi_\xi^{(k+1)}(t) &= \lim_{h \to 0} \frac{\varphi_\xi^{(k)}(t+h) - \varphi_\xi^{(k)}(t)}{h} = \lim_{h \to 0} \frac{\E((i\xi)^{k}e^{i(t+h)\xi}) - \E((i\xi)^{k}e^{it\xi})}{h} = \\
-  &= \lim_{h \to 0} \E \frac{(i\xi)^{k}e^{it\xi} \cdot (e^{ih\xi} - 1)}{h}.
- \end{align*} Осталось понять, что
+  \varphi_\xi^{(k+1)}(t) &= \lim_{h \to 0} \frac{\varphi_\xi^{(k)}(t+h) - \varphi_\xi^{(k)}(t)}{h} = \lim_{h \to 0} \frac{i^{k} \cdot \E(\xi^{k}e^{i(t+h)\xi}) - i^{k} \cdot \E(\xi^{k}e^{it\xi})}{h} = \\
+  &= i^{k} \lim_{h \to 0} \E \frac{\xi^{k}e^{it\xi} (e^{ih\xi} - 1)}{h} = i^{k} \lim_{h \to 0} \int_{\R} x^{k}e^{itx} \cdot \frac{e^{ihx}-1}{h}\,dP_\xi(x).
+ \end{align*} Заметим, что при всех $ x \in \R $ и при $ h \to 0 $ для подынтегральной функции верно
  \begin{align*}
-  \lim_{h \to 0} \int\limits_{\R} (ix)^{k}e^{itx} \frac{e^{ihx} - 1}{h}\,dP_\xi(x) = \int\limits_{\R} \lim_{h \to 0} (\ldots).
- \end{align*} Теорема Лебега о мажорируемой сходимости. Соорудим мажоранту:
+  x^{k}e^{itx} \cdot \frac{e^{ihx} - 1}{h}  = x^{k}e^{itx} \cdot \frac{1 + ihx + o(h) - 1}{h} = ix^{k+1}e^{itx} + o(1).
+ \end{align*} Если мы обоснуем, что можно поменять местами знаки интеграла и предела, то мы получим нужное:
  \begin{align*}
-  \left| (ix)^{k}e^{itx}\frac{e^{ihx}-1}{h} \right| = \left| x \right|^{k} \left| \frac{e^{ihx}-1}{h} \right|.
- \end{align*} Если $ \left| h \right| \geqslant \frac{1}{\left| x \right|} $, то
+  \varphi_\xi^{(k+1)}(t) = i^{k} \int_{\R} ix^{k+1}e^{itx}\,dP_\xi(x) =    i^{k+1} \cdot \E (\xi^{k+1}e^{it\xi}).
+ \end{align*}
+
+ Обосновывать мы будем по теореме Лебега о мажорируемой сходимости. Для этого нам нужно соорудить мажоранту --- функцию, которая не зависит от $ h $, суммируема по мере $ P_\xi $, и всюду ограничивает сверху следующее выражение
+ \begin{align*}
+  \left| x^{k}e^{itx} \cdot \frac{e^{ihx}-1}{h} \right| = \left| x \right|^{k} \cdot \left| \frac{e^{ihx}-1}{h} \right|.
+ \end{align*}
+
+ Если $ \left| hx \right| > 1 $, то
  \begin{align*}
   \left| \frac{e^{ihx}-1}{h} \right| \leqslant \frac{2}{\left| h \right|} \leqslant 2 \left| x \right|.
- \end{align*} Если же $ \left| h \right| \leqslant \frac{1}{\left| x \right|} $, то
- \begin{align*}
-  \left| \frac{e^{ihx}-1}{h} \right| = \left| \frac{1 + O(ihx) - 1}{h} \right| = O(x) \leqslant C \left| x \right|.
- \end{align*} так как функция непрерывна от $ hx $, задана на компакте. Так или иначе
- \begin{align*}
-  \left| (ix)^{k}e^{itx}\frac{e^{ihx}-1}{h} \right| \leqslant C \left| x \right|^{k+1}. 
- \end{align*} Но функция $ \left| x \right|^{k+1} $ суммируема, так как $ \E \left| \xi \right|^{k+1}  < +\infty$. Поэтому теорема Лебега о мажорируемой сходимости работает.
-\end{proof}
-\begin{crly}
- \begin{align*}
-  \E\xi = -i \varphi'_\xi(0)
  \end{align*}
+
+ Если же $ \left| h x \right| \leqslant 1 $, то можно считать, что все функции заданы на компакте, и поэтому можно написать
  \begin{align*}
-  \D\xi = -\varphi''_\xi(0) + \left( \varphi'_\xi(0) \right)^{2}
+  \left| \frac{e^{ihx}-1}{h} \right| = \left| \frac{1 + \OO(ihx) - 1}{h} \right| = \OO(x) \leqslant C \left| x \right|
+ \end{align*} для некоторой константы $ C>0 $. Так или иначе, получаем
+ \begin{align*}
+  \left| x^{k}e^{itx}\frac{e^{ihx}-1}{h} \right| \leqslant C \left| x \right|^{k+1}
+ \end{align*} для некоторого $ C > 0 $. Но функция $ x \mapsto  \left| x \right|^{k+1} $ суммируема по мере $ P_\xi $, ведь $ \E \left| \xi \right|^{k+1}  < +\infty$. Мажоранта найдена.
+
+ Осталось показать непрерывность последней производной $ \varphi_\xi^{(n)}(t) $:
+ \begin{align*}
+  \varphi_\xi^{(n)}(t + h) - \varphi_\xi^{(n)}(t) &= i^{n} \cdot \E(\xi^{n}e^{it\xi}(e^{ih\xi} - 1)) = i^{n} \cdot \E(\xi^{n}e^{it\xi} \cdot o(1)) = o(1).
+ \end{align*} Снова применяем теорему Лебега о мажорируемой сходимости, но здесь мажоранта строится проще:
+ \begin{align*}
+  \left| x^{n}e^{itx}(e^{ihx} - 1) \right| \leqslant 2 \left| x^{n} \right|,
+ \end{align*} где функция $ x \mapsto \left| x^{n} \right| $ суммируема по мере $ P_\xi $, так как $ \E \left| \xi \right|^{n} < +\infty $.
+\end{proof}
+
+\begin{crly}[матожидание и дисперсия в терминах характеристической функции]
+ Пусть вещественнозначная случайная величина $ \xi $ имеет вторые моменты. Тогда
+ \begin{align*}
+  \E\xi = -i \varphi'_\xi(0), &&
+  \D\xi = -\varphi''_\xi(0) + \left( \varphi'_\xi(0) \right)^{2}.
  \end{align*}
 \end{crly}
-
-Эта теорема частично работает и в другую сторону.
-
-\begin{thm}
- Если существует конечная вторая производная $ \varphi''_\xi(0) $, то $ \E\xi^{2} < +\infty $.
-\end{thm}
-\begin{remrk*}
- В общем виде теорема выглядит так: если существует конечная $ \varphi^{(2n)}_\xi(0) $, то $ \E\xi^{2n} < +\infty $.
-\end{remrk*}
 \begin{proof}[\normalfont\textsc{Доказательство}]
+ Применим теорему \ref{theorem:moments_imply_char_func_smoothness}:
  \begin{align*}
-  \E\xi^{2} &= \int\limits_{\R} x^{2}\,dP_\xi(x) = \int\limits_{\R} \lim_{t \to 0} \left(\frac{\sin(tx)}{t} \right)  ^{2}dP_\xi(x)
- \end{align*} По лемме Фату
- \begin{align*}
-  \leqslant \varliminf_{t \to 0} \int\limits_{\R} \left( \frac{\sin(tx)}{t} \right)^{2}\,dP_\xi(x)
- \end{align*} Но
- \begin{align*}
-  (\sin(tx))^{2} = \left( \frac{e^{itx} - e^{-itx}}{2i} \right)^{2} = -\frac{e^{2itx} + e^{-2itx}-2}{4}.
- \end{align*} Тогда
- \begin{align*}
-  &\leqslant \varliminf_{t \to 0} \frac{1}{4t^{2}} \int\limits_{\R} \left( 2-e^{2itx} -e^{-2itx} \right) \,dP_\xi(x) = \\
-  &= \varliminf_{t\to 0} \frac{1}{4t^{2}} \left( 2 - \varphi_\xi(2t) - \varphi_\xi(-2t) \right) = \varliminf_{ t\to 0} \frac{2  - \varphi_\xi(2t) - \varphi_\xi(-2t)}{4t^{2}}.
+  \varphi_\xi'(0) = i \cdot \E\xi \implies \E\xi = -i \varphi_\xi'(0),\\
+  \varphi_\xi''(0) = -\E\xi^{2} \implies \E\xi^{2} = -\varphi_\xi''(0),\\
+  \D\xi = \E\xi^{2}-(\E\xi)^{2} = -\varphi_\xi''(0) + (\varphi_\xi''(0))^{2}.
  \end{align*}
- Тейлор в нуле
- \begin{align*}
-  \varphi_\xi(s) = 1 + \varphi'_\xi(0) \cdot s + \frac{\varphi''_\xi(0)}{2}s^{2} + o(s^{2}).
- \end{align*} Тогда
- \begin{align*}
-  \varphi_\xi(2t) + \varphi_\xi(-2t) = 2 + \varphi''_\xi(0) \cdot 4t^{2} + o(t^{2}).
- \end{align*}
- Тогда
- \begin{align*}
-  \varliminf_{t \to 0} (-\varphi''_\xi(0) + o(1)) = -\varphi''_\xi(0)
- \end{align*} Общая ситуация доказывается точно так же, только много писать. Вторая производная в нуле всегда отрицательна.
 \end{proof}
 
-\begin{thm}[формула обращения]
- Пусть $ P_\xi(\left\{ a \right\}) = P_\xi(\left\{ b \right\}) = 0 $. Тогда
+Связь между гладкостью характеристической функции и моментами случайной величины частично работает и в другую сторону.
+
+\begin{thm}
+ \label{theorem:char_func_2diff_at_0_implies_2nd_moment}
+ Если у характеристической функции вещественнозначной случайной величины $ \xi $ существует конечная вторая производная в нуле $ \varphi''_\xi(0) $, то у $ \xi $ есть конечный второй момент:
  \begin{align*}
-  P(a \leqslant \xi \leqslant b) = \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T}  \frac{e^{-iat}-e^{-ibt}}{it} \varphi_\xi(t)\,dt.
+  \E\xi^{2} < +\infty.
  \end{align*}
+\end{thm}
+\begin{remrk}
+ \label{remark:general_char_func_2n_diff_at_0_implies_2n_moment}
+ В общем виде теорема выглядит так: если существует конечная производная $ \varphi^{(2n)}_\xi(0) $, то и существуют моменты порядка $ 2n $: $ \E\xi^{2n} < +\infty $.
+\end{remrk}
+\begin{remrk}
+ В частности, из теоремы \ref{theorem:char_func_2diff_at_0_implies_2nd_moment} следует, что если $ \varphi_\xi $ дважды дифференцируема в нуле, то функция $ \varphi_\xi $ $ C^{2} $-гладкая.
+\end{remrk}
+\begin{proof}[\normalfont\textsc{Доказательство теоремы \ref{theorem:char_func_2diff_at_0_implies_2nd_moment}}]\
+
+ Перепишем крайне не очевидным образом подынтегральную функцию $ x^{2} $ в математическом ожидании:
  \begin{align*}
-  = \mathrm{p.v.} \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it} \varphi_\xi(t)\,dt.
+  \E\xi^{2} &= \int_{\R} x^{2}\,dP_\xi(x) = \int_{\R} \lim_{t \to 0} \left(\frac{\sin(tx)}{t} \right)  ^{2}dP_\xi(x),
+ \end{align*} ведь $ \sin(tx) = tx + o(t) $ при $ t \to 0 $. Так как подынтегральная функция неотрицательна, то по лемме Фату
+ \begin{align*}
+  \E\xi^{2} \leqslant \liminf_{t \to 0} \int_{\R} \left( \frac{\sin(tx)}{t} \right)^{2}\,dP_\xi(x).
+ \end{align*} Раскроем синус через комплексные экспоненты:
+ \begin{align*}
+  (\sin(tx))^{2} = \left( \frac{e^{itx} - e^{-itx}}{2i} \right)^{2} = -\frac{e^{2itx} + e^{-2itx}-2}{4} = \frac{2-e^{2itx}-e^{-2itx}}{4}.
+ \end{align*} Тогда
+ \begin{align*}
+  \E\xi^{2} &\leqslant \liminf_{t \to 0} \frac{1}{4t^{2}} \int_{\R} \left( 2-e^{2itx} -e^{-2itx} \right) \,dP_\xi(x) = \\
+  &=\liminf_{ t\to 0} \frac{2  - \varphi_\xi(2t) - \varphi_\xi(-2t)}{4t^{2}}.
+ \end{align*} Запишем формулу Тейлора функции $ \varphi_\xi $ в точке $ 0 $:
+ \begin{align*}
+  \varphi_\xi(s) = 1 + \varphi'_\xi(0) \cdot s + \frac{\varphi''_\xi(0)}{2}s^{2} + o(s^{2})
+ \end{align*} при $ s \to 0 $. Тогда
+ \begin{align*}
+  \varphi_\xi(2t) + \varphi_\xi(-2t) = 2 + \varphi''_\xi(0) \cdot 4t^{2} + o(t^{2}).
+ \end{align*} Подставляя полученную оценку обратно, получаем
+ \begin{align*}
+  \E\xi^{2} \leqslant \liminf_{t \to 0} (-\varphi_\xi''(0) + o(1)) = -\varphi_\xi''(0).
+ \end{align*}
+ Общая ситуация доказывается точно так же, только много писать. Вторая производная в нуле всегда отрицательна.
+\end{proof}
+
+Общая формулировка, упомянутая в замечании \ref{remark:general_char_func_2n_diff_at_0_implies_2n_moment}, доказывается так же, но получатся больше выкладок. 
+
+\begin{crly}
+ $ \varphi_\xi''(0) \leqslant 0 $.
+\end{crly}
+
+\subsection{Формула обращения.}
+
+Мы знаем, что характеристическая функция зависит только от распределения случайной величины. Оказывается, что верно и обратное: по характеристической функции можно однозначно восстановить распределение случайной величины. Этот результат называется \textit{формулой обращения}.
+
+Формула обращения порождает следующий удобной метод рассуждения. Если мы хотим доказать, что некоторая случайная величина обладает таким-то распределением, то нам достаточно вычислить характеристическую функцию этой случайной величины и показать, что она совпадает с характеристической функцией желанного распределения.
+
+\begin{thm}[формула обращения]
+ \label{theorem:inversing_formula}
+ Пусть $ \xi $ --- вещественнозначная случайная величина, а числа $ a < b $ --- точки непрерывности её функции распределения: $ P_\xi(\left\{ a \right\}) = P_\xi(\left\{ b \right\}) = 0 $. Тогда верна \textbf{формула обращения}
+ \begin{align*}
+  P(a \leqslant \xi \leqslant b) &= \frac{1}{2\pi} \lim_{T \to +\infty} \int_{-T}^{T}  \frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_\xi(t)\,dt = \\
+  &= \frac{1}{2\pi} \operatorname{p.\!v.} \int_{\R} \frac{e^{-iat}-e^{-ibt}}{it}\cdot\varphi_\xi(t)\,dt.
  \end{align*}
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Рассмотрим случай, когда $ a = -1 $, $ b = 1 $. Нужно проверить
+ Рассмотрим сначала случай, когда $ a = -1 $, $ b = 1 $. Нужно доказать
  \begin{align*}
-  P(-1 \leqslant \xi \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi}\int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\varphi_\xi(t)\,dt.
+  P(-1 \leqslant \xi \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi}\int_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\cdot\varphi_\xi(t)\,dt.
+ \end{align*} Распишем интеграл в правой части:
+ \begin{align*}
+  \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\cdot\varphi_\xi(t)\,dt &= \int_{-T}^{T} \int_\R \frac{e^{it}-e^{-it}}{it} \cdot e^{itx}\,dP_\xi(x)\,dt.
+ \end{align*} Мы хотим воспользоваться теоремой Фубини и переставить интегралы местами. Для этого нам достаточно показать ограниченность выражения
+ \begin{align*}
+  \left| \frac{e^{it}-e^{-it}}{it} \cdot e^{itx} \right| = \left| \frac{e^{it}-e^{-it}}{it} \right|,
+ \end{align*} ведь меры конечные ($ P_\xi $ --- вероятностная мера, а внешний интеграл берётся по ограниченному подмножеству $ \R $). 
+
+ Если $ t > 1 $, то
+ \begin{align*}
+  \left| \frac{e^{it}-e^{-it}}{it} \right| \leqslant \frac{2}{\left| t \right|} < 2.
+ \end{align*} 
+
+ Если же $ t \leqslant 1 $, то
+ \begin{align*}
+  \left| \frac{e^{it}-e^{-it}}{it} \right| = \left| \frac{1 + it - 1 - (-it) + o(t)}{it} \right| = \left| 2 + o(1) \right|
+ \end{align*} --- ограничено, так как $ t $ лежит в компакте  $ [-1,1] $.
+
+ Так или иначе получаем
+ \begin{align*}
+  \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it} \cdot \varphi_\xi(t)\,dt = \int_{\R} \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it}  \cdot e^{itx}\,dt\,dP_\xi(x).
  \end{align*}
- По теореме Фубини:
+
+ Далее обозначим и перепишем внутренний интеграл:
  \begin{align*}
-  \int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\varphi_\xi(t)\,dt &= \int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it} \int\limits_{\R} e^{itx}\,dP_\xi(x)\,dt = \\
-  &= \int\limits_{\R} \int\limits_{-T}^{T} e^{itx} \cdot \frac{e^{it}-e^{-it}}{it}dt\,dP_\xi(x). 
- \end{align*} Модуль ограничен:
+  \Phi_T(x) &= \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it} \cdot e^{itx}\,dt = \int_{-T}^{T} \left(\int_{-1}^{1} e^{itu}\,du \right) e^{itx}\,dt = \int_{-T}^{T} \int_{-1}^{1} e^{it(u+x)}\,du\,dt.
+ \end{align*} Так как $ \left| e^{it(u+x)} \right| = 1 $, то по теореме Фубини
  \begin{align*}
-  \left| \frac{e^{it}-e^{it}}{it} \right| \leqslant C
- \end{align*} всё суммируемое и мера $dP_\xi$ конечна . Далее обозначим
- \begin{align*}
-  \Phi_T(x) &= \int\limits_{-T}^{T} e^{itx} \cdot \underbrace{\frac{e^{it}-e^{-it}}{it}}_{\int_{-1}^{1} e^{itu}\,du}\,dt = \\
-  &= \int\limits_{-T}^{T} e^{itx}\int\limits_{-1}^{1} e^{itu}\,du\,dt = \int\limits_{-1}^{1} \int\limits_{-T}^{T} e^{it(x+u)}\,dt\,du = \\
-  &= \int\limits_{-1}^{1} \frac{e^{iT(x+u)} - e^{-iT(x+u)}}{i(x+u)}\,du = \\
-  &= \int\limits_{-1}^{1} \frac{2\sin(T(x+u))}{x+u}\,du = \begin{bmatrix}
-   v = T(x+u), & dv = T\,du
+  \Phi_T(x) &= \int_{-1}^{1} \int_{-T}^{T} e^{it(u+x)}\,dt\,du = \int_{-1}^{1} \frac{e^{iT(u+x)}-e^{-iT(u+x)}}{i(u+x)}\,du = \\
+  &= 2 \int_{-1}^{1} \frac{\sin(T(u+x))}{u+x}\,du = \begin{bmatrix}
+   v = T(u+x), & dv = T\,du \\
+   u = v / T - x, & du = dv / T
   \end{bmatrix} = \\
-  &= \int\limits_{T(x-1)}^{T(x+1)} \frac{2\sin v}{v}\,dv.
- \end{align*} Предположим, что
+  &= 2 \int_{T(x-1)}^{T(x+1)} \frac{\sin v}{v / T}\,\frac{dv}{T} = 2 \int_{T(x-1)}^{T(x+1)}  \frac{\sin v}{v}\,dv.
+ \end{align*}
+
+ Исследуем теперь для числа $ x \in \R $ предел
  \begin{align*}
-  \lim_{T \to \infty} \int\limits_{\R} \Phi_T(x)\,dP_\xi(x) = \int\limits_{\R} \lim_{T \to +\infty}   \Phi_T(x)\,dP_\xi(x)
- \end{align*} Тогда
- \begin{align*}
-  \lim_{T \to +\infty}  \Phi_T(x) = \lim_{T \to +\infty} \int\limits_{T(x-1)}^{T(x+1)}  \frac{2\sin v}{v}\,dv 
+  \lim_{T \to +\infty}  \Phi_T(x) = \lim_{T \to +\infty} \int_{T(x-1)}^{T(x+1)}  \frac{2\sin v}{v}\,dv.
  \end{align*} 
 
  \begin{itemize}
-  \item $x > 1 \implies T(x + 1), T(x - 1) \to +\infty$, а так как интеграл сходящийся, то стремление может быть только к нулю. 
-  \item $-1 < x < 1 \implies \int_{T(x - 1)}^{T(x + 1)} \frac{\sin v}{dv} \, dv \to \int_{-\infty}^{+\infty} \frac{2 \sin v}{v}\,dv = 4 \int_0^{+\infty} \frac{\sin v}{v} \, dv = 2\pi$ 
-  \item $x = 1  \implies \int_{T(X - 1)}^{T(X + 1)} \frac{2 \sin v}{v}\,dv \to \int_0^{+\infty} \frac{2 \sin v}{v} \, dv = \pi$
-  \item $x < -1 $ и $x = -1$  аналогично. 
+  \item Если $x > 1$, то оба конца $ T(x - 1) $ и $ T(x+1) $ стремятся к $ +\infty $. Так как интеграл
+   \begin{align*}
+    \int_{1}^{+\infty} \frac{\sin v}{v}\,dv
+   \end{align*} сходится, то его хвост может стремится только к нулю. Симметрично, если $ x < -1 $, то оба конца $ T(x-1) $ и $ T(x+1) $ стремятся к $ -\infty $, значит хвост интеграла стремится к нулю.
+  \item Пусть $-1 < x < 1 $. Тогда
+   \begin{align*}
+    \lim_{T \to +\infty} \int_{T(x-1)}^{T(x+1)}  \frac{2 \sin v}{v}\,dv = \int_{-\infty}^{+\infty} \frac{2\sin v}{v}\,dv = 4 \int_{0}^{\infty} \frac{\sin v}{v}\,dv = 2 \pi.
+   \end{align*}
+
+  \item Пусть $ x = 1 $. Тогда
+   \begin{align*}
+    \lim_{T \to +\infty} \int_{T(x-1)}^{T(x+1)} \frac{2\sin v}{v}\,dv = \int_{0}^{\infty} \frac{2\sin v}{v} = \pi.
+   \end{align*} Аналогично для $ x = -1 $:
+   \begin{align*}
+    \lim_{T \to +\infty} \int_{T(x-1)}^{T(x+1)} \frac{2\sin v}{v}\,dv = \int_{-\infty}^{0} \frac{2\sin v}{v}\,dv = \pi.
+   \end{align*}
  \end{itemize}
 
+ Таким образом,
  \begin{align*}
-  = \begin{cases}    0, \text{ если } x > 1, x < -1  \\    \pi, \text{ если } x = 1, x = -1 \\    2\pi, \text{ если } -1 < x < 1   \end{cases}
+  \lim_{T \to +\infty} \Phi_T(x) = \begin{cases}    0, \text{ если } x < -1 \text{ или } x > 1  \\ 
+   \pi, \text{ если } x = \pm 1 \\
+  2\pi, \text{ если } -1 < x < 1   \end{cases}
   = 2\pi \cdot \Ind_{[-1,1]}(x) 
- \end{align*} почти всюду, т. к. $P_{\xi}(\{a\}) = P_{\xi}(\{b\}) = 0$. Тогда
+ \end{align*} $ P_\xi $-почти всюду, так как по условию $P_{\xi}(\{-1\}) = P_{\xi}(\{1\}) = 0$.
 
+ Теперь, если мы обоснуем следующий предельный переход
+ \begin{align}
+  \label{eq:inversing_formula:limit_swap_int}
+  \lim_{T \to +\infty} \int_{\R} \Phi_T(x)\,dP_\xi(x) = \int_{\R} \left(\lim_{T \to +\infty}   \Phi_T(x) \right)dP_\xi(x),
+ \end{align} то мы получим то, что нужно:
  \begin{align*}
-  = \int\limits_{\R} 2\pi \Ind_{[-1,1]} (x)\,dP_\xi(x) = 2\pi \cdot P_\xi [-1, 1].
- \end{align*} Осталось обосновать перестановку предела и интеграла. Теорема Лебега о мажорируемой сходимости. Мажоранта:
- \begin{align*}
-  F(y) = \int\limits_{-\infty}^{y} \frac{2\sin v}{v}\,dv. 
+  \frac{1}{2\pi} \lim_{T \to +\infty} \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it} \cdot \varphi_\xi(t)\,dt &= \frac{1}{2\pi} \lim_{T\to +\infty} \int_{\R} \Phi_T(x)\,dP_\xi(x) = \\
+  &= \frac{1}{2\pi} \int_{\R} \left( \lim_{T \to +\infty} \Phi_T(x)  \right) dP_\xi(x) = \\
+  &= \frac{1}{2\pi} \int_{\R} 2\pi \cdot \Ind_{[-1,1]}(x)\,dP_\xi(x) = P_\xi([-1,1]) = \\
+  &= P(-1 \leqslant \xi \leqslant 1).
  \end{align*}
 
- Как свести общий случай к $ a = -1 $, $ b = 1 $? Пусть \begin{align*}
-  \xi = \frac{a+b}{2} + \frac{b-a}{2}\cdot\eta
- \end{align*} Тогда
+ Обосновывать \eqref{eq:inversing_formula:limit_swap_int} будем теоремой Лебега о мажорируемой сходимости. Так как мера $ P_\xi $ конечная, достаточно показать ограниченность $ \left| \Phi_T(x) \right| $. Эквивалентно, нужно показать ограниченность интегралов вида
  \begin{align*}
-  \left\{ a \leqslant \xi \leqslant b \right\} \Longleftrightarrow \left\{ -1 \leqslant \eta \leqslant 1 \right\}.
- \end{align*} Значит,
+  \int_{a}^{b} \frac{\sin v}{v}\,dv, \qquad a,b\in\R.
+ \end{align*} Так как интегралы  $ \int_{0}^{\infty} \frac{\sin v}{v}\,dv  $ и $ \int_{-\infty}^{0} \frac{\sin v}{v}\,dv  $ сходятся, то интегралы вида
  \begin{align*}
-  P(a \leqslant \xi \leqslant b) &= P(-1 \leqslant \eta \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\varphi_\eta(t)\,dt = \\
-  & \overset{?}{=} \lim_{T \to +\infty} \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it}\varphi_\xi(t)\,dt 
+  \int_{0}^{w} \frac{\sin v}{v}\,dv, \qquad w \in \R
+ \end{align*}  ограничены некоторой константой $ C $. Но тогда интегралы ограничены и по любому отрезку:
+ \begin{align*}
+  \left| \int_{a}^{b} \frac{\sin v}{v}\,dv \right| \leqslant \left| \int_{a}^{0} \frac{\sin v}{v}\,dv \right| + \left| \int_{0}^{b} \frac{\sin v}{v}\,dv \right| \leqslant 2C.
  \end{align*}
 
- Покажем, что на месте $\overset{?}{=}$ действительно есть равенство. Для этого раскроем $\varphi_{\xi} $ по правилу $\varphi_\xi(t) = e^{i \frac{a+b}{2}t}\varphi_\eta\left(\frac{b-a}{2}t\right)$ и выплнем преобразования:	
-
+ Нам осталось свести общий случай к $ a = -1 $, $ b = 1 $. Рассмотрим \begin{align*}
+  \xi = \frac{b-a}{2}\cdot\eta + \frac{a+b}{2}.
+ \end{align*} Тогда $ a \leqslant \xi \leqslant b $ равносильно $ -1 \leqslant \eta \leqslant 1 $. Значит,
  \begin{align*}
-  \int\limits_{-T}^{T} \frac{e^{-iat} - e^{ibt}}{it} \varphi_{\xi}(t)\,dt &= \int\limits_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it}e^{i \frac{a+b}{2} t} \cdot \varphi_\eta \left( \frac{b-a}{2}t \right)\,dt = \\
-  &= \int\limits_{-T}^{T} \frac{e^{i \frac{b-a}{2}t} -e^{-i \frac{b-a}{2} t}}{it} \varphi_\eta \left( \frac{b-a}{2}t \right)dt = \\
-  &= \left[s = \frac{b - a}{2} t\right] = \\
-  &= \int\limits_{- \frac{b-a}{2}T}^{\frac{b-a}{2}T} \frac{e^{is}-e^{-is}}{is}\varphi_\eta(s)\,ds 
+ P(a \leqslant \xi \leqslant b) &= P(-1 \leqslant \eta \leqslant 1) = \lim_{T \to +\infty} \frac{1}{2\pi} \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it}\cdot\varphi_\eta(t)\,dt. \end{align*} Нам осталось доказать равенство
+ \begin{align}
+  \label{eq:inversing_formula:a_b_to_pm_1}
+  \lim_{T \to +\infty} \int_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it} \cdot \varphi_\xi(t)\,dt = \lim_{T \to +\infty} \int_{-T}^{T} \frac{e^{it}-e^{-it}}{it} \cdot \varphi_\eta(t)\,dt.
+ \end{align} Для этого раскроем $\varphi_{\xi}(t) $ по свойствам характеристической функции:
+ \begin{align*}
+  \varphi_\xi(t) = e^{it \frac{a+b}{2}}\varphi_\eta\left(\frac{b-a}{2} \cdot t\right)
  \end{align*}
- Устремляем $T$ в бесконечность и получаем, что равенство $\overset{?}{=}$ верно.
+ и выполним преобразования:	
+ \begin{align*}
+  \int_{-T}^{T} \frac{e^{-iat} - e^{ibt}}{it} \cdot \varphi_{\xi}(t)\,dt &= \int_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it}e^{i t \frac{a+b}{2}} \cdot \varphi_\eta \left( \frac{b-a}{2} \cdot t \right)\,dt = \\
+  &= \int_{-T}^{T} \frac{e^{it \frac{b-a}{2}} -e^{-i t \frac{b-a}{2}}}{it} \varphi_\eta \left( \frac{b-a}{2} \cdot t \right)dt = \\
+  &= \begin{bmatrix}
+   s =  \frac{b-a}{2} \cdot t, & ds = \frac{b-a}{2}\,dt \\
+   t = \frac{2}{b-a} \cdot s, & dt = \frac{2}{b-a}\,ds
+  \end{bmatrix} = \\
+  &= \int_{- \frac{b-a}{2}T}^{\frac{b-a}{2}T} \frac{e^{is}-e^{-is}}{is}\cdot\varphi_\eta(s)\,ds.
+ \end{align*} Так как $ \frac{b-a}{2} > 0 $, то устремив $ T \to +\infty $ мы получим равенство \eqref{eq:inversing_formula:a_b_to_pm_1}.
 \end{proof}
 
-Сделаем выводы из <<первой навороченной теоремы про характеристические функции>>.
-
-\begin{crly}
- Если $ \varphi_\xi = \varphi_\eta $, то $ P_\xi = P_\eta $.
+\begin{crly}[характеристическая функция определяет распределение]
+ \label{corollary:char_func_defines_distribution}
+ Пусть $ \xi,\eta $ --- случайные величины. Если их характеристические функции совпадают: $ \varphi_\xi = \varphi_\eta $, то они одинаково распределены: $ P_\xi = P_\eta $.
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Обозначим
+ Введём обозначение для множества точек разрыва функций распределения $ \xi $ и $ \eta $:
  \begin{align*}
-  A = \left\{ x \in \R \Mid P_\xi(\left\{ x \right\}) > 0 \right\}
- \end{align*} Тогда множество $ A $ не более, чем счётное (счётное объединение конечных множеств $\{x \in \R \mid P_{\xi}(\{x\}) > \frac{1}{n}\}$). Значит, почти все точки хорошие. Мы знаем, что $ \varphi_\xi $ однозначно определяет вероятности
- \begin{align*}
-  P_\xi([a,b]) = P_\eta( \left[a, b\right)),
- \end{align*} если $ a,b \notin A $.
+  B = \left\{ x\in\R \mid P_\xi(\left\{ x \right\}) > 0 \text{ или } P_\eta(\left\{ x \right\}) > 0 \right\}.
+ \end{align*} Множество $ B $ не более, чем счётно (например, так как $ \sum_{x \in B} P(\xi = x) + \sum_{x \in B} P(\eta = x) \leqslant 2 $).
 
- Пусть $ a \in A $.  Возьмём  $ a_n \notin A $ такие, что  $ a_n $ убывают к  $ a $ . Знаем, что
+ По формуле обращения (теорема \ref{theorem:inversing_formula}) для любой ячейки $ (a,b] $, концы которого не являются точками разрыва, верно
  \begin{align*}
-  \left(a, b\right]  = \bigcup_{n=1}^{\infty}[a_n,b].
- \end{align*} Множества возрастают, по непрерывности меры сверху всё ок:
- \begin{align*}
-  P_\xi \left(a, b\right] = \lim_{n \to \infty} P_\xi [a_n,b] 
- \end{align*} --- однозначно определяется.
+  P_\xi \left(a, b\right] = P_\eta \left(a, b\right], \qquad a,b \notin B.
+ \end{align*}
 
- Пусть $ b \in A $. Возьмём  $ b_n \notin A $,  $ b_n $ убывают к  $ b $. Тогда здесь
+ По единственности из теоремы Каратеодори о стандартном продолжении равенство мер $ P_\xi = P_\eta $ достаточно проверить на ячейках:
  \begin{align*}
-  \left(a, b\right] = \bigcap_{n=1}^{\infty} \left(a, b_n\right] ,
- \end{align*} значит
- \begin{align*}
-  P_\xi \left(a, b\right] = \lim P_\xi \left(a, b_n\right]   
- \end{align*} --- определяется однозначно. Меры совпадают на ячейках $  \implies $ совпадают всюду.
+  P_\xi \left(a, b\right] = P_\eta \left(a, b\right], \qquad a,b \in \R.
+ \end{align*} Поэтому, нам осталось лишь разобраться с точками разрыва.
 
+ Докажем равенство мер для ячейки $ \left(a, b\right]   $, где $ a \in B $ и  $ b \notin B $. Рассмотрим точки $ a_n \notin B $, такие, что $ a_n > a $ и $ a_n \to a $. Так как
+ \begin{align*}
+  \left(a, b\right] = \bigcup_{n=1}^{\infty} \left(a_n, b\right],
+ \end{align*} то по непрерывности меры сверху
+ \begin{align*}
+  P_\xi \left(a, b\right] = \lim_{n \to \infty} P_\xi \left(a_n, b\right]    = \lim_{n \to \infty} P_\eta \left(a_n, b\right] = P_\eta \left(a, b\right].  
+ \end{align*} Равенство мер доказано на ячейках с $ a \in \R $ и  $ b \notin B $.
+
+ Аналогично докажем равенство мер для ячейки  $ \left(a, b\right]   $, где $ a \in \R $ и  $ b \in B $. Возьмём точки  $ b_n \notin B $ такие, что  $ b_n > b $ и  $ b_n \to b $ . Так как
+ \begin{align*}
+  \left(a, b\right] = \bigcap_{n=1}^{\infty}\left(a, b_n\right],
+ \end{align*} то по непрерывности меры снизу
+ \begin{align*}
+  P_\xi \left(a, b\right]  = \lim_{n \to \infty} P_\xi \left(a, b_n\right]    = \lim_{n \to \infty} P_\eta \left(a, b_n\right] = P_\eta \left(a, b\right].  
+ \end{align*}
 \end{proof}
+
 \begin{crly}
- Если $ \int_{\R} \left| \varphi_\xi(t) \right|\,dt < +\infty  $, то $ F_\xi $ имеет плотность
+ Пусть $ \xi $ --- случайная величина с суммируемой по мере Лебега функцией распределения:
  \begin{align*}
-  p_\xi(x) = \frac{1}{2\pi} \int\limits_{\R} e^{-itx}\varphi_\xi(t)\,dt. 
- \end{align*} Это преобразование Фурье функции $\varphi_\xi$ .
+  \int_{\R} \left| \varphi_\xi(t) \right|dt < +\infty. 
+ \end{align*}
+ Тогда $ \xi $ абсолютно непрерывна, и её плотность равна
+ \begin{align}
+  \label{eq:density_of_rv_with_sum_char_func}
+  p_\xi(x) = \frac{1}{2\pi} \int_{\R} e^{-itx}\cdot\varphi_\xi(t)\,dt. 
+ \end{align}
 \end{crly}
+Выражение \eqref{eq:density_of_rv_with_sum_char_func} называют \textit{преобразованием Фурье} функции $ \varphi_\xi(t) $.
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Из абсолютной сходимости интеграла $ \int_{\R} \left| \varphi_\xi(t) \right|\,dt  $ следует что
+ Пусть $ a < b $ --- точки непрерывности функции распределения $ \xi $. Из абсолютной сходимости интеграла $ \int_{\R} \left| \varphi_\xi(t) \right|dt  $ следует абсолютная сходимость интеграла
  \begin{align*}
-  \int\limits_{\R} \underbrace{\frac{e^{-iat}-e^{-ibt}}{it}}_{\text{огр.}} \varphi_\xi(t)\,dt
- \end{align*} абсолютно сходится. Тогда
+  \int_{\R} \left|\frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_\xi(t) \right|dt,
+ \end{align*} поскольку добавленный множитель ограничен:
  \begin{align*}
-  P(a \leqslant \xi \leqslant b) = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{ibt}}{it}\varphi_\xi(t)\,dt. 
- \end{align*} Нужно показать
+  &\left| \frac{e^{-iat} - e^{-ibt}}{it} \right| \leqslant \frac{2}{\left| t \right|} < 2 &\text{при } \left| t \right| > 1,\\
+  &\left| \frac{e^{-iat} - e^{-ibt}}{it} \right| = \left| \frac{1 + \OO(t) - 1 + \OO(t)}{t} \right| = \OO(1) &\text{при } t \in [-1, 1].
+ \end{align*} Поэтому, по теореме \ref{theorem:inversing_formula} формула обращения принимает следующий вид:
  \begin{align*}
-  P(a \leqslant \xi \leqslant b) = \int\limits_{a}^{b} p_\xi(x)\,dx.
- \end{align*} Проверим
+  P(a \leqslant \xi \leqslant b) = \frac{1}{2\pi} \int_{\R} \frac{e^{-iat}-e^{-ibt}}{it}\cdot\varphi_\xi(t)\,dt. 
+ \end{align*}
+
+ Нам нужно проверить равенство
  \begin{align*}
-  \int\limits_{a}^{b} \frac{1}{2\pi} \int\limits_{\R} e^{-itx}\varphi_\xi(t)\,dt\,dx &= \frac{1}{2\pi}\int\limits_{\R}  \int\limits_{a}^{b} e^{-itx}\,dx\,\varphi_\xi(t)\,dt = \\
-  &= \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it} \varphi_\xi(t)\,dt.
- \end{align*} Всё получилось!
+  P(a \leqslant \xi \leqslant b) = \int_{a}^{b} p_\xi(x)\,dx
+ \end{align*} где $ p_\xi(x) $ взята из условия теоремы (равенство \eqref{eq:density_of_rv_with_sum_char_func}). Проверим:
+ \begin{align*}
+  \int_{a}^{b} \frac{1}{2\pi} \int_{\R} e^{-itx}\cdot\varphi_\xi(t)\,dt\,dx &= \frac{1}{2\pi}\int_{\R}  \left(\int_{a}^{b} e^{-itx}\,dx \right) \cdot \varphi_\xi(t)\,dt = \\
+  &= \frac{1}{2\pi} \int_{\R} \frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_\xi(t)\,dt = \\
+  &= P(a \leqslant \xi \leqslant b).
+ \end{align*} Интегралы были переставлены по теореме Фубини: функция $ e^{-itx} \cdot \varphi_\xi(t) $ суммируема при $ t \in \R $ и $ x \in [a,b] $, так как $ \varphi_\xi(t) $ суммируема по условию, а $ e^{-itx} $ ограничена единицей.
+
+ Отметим, что из уже доказанного следует отсутствие точек разрыва функции распределения (поэтому ограничение на $ a $ и $ b $ не имеет силы). Действительно, мы можем покрыть точку разрыва малым отрезком $ [a,b] $, и интеграл плотности по нему будет стремится к нулю, то есть вероятность этой точки разрыва на самом деле равна нулю.
 \end{proof}
 
-\begin{thm}
- Пусть $ \xi_k \sim \Norm(a_k, \sigma_k^{2}) $ независимы. Пусть $ c_1, c_2, \ldots, c_n $ не все нули. Тогда
+\begin{thm}[сумма независимых нормальных случайных величин]
+ \label{theorem:sum_of_independent_normal_rvs}
+ Пусть нормальные случайные величины $ \xi_k \sim \Norm(\mu_k, \sigma_k^{2}) $ независимы. Пусть среди коэффициентов $ c_1, c_2, \ldots, c_n $ есть хотя бы один ненулевой, и пусть $ \mu_0 \in \R $ --- число. Тогда следующая сумма случайных величин распределена нормально:
  \begin{align*}
-  \xi = a_0 + c_1 \xi_1 + \ldots + c_n \xi_n \sim \Norm(a, \sigma^{2}),
+  \xi = \mu_0 + c_1 \xi_1 + \ldots + c_n \xi_n \sim \Norm(\mu, \sigma^{2}),
  \end{align*} где
  \begin{align*}
-  a = a_0 + \sum_{k=1}^{n}c_ka_k
- \end{align*} и
- \begin{align*}
+  \mu = \mu_0 + \sum_{k=1}^{n}c_k\mu_k, &&
   \sigma^{2} = \sum_{k=1}^{n}c_k^{2}\sigma_k^{2}.
  \end{align*}
 \end{thm}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- Посчитаем хар. функцию $ \xi $:
+ Вычислим характеристическую функцию $ \xi $:
  \begin{align*}
-  \varphi_\xi(t) = \varphi_{a_0 + \sum_{k=1}^{n}c_k\xi_k}(t) = e^{ia_0 t} \prod_{k=1}^{n}\varphi_{\xi_k}(c_k t) = e^{ia_0t}\prod_{k=1}^{n} e^{-c_k^{2}\sigma_k^{2} t^{2} / 2} \cdot e^{ic_ka_k t} \implies \text{ ОК }
- \end{align*}
+  \varphi_\xi(t) &= \varphi_{\mu_0 + c_1\xi_1 + \ldots + c_n\xi_n}(t) = e^{i\mu_0 t} \prod_{k=1}^{n}\varphi_{\xi_k}(c_k t) = e^{i\mu_0 t} \prod_{k=1}^{n} e^{i\mu_k (c_k t) - \frac{\sigma_k^{2}(c_k t)^{2}}{2}} = \\
+  &= \exp \left[ i \left( \mu_0 + \sum_{k=1}^{n}c_k\mu_k \right) t - \frac{t^{2}}{2} \left( \sum_{k=1}^{n}c_k^{2}\sigma_k^{2} \right) \right] = \\
+  &= e^{i\mu t - \frac{\sigma^{2}t^{2}}{2}}.
+ \end{align*} Таким образом, характеристическая функция $ \xi $ совпадает с характеристической функцией нормального распределения $ \Norm(\mu,\sigma^{2}) $. По следствию \ref{corollary:char_func_defines_distribution} $ \xi \sim \Norm(\mu,\sigma^{2}) $.
 \end{proof}
+
+Доказательство теоремы \ref{theorem:sum_of_independent_normal_rvs} с помощью характеристических функций оказалось крайне простым и красивым: вычислили характеристическую функцию, проверили. Если же доказывать её, вычисляя свёртку плотностей (как мы это сделали в примере \ref{example:sum_of_two_independent_normal_rvs}), то мы получим огромную выкладку.
 
 \end{document}
 
