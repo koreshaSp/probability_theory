@@ -41,8 +41,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.9410441"
-     inkscape:cx="482.7299"
-     inkscape:cy="196.54371"
+     inkscape:cx="482.72989"
+     inkscape:cy="196.02852"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -149,7 +149,7 @@
          id="tspan20998"
          style="stroke-width:0.315581"
          x="122.09529"
-         y="204.1479">{\color{blue}$m \leqslant 1$}</tspan></text>
+         y="204.1479">{\color{blue}$m &lt; 1$}</tspan></text>
     <circle
        id="path24491"
        style="fill:#000000;stroke:none;stroke-width:0.315581"
