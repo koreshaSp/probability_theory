@@ -3,6 +3,7 @@
 \begin{document}
 
 \subsection{Законы больших чисел.}
+\label{subsection:law_of_large_numbers}
 
 Предположим, есть некоторый эксперимент, который мы повторяем много раз. То есть, у нас есть последовательность независимых случайных величин $ \xi_1,\xi_2, \ldots $, где $ \xi_k $ --- результат $ k $-го повторения эксперимента. Обозначим через $ S_n $ сумму результатов первых  $ n $  повторений:
 \begin{align*}
@@ -202,42 +203,42 @@
 \end{proof}
 
 \newpage
-\section{Производящие функции.}
+\section{Производящие функции случайных величин.}
 
-\subsection{Производящая функция.}
+\subsection{Производящая функция вероятностей.}
 
 \begin{df}[производящая функция вероятностей]
  \textit{Производящей функцией вероятностей} дискретной случайной величины $ \xi\colon\,\Omega\to \left\{ 0,1,2,\ldots \right\} $ называется степенной ряд
  \begin{align*}
-  G_\xi(t) = \sum_{n=0}^{\infty}P(\xi = n) \cdot t^{n}.
+  G_\xi(z) = \sum_{n=0}^{\infty}P(\xi = n) \cdot z^{n}.
  \end{align*}
 \end{df}
 
 \begin{remrk*}
- Производящая функция зависит только от распределения случайной величины. 
+ Производящая функция зависит только от распределения дискретной случайной величины. 
 \end{remrk*}
 
 \begin{prop}[свойства производящих функций]\
  \begin{enumerate}
-  \item $G_\xi(t) = \E t^{\xi}$.
+  \item $G_\xi(z) = \E z^{\xi}$.
    \begin{proof}[\normalfont\textsc{Доказательство}]
     Действительно,
     \begin{align*}
-     \E t^{\xi} = \int_{\R} x\,dP_\xi(x) = \sum_{x=0}^{\infty} P(\xi=x) \cdot t ^{x} = G_\xi(t).
+     \E z^{\xi} = \int_{\R} z^x\,dP_\xi(x) = \sum_{x=0}^{\infty} P(\xi=x) \cdot z^{x} = G_\xi(z).
     \end{align*}
    \end{proof}
-  \item $ G_\xi(1) = 1 $, и ряд $ G_\xi(t) $ сходится при $ \left| t \right| \leqslant 1 $.
+  \item $ G_\xi(1) = 1 $, и ряд $ G_\xi(z) $ сходится при $ \left| z \right| \leqslant 1 $.
    \begin{proof}[\normalfont\textsc{Доказательство}]
     \begin{align*}
      G_\xi(1) &= \sum_{n=0}^{\infty}P(\xi=n) = 1,\\
-     \left| G_\xi(t) \right| &\leqslant \left| \sum_{n = 0}^\infty P(\xi = n) \cdot t^{n} \right| = \sum_{n = 0}^\infty P(\xi = n) \cdot \underbrace{|t|^{n}}_{\leq 1} \leqslant \sum_{n = 0}^\infty P(\xi = n) = 1.
-    \end{align*}
+     \left| G_\xi(z) \right| &= \left| \sum_{n = 0}^\infty P(\xi = n) \cdot z^{n} \right| \leqslant \sum_{n = 0}^\infty P(\xi = n) \cdot |z|^{n} \leqslant \sum_{n = 0}^\infty P(\xi = n) = 1
+    \end{align*} при $ \left| z \right| \leqslant 1 $.
    \end{proof}
   \item $ G'_\xi(1) = \E \xi $. 
    \begin{proof}[\normalfont\textsc{Доказательство}]
     Действительно,
     \begin{align*}
-     G_\xi'(t) &= \sum_{n=1}^{\infty}nP(\xi = n) \cdot t^{n-1},\\
+     G_\xi'(z) &= \sum_{n=1}^{\infty}nP(\xi = n) \cdot z^{n-1},\\
      \E\xi &= \sum_{n=1}^{\infty} nP(\xi=n) = G_\xi'(1).
     \end{align*}
    \end{proof}
@@ -254,23 +255,30 @@
      \D\xi &= \E\xi^{2} - (\E\xi)^{2} = G_\xi''(1) + G_\xi'(1) - G_\xi'(1)^{2}.
     \end{align*}
    \end{proof}
-  \item Если $ \xi $ и $ \eta $ независимы, то $ G_{\xi + \eta}(t) = G_{\xi}(t) \cdot G_\eta(t) $.
+  \item Если $ \xi $ и $ \eta $ независимы, то $ G_{\xi + \eta}(z) = G_{\xi}(z) \cdot G_\eta(z) $.
    \begin{proof}[\normalfont\textsc{Доказательство}]
     Если $ \xi $ и $ \eta $ независимы, то и $ t^{\xi}  $ и $ t^{\eta} $ независимы. Тогда
     \begin{align*}
-     G_{\xi+\eta}(t) = \E(t^{\xi+\eta}) = \E t^{\xi} \cdot \E t^{\eta} = G_\xi(t) \cdot G_\eta(t).
+     G_{\xi+\eta}(z) = \E(z^{\xi+\eta}) = \E z^{\xi} \cdot \E z^{\eta} = G_\xi(z) \cdot G_\eta(z).
     \end{align*}
    \end{proof}
  \end{enumerate}
 \end{prop}
+
+\begin{prop}
+ Производящая функция $ G_\xi(z) $ непрерывна на своей области определения.
+\end{prop}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Более того, она аналитична, ведь это степенной ряд с ненулевым радиусом сходимости.
+\end{proof}
 
 \subsection{Примеры применения производящих функций.}
 
 \begin{exmpl}[производящая функция и моменты дискретного равномерного распределения]
  Рассмотрим равномерное распределение на $  \left\{ 0,1,\ldots,n-1 \right\} $. Его производящая функция вероятностей равна
  \begin{align*}
-  U_n(t) = \frac{1 + t + t^{2} + \ldots + t^{n-1}}{n} = \frac{t^{n}-1}{t-1} \cdot \frac{1}{n}.
- \end{align*} Сделаем замену переменной $ t = 1 + s $:
+  U_n(z) = \frac{1 + z + z^{2} + \ldots + z^{n-1}}{n} = \frac{z^{n}-1}{z-1} \cdot \frac{1}{n}.
+ \end{align*} Сделаем замену переменной $ z = 1 + s $:
  \begin{align*}
   U_n(1 + s) = \frac{(1+s)^{n} - 1}{sn} = \sum_{k=1}^{n} \binom n k  \cdot \frac{s^{k-1}}{n}.
  \end{align*} Найдём матожидание:
@@ -293,18 +301,18 @@
 
  Пусть случайная величина $ \xi $ --- сколько выпало на кубике. Её производящая функция вероятностей равна
  \begin{align*}
-  G_\xi(t) = \frac{t + t^{2} + \ldots + t^{6}}{6} = \frac{(t^{6}-1)t}{6(t-1)}.
+  G_\xi(z) = \frac{z + z^{2} + \ldots + z^{6}}{6} = \frac{(z^{6}-1)z}{6(z-1)}.
  \end{align*} Пусть $ \xi_1,\xi_2,\xi_3 $ --- три независимых подбрасываний кубика. Производящая функция вероятностей их суммы $ \sigma = \xi_1 + \xi_2 + \xi_3 $ равна
  \begin{align*}
-  G_{\sigma}(t) &= (G_\xi(t))^{3} = \frac{1}{6^{3}} \cdot \frac{(t^{6}-1)^{3}t^{3}}{(t-1)^{3}} = \\
-  &= \frac{1}{6^{3}} \cdot t^{3}(1 - 3t^{6} + 3t^{12} - t^{18}) \cdot \frac{1}{(1-t)^{3}}.
+  G_{\sigma}(z) &= (G_\xi(z))^{3} = \frac{1}{6^{3}} \cdot \frac{(z^{6}-1)^{3}z^{3}}{(z-1)^{3}} = \\
+  &= \frac{1}{6^{3}} \cdot z^{3}(1 - 3z^{6} + 3z^{12} - z^{18}) \cdot \frac{1}{(1-z)^{3}}.
  \end{align*} Но
  \begin{align*}
-  \frac{1}{(1-t)^{3}} = \left( \sum_{n=0}^{\infty}t^{n} \right)^{3} = \sum_{n=0}^{\infty} \binom {n+2} 2 \cdot t^{n}.
+  \frac{1}{(1-z)^{3}} = \left( \sum_{n=0}^{\infty}z^{n} \right)^{3} = \sum_{n=0}^{\infty} \binom {n+2} 2 \cdot z^{n}.
  \end{align*} Тогда
  \begin{align*}
-  G_{\sigma}(t) =\frac{1}{6^{3}} \cdot (t^{3}-3t^{9}+3t^{15}-t^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 t^{n}.
- \end{align*} Значит, коэффициент $ G_\sigma(t) $ при $ t^{10} $ равен
+  G_{\sigma}(z) =\frac{1}{6^{3}} \cdot (z^{3}-3z^{9}+3z^{15}-z^{21}) \sum_{n=0}^{\infty}\binom {n+2} 2 z^{n}.
+ \end{align*} Значит, коэффициент $ G_\sigma(z) $ при $ z^{10} $ равен
  \begin{align*}
   \frac{1}{6^{3}} \left[ \binom 9 7 - 3 \binom 3 2 \right] = \frac{1}{6^{3}} \left( 36 - 9 \right) = \frac{27}{6^{3}} = \frac{1}{8}.
  \end{align*}

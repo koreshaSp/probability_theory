@@ -10,6 +10,7 @@
 В этом параграфе основным результатом будет большая теорема о равносильных формулировках сходимости по распределению. Начнём с подготовительных утверждений.
 
 \begin{remrk}
+ \label{remark:sum_with_continuous_rv_is_continuous}
  Пусть cлучайные величины $ \xi $ и $ \eta $ независимы, и $ \eta $ непрерывна. Тогда $ \xi + \eta $ непрерывна.
 \end{remrk}
 \begin{proof}[\normalfont\textsc{Доказательство}]
@@ -256,288 +257,371 @@
 
  \begin{itemize}
   \item Из условия \ref{i7:weak_convergence} следует условие \ref{i1:weak_convergence}. 
+
+   Чтобы перейти от характеристических функций к функциям распределения, мы хотели бы воспользоваться формулой обращения (теорема \ref{theorem:inversing_formula}):
+   \begin{align*}
+    P(\xi \in \left(a, b\right]) = \frac{1}{2\pi} \lim_{T \to +\infty} \int_{-T}^{T} \frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_\xi(t)\,dt,
+   \end{align*} где $ P(\xi=a)=P(\xi=b)=0 $. Проблема здесь состоит в том, что интеграл не настоящий, а в смысле главного значения. Решать проблему будем так: добавим ко всем случайным величинам некоторую малую случайную величину так, чтобы с одной стороны значения поменялись не сильно, а с другой стороны характеристическая функция улучшилась.
+
+   Добавим ко всем величинам случайную величину $ \eta \sim \Norm(0,\sigma^{2}) $, не зависящую от всех $ \xi, \xi_1, \xi_2, \ldots $, где $ \sigma $ очень мало (подбирать его мы будем позже). Формальное доказательство возможности взять такую независимую величину очень занудно, поэтому мы не будем его приводить. Тогда
+   \begin{align*}
+    &\varphi_{\xi_n + \eta}(t) = \varphi_{\xi_n}(t) \cdot \varphi_\eta(t) = \varphi_{\xi_n}(t) \cdot e^{-\frac{\sigma^{2}t^{2}}{2}},\\
+    &\varphi_{\xi+\eta}(t)=\varphi_{\xi}\cdot\varphi_\eta(t)=\varphi_\xi(t)\cdot e^{-\frac{\sigma^{2}t^{2}}{2}}
+    %,\\ &\lim_{n \to \infty} \varphi_{\xi_n+\eta}(t)=\varphi_{\xi+\eta}(t)
+   .\end{align*} Также, случайные величины $ \xi + \eta $ и $ \xi_n + \eta $ непрерывны по замечанию \ref{remark:sum_with_continuous_rv_is_continuous}, поэтому при использовании формулы обращения нам не будет нужна оговорка о точках непрерывности. Наконец, заметим, что интеграл в формуле обращения величин $ \xi_n $
+   \begin{align*}
+    \int_{\R} \frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_{\xi_n}(t) \cdot e^{-\frac{\sigma^{2}t^{2}}{2}}\,dt
+   \end{align*} сходится абсолютно. Действительно, интеграл
+   \begin{align*}
+    \int_{\R} e^{-\frac{\sigma^{2}t^{2}}{2}}\,dt
+   \end{align*} абсолютно сходится, а остальные множители ограничены:
+   \begin{align*}
+    \left| \varphi_{\xi_n}(t) \right| \leqslant 1, && \left| \frac{e^{-iat}-e^{-ibt}}{it} \right| \leqslant C.
+   \end{align*} Поэтому, в формуле обращения можно вместо интеграла в смысле главного значения писать обычный интеграл: для любого $ n $ и любых $ a < b $ верно
+   \begin{align*}
+    P(a \leqslant \xi_n + \eta \leqslant b) = \frac{1}{2\pi} \int_{\R}   \frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_{\xi_n}(t) \cdot e^{-\frac{\sigma^{2}t^{2}}{2}}\,dt,
+   \end{align*} и те же самые рассуждения справедливы для $ \xi $:
+   \begin{align*}
+    P(a\leqslant\xi+\eta\leqslant b)=\frac{1}{2\pi}\int_\R\frac{e^{-iat}-e^{-ibt}}{it}\cdot\varphi_\xi(t)\cdot e^{-\frac{\sigma^{2}t^{2}}{2}}\,dt.
+   \end{align*}
+
+   Так как $ \varphi_{\xi_n}(t) \to \varphi_\xi(t) $ поточечно, то по теореме Лебега о мажорируемой сходимости 
+   \begin{align}
+    \label{eq:weak_convergence:7_implies_1:lim_of_P_a_b}
+    \lim_{n \to \infty} P(a \leqslant \xi_n+\eta \leqslant b) = P(a \leqslant \xi+\eta \leqslant b),
+   \end{align} где мажоранта --- это суммируемая функция $ t \mapsto C e^{-\frac{\sigma^{2}t^{2}}{2}} $.
+
+   Равенство \eqref{eq:weak_convergence:7_implies_1:lim_of_P_a_b} можно записать в терминах функций распределения:
+   \begin{align*}
+    \lim_{n \to \infty} (G_n(b)-G_n(a)) = G(b)-G(a)
+   \end{align*} для любых $ a,b \in \R $, где $ G_n $ и $ G $ --- функции распределения случайных величин $ \xi_n+\eta $ и $ \xi+\eta $ соответственно. Тогда по замечанию \ref{remrk:lim_f_n_using_f_n_a_minnus_f_n_b} для любого $ x \in \R $ выполнено
+   \begin{align*}
+    \lim_{n \to \infty} G_n(x)=G(x).
+   \end{align*} Мы доказали сходимость по распределению величин $ \xi_n+\eta $ к величине $ \xi+\eta $. Теперь нам осталось избавиться от $ \eta $, то есть перейти от $ G $ к $ F $.
+
+   Пусть $ x \in \R $ --- точка непрерывности функции распределения $ F $. Зафиксируем число $ \eps > 0 $. Выберем по непрерывности $ \delta > 0 $ для $ \eps $ такое, что
+   \begin{align*}
+    \left| F(y)-F(x) \right| < \eps
+   \end{align*} при $ x - 2\delta \leqslant y \leqslant x + 2\delta $. Оценим теперь $ F_n(x) $ отдельно сверху и снизу.
+
+   Оценка сверху:
+   \begin{align*}
+    F_n(x)&=P(\xi_n \leqslant x) \leqslant P(\xi_n + \eta \leqslant x + \delta) + P(\left| \eta \right| \geqslant \delta) = \\
+    &= G_n(x+\delta) + P(\left| \eta \right| \geqslant \delta).
+   \end{align*} По неравенству Чебышева \eqref{equation:chebyshev_inequality}:
+   \begin{align*}
+    F_n(x) &\leqslant G_n(x + \delta) + \frac{\D\eta}{\delta^{2}} < G(x+\delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} = \\
+    &= P(\xi+\eta \leqslant x + \delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \leqslant \\
+    &\leqslant P(\xi \leqslant x + 2\delta) + P(\left| \eta \right| \geqslant \delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \leqslant \\
+    &\leqslant F(x+2\delta) + \eps +  \frac{2\sigma^{2}}{\delta^{2}} < F(x) + 2\eps + \frac{2\sigma^{2}}{\delta^{2}}
+   \end{align*} при достаточно больших $ n $.
+
+   Оценка снизу полностью аналогична:
+   \begin{align*}
+    F_n(x) &= P(\xi_n \leqslant x) \geqslant P(\xi_n + \eta \leqslant x - \delta) - P(\left| \eta \right| \geqslant \delta) \geqslant \\
+    &\geqslant G_n(x-\delta) - \frac{\sigma^{2}}{\delta^{2}} > G(x-\delta)-\eps-\frac{\sigma^{2}}{\delta^{2}} = \\
+    &= P(\xi+\eta \leqslant x - \delta)-\eps-\frac{\sigma^{2}}{\delta^{2}} \geqslant \\
+    &\geqslant P(\xi \leqslant x - 2\delta) - P(\left| \eta \right| \geqslant \delta) - \eps - \frac{\sigma^{2}}{\delta^{2}} \geqslant \\
+    &\geqslant F(x-2\delta) - \eps - \frac{2\sigma^{2}}{\delta^{2}} > F(x) - 2\eps - \frac{2\sigma^{2}}{\delta^{2}}
+   \end{align*} при больших $ n $.
+
+   Итого, для каждого $ \eps > 0 $ можно выбрать достаточно малое $ \delta > 0 $, и по нему выбрать достаточно малое $ \sigma > 0 $  так, чтобы для достаточно больших $ n $ 
+   \begin{align*}
+    \left| F_n(x)-F(x) \right| < 2\eps + \frac{2\sigma^{2}}{\delta^{2}} < 3\eps.
+   \end{align*} Сходимость $ \xi_n $ к $ \xi $ по распределению доказана.
  \end{itemize}
-
- $ 7 \implies 1 $. Воспользуемся формулой обращения:
- \begin{align*}
-  P(\xi \in (a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^{T} \frac{e^{-iat} - e^{-ibt}}{it} \varphi_\xi(t)\,dt,
- \end{align*} если $ P(\xi = a) = P(\xi = b) = 0 $. Здесь проблема в том, что интеграл не настоящий, а в смысле главного значения. Решать проблему будем так: изменим случайную величину, так чтобы не сильно поменялись значения, но характеристическая функция улучшилась бы. Возьмём случайную величину $ \eta $, не зависящую от всех $ \xi, \xi_1, \xi_2, \ldots $ такую, что $ \eta \sim \Norm(0, \sigma^{2}) $ (формально это очень занудно). Тогда мы знаем, что
- \begin{align*}
-  \varphi_{\xi_n + \eta}(t) = \varphi_{\xi_n}(t) \cdot \varphi_\eta(t) = \varphi_{\xi_n}(t) e^{-\sigma^{2}t^{2} / 2} \to \varphi_\xi(t) e^{-\sigma^{2}t^{2} / 2} = \varphi_{\xi+\eta}(t)
- \end{align*} поточечно. Кроме того, случайные величины $ \xi_n + \eta $ и   $ \xi + \eta $ непрерывны. Поэтому не нужно оговорка. Тогда
- \begin{align*}
-  P(\xi_n + \eta \in [a,b]) = \lim_{T \to +\infty}  \frac{1}{2\pi} \int\limits_{-T}^T \underbrace{\frac{e^{-iat} - e^{-ibt}}{it}}_{|\cdot| \leqslant const} \underbrace{\varphi_{\xi_n}(t)}_{|\cdot| \leqslant 1} e^{-\sigma^{2}t^{2} / 2} \,dt
- \end{align*} Но интеграл сходится, так как $\int_{-\infty}^{+\infty} e^{-\sigma^2t^2/2}\,dt$ сходится, а остальные сомножители под интегралом ограничены! Поэтому можно убрать предел:
- \begin{align*}
-  = \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat} - e^{-ibt}}{it} e^{-\sigma^{2}t^{2} / 2}\varphi_{\xi_n}(t)\,dt
- \end{align*} Устремим $ n \to \infty $. По теореме Лебега с мажорантой $const \cdot e^{\sigma^2t^2/2}$ переходим к пределу под интегралом:  
- \begin{align*}
-  \to \frac{1}{2\pi} \int\limits_{\R} \frac{e^{-iat}-e^{-ibt}}{it}  e^{-\sigma^{2}t^{2} / 2}\varphi_{\xi}(t)\,dt
- \end{align*} Но
- \begin{align*}
-  = P(\xi+ \eta \in (a,b]).
- \end{align*} Пусть $ G_n $ и $ G $ --- функции распределения для $ \xi_n + \eta $ и $ \xi + \eta $ соответственно. Тогда мы только что показали, что
- \begin{align*}
-  G_n(b) - G_n(a) \to G(b) - G(a)
- \end{align*} для любых $ a,b\in\R $. По замечанию \ref{remrk:lim_f_n_using_f_n_a_minnus_f_n_b} $ G_n(x) \to G(x) $ для любого $ x \in \R $.
-
- Осталось перейти от $ G $ к $ F $. Пусть $ x $ --- точка непрерывности $ F $. Зафиксируем $ \eps  > 0 $. Выберем $ \delta > 0 $ так, что 
- \begin{align*}
-  \left| F(x \pm 2\delta) - F(x) \right| < \eps.
- \end{align*}
- \begin{align*}
-  \left\{ \xi+\eta \leqslant x  + \delta \right\} \subset \left\{ \xi \leqslant x + 2\delta \right\} \cup \left\{ \left| \eta \right| \geqslant \delta \right\}.
- \end{align*} Запишем неравенство на вероятности:
- \begin{align*}
-  G(x+\delta) \leqslant F(x+2\delta) + P(\left| \eta \right| \geqslant \delta) \leqslant F(x+2\delta) + \frac{\D \eta}{\delta^{2}} = F(x + 2\delta) + \frac{\sigma^2}{\delta^2}. 
- \end{align*} 
- Тогда при больших $n$
- \begin{align*}
-  F_n(x) = P(\xi_n < x) &\leqslant P(\xi_n + \eta \leqslant x + \delta) + P(|\eta| \geqslant \delta) \\
-  &\leqslant G_n(x+\delta) + \frac{\sigma^{2}}{\delta^{2}} \\
-  &< G(x+\delta) + \eps + \frac{\sigma^{2}}{\delta^{2}} \\
-  &\leqslant F(x+2\delta) + \eps + \frac{2\sigma^{2}}{\delta^{2}} \\
-  &< F(x) + 2\eps + \frac{2\sigma^{2}}{\delta^{2}}.
- \end{align*}
-
- Напишем похожую штуку в другую сторону:
- \begin{align*}
-  \left\{ \xi +\eta \leqslant x - \delta \right\} \supset \left\{ \xi \leqslant x - 2\delta \right\} \setminus \left\{ \left| \eta \right| \geqslant \delta \right\}.
- \end{align*} Для вероятностей:
- \begin{align*}
-  G(x-\delta) \geqslant F(x - 2\delta) - \frac{\sigma^{2}}{\delta^{2}}.
- \end{align*}  Аналогично получаем оценку снизу 
- \begin{align*}
-  F_n(x) \geqslant G_n(x - \delta) - \frac{\sigma^{2}}{\delta^{2}} > G(x-\delta) - \eps - \frac{\sigma^{2}}{\delta^{2}} \geqslant F(x - 2\delta) - \eps - \frac{2\sigma^{2}}{\delta^{2}}  > F(x) - 2\eps - \frac{2\sigma^{2}}{\delta^{2}}.
- \end{align*}
-
- Тогда
- \begin{align*}
-  \left| F_n(x) - F(x) \right| < 2\eps + 2 \frac{\sigma^{2}}{\delta^{2}}
- \end{align*} Выбираем $ \eps > 0$, по $ \eps $ выбираем $ \delta $,  а затем по $ \delta $ выбираем $ \sigma $, и получаем нужное $ N $. Так и построим $ N $ по $ \eps $.
-
-\end{proof}
-
-\begin{thm}
- Пусть функции $ F_n, F \colon\, \R \to [0,1] $(они возрастают), $ F \in C(\R) $ и $ F_n \to F $ поточечно. Тогда $ F_n \rightrightarrows F $ равномерно.
-\end{thm}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Найдём $ t_j $ такое, что $ F(t_j) = \frac{j}{m} $, где $ j = 1, 2, \ldots, m - 1 $. Мы знаем, что для всех $ j $ верно $ F_n(t_j) \to F(t_j) $, поэтому при больших $ n $ верно
- \begin{align*}
-  \left| F_n(t_j) - F(t_j) \right| < \eps
- \end{align*}
-
- \begin{figure}[ht]
-  \centering
-  \incfig[0.5]{distribution_function_points_to_evenlly}
-  \caption{Выбор $t_1, \dots, t_{m-1}$. }
-  \label{fig:distribution_function_points_to_evenlly}
- \end{figure}
-
- Тогда возьмём $ t_{j-1} < t \leqslant t_j $. Тогда при больших $ n $:
- \begin{align*}
-  F_n(t) \leqslant F_n(t_j) < F(t_j) + \eps = \frac{j}{m} + \eps = F(t_{j-1}) + \frac{1}{m} + \eps \leqslant F(t) + \eps + \frac{1}{m}.
- \end{align*} В другую сторону аналогично:
- \begin{align*}
-  F_n(t) \geqslant F_n(t_{j-1}) > F(t_{j-1}) - \eps = \frac{j-1}{m} - \eps = F(t_j) - \frac{1}{m} - \eps \geqslant F(t) - \eps - \frac{1}{m}.
- \end{align*} Значит берём $ \frac{1}{m} < \eps $ и успех.
 \end{proof}
 
 \newpage
 \section{Центральная предельная теорема.}
 
+Предположим, что у нас есть большое количество слабо зависимых и примерно одинаково распределённых случайных величин:
+\begin{align*}
+ \xi_1, \xi_2, \xi_3, \ldots, \xi_n,
+\end{align*} где $ n $ стремится к бесконечности. Например, эти величины являются результатами независимых повторений одного и того же эксперимента. Однако, в отличие от постановки закона больших чисел (параграф \ref{subsection:law_of_large_numbers}), нас интересует не стремление среднего результата к ожидаемому, а то, как распределена сумма результатов
+\begin{align*}
+ S_n = \xi_1 + \xi_2 + \ldots + \xi_n.
+\end{align*}
+
+\textit{Центральные предельные теоремы (ЦПТ)} утверждают, что при некоторых условиях распределение суммы $ S_n $ стремится к нормальному распределению. Разные формы ЦПТ в основном варьируют условия на распределения величин $ \xi_1, \xi_2, \ldots $ В самой простой форме (ЦПТ в форме Поля Лев\'{и}) величины $ \xi_n $ должны иметь вторые моменты, и должны быть одинаково распределены. В других формах ЦПТ (например, ЦПТ в форме Линденберга) условие на распределения величин более сложные, но более слабые.
+
+\subsection{ЦПТ в форме Поля Лев\'{и}.}
+
+Прежде, чем мы перейдём к ЦПТ в самой простой форме, нам потребуется техническая теорема, позволяющая получить равномерность в поточечной сходимости функций.
+
+\begin{thm}[равномерность слабой сходимости к непрерывному распределению]
+ \label{theorem:even_weak_convergence_to_continuous_distr_func}
+ Пусть $ F \in C(\R)$ --- непрерывная функция распределения, и последовательность функций распределения $ F_1, F_2, \ldots $ сходится к $ F $ поточечно: $ F_n \to F $. Тогда эта сходимость равномерная: $ F_n \rightrightarrows F $.
+\end{thm}
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Для большого $ m $ найдём точки $ t_j $ такие, что $ F(t_j) = \frac{j}{m} $, где $ j = 1, 2, \ldots, m - 1 $ (это можно сделать, потому что $ F $ непрерывна и стремится к $ 0 $ и $ 1 $ при $ x \to -\infty $ и $ x \to +\infty $ соответственно). Кроме того, положим $ t_0 = -\infty $ и $ t_m = +\infty $, и будем считать, что
+ \begin{align*}
+  F(t_0) = F_n(t_0) = 0, && F(t_m) = F_n(t_m) = 1,
+ \end{align*} на самом деле подразумевая пределы функций $ F $ и $ F_n $ при $ t \to t_0 $ или $ t \to t_m $.
+
+ Зафиксируем $ \eps > 0 $. В каждой точке $ t_j $ верна поточечная сходимость, поэтому при $ n > N $ верно
+ \begin{align*}
+  \left| F_n(t_j) - F(t_j) \right| < \eps / 2
+ \end{align*} одновременно для всех $ t_j $.
+
+ Рассмотрим любую точку $ t \in \R $: для неё существует единственное $ j \in \left\{ 1,\ldots,m \right\} $ такое, что $ t_{j-1} < t \leqslant t_j $. Тогда при $ n > N $
+ \begin{align*}
+  F_n(t) &\leqslant F_n(t_j) < F(t_j) + \frac{\eps}{2} < F(t) + \frac{\eps}{2} + \frac{1}{m},\\
+  F_n(t) &\geqslant F_n(t_{j-1}) > F(t_{j-1}) - \frac{\eps}{2} > F(t) - \frac{\eps}{2} - \frac{1}{m}.
+ \end{align*} Тогда при $ \frac{1}{m} < \frac{\eps}{2} $ получаем
+ \begin{align*}
+  \left| F_n(t)-F(t) \right| < \eps
+ \end{align*} при $ n > N $ для всех $ t \in \R $. Равномерность доказана.
+\end{proof}
+
 \begin{thm}[ЦПТ в форме Поля Лев\'{и}]
  \label{theorem:central_limit_theorem_Levi}
- Пусть случайные величины $ \xi_1, \xi_2, \ldots $  одинаково распределены и независимы. Пусть $ a = \E \xi_i $ --- их матожидание, и  $ \sigma^{2} = \D \xi_i > 0 $  --- их дисперсия,
+ Пусть случайные величины $ \xi_1, \xi_2, \ldots $  одинаково распределены и независимы, $ \mu = \E \xi_i $ --- их матожидание, и  $ \sigma^{2} = \D \xi_i > 0 $  --- их дисперсия. Пусть
  \begin{align*}
   S_n = \xi_1 + \xi_2 + \ldots + \xi_n
- \end{align*} --- их частичная сумма. Тогда
+ \end{align*} --- их частичная сумма, а
  \begin{align*}
-  P\left(\frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x\right) = P \left( \frac{S_n - na}{\sigma \sqrt n} \leqslant x \right) \rightrightarrows \Phi(x),
- \end{align*} где
+  Z_n = \frac{S_n - \E S_n}{\sqrt{\D S_n}} = \frac{S_n - \mu n}{\sigma \sqrt n}
+ \end{align*} --- та же частичная сумма, но несмещённая (её матожидание равно нулю) и нормированная (её дисперсия равна единице). Тогда $ Z_n $ слабо сходится к стандартному нормальному распределению $ \Norm(0,1) $, причём сходимость равномерная по $ x\in\R $:
  \begin{align*}
-  \Phi(x) = \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{x} e^{-t^{2} / 2}\,dt.
- \end{align*}
+  F_{Z_n}(x) \rightrightarrows \Phi(x).
+ \end{align*} Здесь
+ \begin{align*}
+  \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-t^{2} / 2}\,dt
+ \end{align*} --- функция распределения стандартного нормального распределения.
 \end{thm}
 \begin{remrk*}
- Поль Лев\'{и}(1886 - 1971) --- не тот, что и Л\'{е}ви(Беппо Леви, 1875 - 1961) из теоремы в теории меры о перестановке знака предела и интеграла Лебега.
+ Поль Лев\'{и} (1886 - 1971) --- не тот, что и Л\'{е}ви (Беппо Леви, 1875 - 1961) из теоремы в теории меры о перестановке знака предела и интеграла Лебега.
 \end{remrk*}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Разложим
- \begin{align*}
-  \varphi(t) = \varphi_{\xi_1 - a}(t) = 1 - \frac{\sigma^{2}t^{2}}{2} + o(t^{2})
- \end{align*} Положим
- \begin{align*}
-  \varphi_n(t) &:= \varphi_{\frac{S_n - na}{\sigma \sqrt n}}(t) = \varphi_{S_n - na} \left( \frac{t}{\sigma \sqrt n} \right) = \prod_{k=1}^{n} \varphi_{\xi_k - a} \left( \frac{t}{\sigma \sqrt n} \right) = \\
-  &= \left(\varphi \left( \frac{t}{\sigma \sqrt n} \right) \right)^{n} = \left( 1- \frac{\sigma^{2} \frac{t^{2}}{\sigma^{2} n}}{2} + o \left( \frac{t^{2}}{\sigma^{2} n} \right) \right)^{n} = \\
-  &= \left( 1 - \frac{t^{2}}{2n} + o \left( \frac{t^{2}}{n} \right) \right)^{n} \to e^{-t^{2} / 2}.
- \end{align*} Осталось проверить поточечную сходимость характеристических функций:
+\begin{remrk*}
+ Заключение ЦПТ можно сформулировать в терминах $ S_n $, а не $ Z_n $: ЦПТ утверждает, что распределение $ S_n $ стремится к нормальному распределению $ \Norm(n\mu, n\sigma^{2}) $.
+\end{remrk*}
+\begin{proof}[\normalfont\textsc{Доказательство теоремы \ref{theorem:central_limit_theorem_Levi}}]
+ По предыдущей теореме \ref{theorem:even_weak_convergence_to_continuous_distr_func} нам достаточно лишь доказать поточечную сходимость $ F_{Z_n} \to \Phi $ (не заботясь о равномерности), а по теореме \ref{theorem:weak_convergence} о сходимости по распределению нам достаточно доказать, что характеристические функции $ \varphi_{Z_n}(t) $ поточечно сходятся к характеристической функции стандартного нормального распределения, то есть к функции $ t \mapsto e^{-t^{2} / 2} $ (см. пример \ref{example:char_func_of_normal_distribution}). Так и поступим.
 
+ Запишем формулу Тейлора в окрестности точки $ u = 0 $ для характеристической функции несмещённого распределения величин $ \xi_i $:
  \begin{align*}
-  \left(1 - \frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right)^{n} \to e^{-t^2/2} \Longleftrightarrow \\
-  n \log \left(1 - \frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right) \to - \frac{t^2}{2} \Longleftrightarrow \\
-  n \left(-\frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right) \to -\frac{t^2}{2} \Longleftrightarrow \\
-  -\frac{t^2}{2} \to -\frac{t^2}{2}
- \end{align*}. Получили что и требовалось.
+  \varphi(u) &:= \varphi_{\xi_i - \mu}(u) = 1 + \varphi_{\xi_i - \mu}'(0) \cdot u + \frac{1}{2}\varphi_{\xi_i - \mu}''(0) \cdot u^{2} + o(u^{2}) = \\
+  &= 1 - i\cdot\E(\xi_i-\mu) \cdot u - \frac{\E(\xi_i - \mu)^{2}}{2} \cdot u^{2} + o(u^{2}) = \\
+  &= 1 - \frac{\sigma^{2}u^{2}}{2} + o(u^{2}).
+ \end{align*} 
 
+ Пусть теперь $ t \in \R $ --- произвольная точка. Тогда при $ n \to \infty $
+ \begin{align*}
+  \varphi_{Z_n}(t) &= \varphi_{S_n - \mu n} \left( \frac{t}{\sigma\sqrt n} \right) = \prod_{k=1}^{n}\varphi_{\xi_k - \mu} \left( \frac{t}{\sigma \sqrt n} \right) = \left( \varphi \left( \frac{t}{\sigma\sqrt n} \right) \right)^{n} = \\
+  &= \left( 1 - \frac{t^{2}}{2n} + o(1 / n) \right)^{n} = \exp \left[ n \log \left( 1 - \frac{t^{2}}{2n} + o(1 / n) \right) \right] = \\
+  &= \exp \left[ n \left( - \frac{t^{2}}{2n} + o(1 / n) \right) \right] = \exp \left[ -\frac{t^{2}}{2} + o(1) \right] = e^{-t^{2} / 2} + o(1),
+ \end{align*} что и требовалось доказать.
 \end{proof}
 
-\begin{crly}[Интегральная теорема Муавра-Лапласа]
- Пусть $ S_n  $ --- количество успехов в схеме Бернулли в схеме с  $ n $  испытаниями и вероятностью успеха $ p $ . Тогда
+\subsection{Следствия ЦПТ.}
+
+Оказывается, интегральная теорема Муавра-Лапласа \ref{theorem:intergram_theorem_muavr_laplas}, которая тогда была оставлена без доказательства, является тривиальным следствием из ЦПТ.
+
+\begin{proof}[\normalfont\textsc{Доказательство теоремы \ref{theorem:intergram_theorem_muavr_laplas}}]
+ Пусть $ \xi_1, \xi_2, \ldots $ --- схема Бернулли с вероятностью успеха $ p \in (0,1) $, $ S_n = \xi_1 + \ldots + \xi_n $ --- число успехов среди $ n $ испытаний. Случайные величины $ \xi_1, \xi_2, \ldots $ независимы, одинаково распределены ($ P(\xi_i = 1) = p $ и $ P(\xi_i = 0) = 1 - p $), имеют матожидание $ \E\xi_i = p $ и дисперсию $ \D\xi_i = pq $. Тогда по центральной предельной теореме \ref{theorem:central_limit_theorem_Levi}
  \begin{align*}
-  P \left( \frac{S_n - np}{\sqrt{npq}} \leqslant x \right) \rightrightarrows \Phi(x).
+  P \left[ \frac{S_n - np}{\sqrt{npq}} \leqslant x \right] \rightrightarrows \Phi(x).
+ \end{align*} Или же
+ \begin{align*}
+  P \left[ a < \frac{S_n-np}{\sqrt{npq}} \leqslant b \right] \rightrightarrows \Phi(b) - \Phi(a).
  \end{align*}
-\end{crly}
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Пусть
- \begin{align*}
-  \xi_k = \begin{cases}
-   1, \text{ с вероятностью } p, \\
-   0, \text{ с вероятностью } q = 1 - p.
-  \end{cases}
- \end{align*} Тогда $ \E \xi_k = p $, $ \D \xi_k = pq $, $ \xi_k $ независимы. Применим ЦПТ.
 \end{proof}
+
+Тем же самым методом, которым мы доказали ЦПТ, то есть методом характеристический функций, можно доказать более широкий вариант теоремы \ref{theorem:poisson} Пуассона.
 
 \begin{thm}[Пуассона]
- Пусть $ P(\xi_{nk} = 1) = p_{nk} $, $ P(\xi_{nk} = 0) = 1-p_{nk} $. Много бернуллевских случайных величин. Пачка $ \xi_{n 1}, \xi_{n 2}, \ldots, \xi_{n n} $ независимы. Пусть
+ \label{theorem:poissonx}
+ Пусть для каждого $ n \geqslant 1 $ есть набор из $ n $ бернуллиевских случайных величин
  \begin{align*}
-  \max_{k=1}^{n} p_{nk} \to 0
- \end{align*} при $ n \to \infty $. Пусть также
+  \xi_{n1} \sim \Bernoulli(p_{n1}), && \xi_{n2}\sim\Bernoulli(p_{n2}), && \ldots, && \xi_{nn} \sim \Bernoulli(p_{nn}),
+ \end{align*} где $ p_{n1}, p_{n2}, \ldots, p_{nn}\in(0,1) $, которые к тому же независимы между собой. Их сумму обозначим
  \begin{align*}
-  p_{n 1}  + p_{n 2} + \ldots + p_{n n} \to \lambda > 0.
- \end{align*} Пусть $ S_n = \xi_{n 1} + \xi_{n 2} + \ldots + \xi_{n n} $. Тогда
- \begin{align*}
-  P(S_n = k) \to \frac{e^{-\lambda}\lambda^{k}}{k!}.
- \end{align*}
+  S_n = \xi_{n1} + \xi_{n 2} + \ldots + \xi_{n n}.
+ \end{align*} Пусть
+ \begin{align}
+  \label{eq:theorem:poissonx:lim_of_max_of_p_n_k}
+  \lim_{n \to \infty} \max_{k=1}^{n} p_{nk} = 0.
+ \end{align} Наконец, пусть
+ \begin{align}
+  \label{eq:theorem:poissonx:lim_of_sum_of_p_n_k}
+  \lim_{n \to \infty} \sum_{k=1}^{n} p_{nk} = \lambda,
+ \end{align} где $ \lambda > 0 $ --- некоторое число. Тогда для каждого $ k \geqslant 0 $
+ \begin{align}
+  \label{eq:theorem:possionx:convergence}
+  \lim_{n \to \infty} P(S_n = k) = \frac{e^{-\lambda}\lambda^{k}}{k!}.
+ \end{align}
 \end{thm}
-В стандартной теореме Пуассона $ p_{n 1} = p_{n 2 } = \ldots = p_{n n} $.
-\begin{proof}[\normalfont\textsc{Доказательство}]
- Посмотрим на характеристические функции $ \xi_{n k} $:
+
+\begin{remrk*}
+ В стандартной версии теоремы Пуассона (теорема \ref{theorem:poisson}), вероятности успеха бернуллиевских величин в одном наборе были одинаковы:
  \begin{align*}
-  \varphi_{\xi_{n k}}(t) = \E e^{it \xi_{n k}} = (1 - p_{n k}) + e^{it} p_{n k} = 1 + (e^{it} - 1)p_{n k},
- \end{align*} ведь случайная величина принимает лишь два значения.
+  p_{n 1} = p_{n 2} = \ldots = p_{n n} = p_n.
+ \end{align*} Тогда условие \eqref{eq:theorem:poissonx:lim_of_sum_of_p_n_k} эквивалентно условию $ p_n \sim \lambda / n $, и из него автоматически следует условие \eqref{eq:theorem:poissonx:lim_of_max_of_p_n_k}.
+\end{remrk*}
+
+\begin{remrk}[характеристическая функция распределения Пуассона]
+ \label{remark:poisson_char_func}
+ В доказательстве теоремы \ref{theorem:poissonx} нам потребуется характеристическая функция распределения Пуассона, поэтому найдём её заранее. Пусть $ \xi \sim \Poisson(x) $. Тогда
+ \begin{align*}
+  \varphi_\xi(t) &= \E e^{it\xi} = \sum_{k=0}^{\infty}e^{itk} \cdot \frac{e^{-\lambda}\lambda^{k}}{k!} = e^{-\lambda} \sum_{k=0}^{\infty} \frac{(e^{it}\lambda)^{k}}{k!} = e^{-\lambda} \cdot e^{e^{it}\lambda} = \exp \left[ (e^{it}-1)\lambda \right].
+ \end{align*}
+\end{remrk}
+
+\begin{proof}[\normalfont\textsc{Доказательство теоремы \ref{theorem:poissonx}}]
+ Условие \eqref{eq:theorem:possionx:convergence} означает слабую сходимость величин $ S_n $ к распределению Пуассона $ \Poisson(\lambda) $ (так как все величины дискретные, то можно проигнорировать оговорку о точках непрерывности: скажем, рассмотрим $ k + 1 / 2 $). Как мы и поступили в доказательстве ЦПТ, пользуясь теоремой \ref{theorem:weak_convergence}, докажем, что характеристические функции сумм $ \varphi_{S_n}(t) $ поточечно сходятся к характеристической функции распределению Пуассона, которую мы заранее вычислили в замечании \ref{remark:poisson_char_func}.
+
+ Запишем характеристическую функцию бернуллиевской случайной величины $ \xi_{n k} $:
+ \begin{align*}
+  \varphi_{\xi_{n k}}(t) = \E e^{it \xi_{n k}} = (1 - p_{n k}) + e^{it} p_{n k} = 1 + (e^{it} - 1)p_{n k}.
+ \end{align*} Тогда характеристическая функция суммы равна
  \begin{align*}
   \varphi_{S_n}(t) = \prod_{k=1}^{n} \varphi_{\xi_{n k}}(t) = \prod_{k=1}^{n} (1 + (e^{it} - 1)p_{n k}).
- \end{align*} Запишем характеристическую функцию Пуассона:
+ \end{align*} Проверим, что она стремится к характеристической функции распределения Пуассона $ t \mapsto \exp \left[ (e^{it}-1)\lambda \right] $, что равносильно
  \begin{align*}
-  \exp((e^{it} - 1)\lambda).
- \end{align*} Проверим: прологарифмируем:
+  \log \varphi_{S_n}(t) \to (e^{it} - 1)\lambda.
+ \end{align*} Прологарифмируем:
  \begin{align*}
-  \log \varphi_{S_n}(t) = \sum_{k=1}^{n}\log (1 + (e^{it} - 1)p_{nk}) \overset{?}{\to} (e^{it} - 1) \lambda
- \end{align*} Но
+  \log \varphi_{S_n}(t) = \sum_{k=1}^{n}\log (1 + (e^{it} - 1)p_{nk}).
+ \end{align*} Но так как по условию \eqref{eq:theorem:poissonx:lim_of_max_of_p_n_k} $ p_{n k} \to 0 $ при $ n \to \infty $, то по формуле Тейлора для логарифма
  \begin{align*}
-  \log(1 + (e^{it} - 1)p_{n k}) = (e^{it} - 1)p_{n k} + O(p_{n k}^{2})
- \end{align*} Тогда сумма
+  \log(1 + (e^{it} - 1)p_{n k}) = (e^{it} - 1)p_{n k} + \OO(p_{n k}^{2}).
+ \end{align*} Тогда по условию \eqref{eq:theorem:poissonx:lim_of_sum_of_p_n_k}
  \begin{align*}
-  = \sum_{k=1}^{n} \left( (e^{it}-1)p_{nk} +O(p_{nk}^{2}) \right) = (e^{it} - 1) \underbrace{\sum_{k=1}^{n}p_{nk}}_{\to \lambda} + \sum_{k = 1}^{n} O(p_{nk} ^{ 2}).
- \end{align*} Оценим остаток:
+  \log \varphi_{S_n}(t) &= \sum_{k=1}^{n} \left( (e^{it}-1)p_{nk} +\OO(p_{nk}^{2}) \right) = (e^{it} - 1) \sum_{k=1}^{n}p_{nk} + \sum_{k = 1}^{n} \OO(p_{nk} ^{ 2}) = \\
+  &= (e^{it}-1)\lambda + o(1) + \OO \left[ \sum_{k=1}^{n}p_{n k}^{2} \right].
+ \end{align*} Осталось оценить остаток:
  \begin{align*}
-  \sum_{k=1}^{n}p_{nk}^{2} \leqslant \sum_{k=1}^{n} p_{nk} \cdot \max p_{n k} \to \lambda \cdot \underbrace{\max p_{nk}}_{\to 0} \to 0.
- \end{align*} Мы поняли, что $ \varphi_{S_n}(t) \to \exp((e^{it}-1)\lambda) $. Тогда есть сходимость по распределению: $ S_n $ сходится по распределению к Пуассону. Так как всё дискретно, то условие <<точки непрерывности>> --- не проблема.
+  \sum_{k=1}^{n}p_{nk}^{2} \leqslant \sum_{k=1}^{n} p_{nk} \cdot \max_{k=1}^{n} p_{n k} = (\lambda + o(1)) \cdot o(1) = o(1).
+ \end{align*} Таким образом, мы получили
+ \begin{align*}
+  \lim_{n \to \infty} \log \varphi_{S_n}(t) = (e^{it}-1)\lambda,
+ \end{align*} что завершает доказательство.
 \end{proof}
-\begin{remrk*}
- Вычислим характеристическую функцию распределения Пуассона:
- \begin{align*}
-  \varphi(t) &= \E e^{it\xi} = \sum_{n=0}^{\infty} e^{itn} P(\xi = n) = \sum_{n=0}^{\infty} (e^{it})^{n} \cdot \frac{e^{-\lambda} \lambda^{n}}{n!} = e^{-\lambda} \sum_{n = 0}^{\infty} \frac{(e^{it}\lambda)^{n}}{n!} = \\
-  &= e^{-\lambda} \cdot e^{\lambda e^{it}} = \exp((e^{it} - 1)\lambda).
- \end{align*}
-\end{remrk*}
+
+\subsection{Обобщения классической ЦПТ.}
+
+\newcommand{\Lind}{\ensuremath \mathrm{Lind}}
 
 \begin{thm}[%
  ЦПТ в форме Линденберга]
- Пусть случайные величины $ \xi_1, \xi_2, \ldots $  независимы, $ a_k = \E \xi_k $,  $ \sigma_k^{2} = \D \xi_k > 0 $ . Пусть $ S_n = \xi_1 + \ldots + \xi_n $, и пусть
+ \label{theorem:central_limit_theorem_Linderberg}
+ Пусть случайные величины $ \xi_1, \xi_2, \ldots $  независимы, имеют матожидание $ \mu_k = \E \xi_k $ и конечную дисперсию $\sigma_k^{2} = \D \xi_k > 0$. Обозначим $ S_n = \xi_1 + \ldots + \xi_n $, и
  \begin{align*}
-  DS_n = D_n^{2} = \sum_{k=1}^{n} \sigma_k^{2}.
- \end{align*} Рассмотрим функцию $ f(x) := x^{2} \Ind_{\left\{ \left| x \right| \geqslant \eps D_n \right\}} $. Обозначим
+  D_n^{2} := \D S_n = \sum_{k=1}^{n} \sigma_k^{2}.
+ \end{align*} Для числа $ \eps > 0 $ обозначим
  \begin{align*}
-  \mathrm{Lind}(\eps, n) := \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E f(\xi_k - a_k).
- \end{align*} Пусть для любого $ \eps > 0 $ верно
+  \Lind(\eps, n) := \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E \left[ (\xi_k-\mu_k)^{2} \cdot \Ind_{\left\{ \left| \xi_k \right| \geqslant \eps \cdot D_n \right\}} \right].
+ \end{align*} Предположим, что для случайных величин $ \xi_1,\xi_2,\ldots $ выполняется \textbf{условие Линденберга}: для любого $ \eps > 0 $ верно
+ \begin{align}
+  \label{eq:lindenberg_condition}
+  \lim_{n \to \infty} \Lind(\eps, n) = 0.
+ \end{align} Тогда верно заключение ЦПТ:
  \begin{align*}
-  \lim_{n \to \infty} \mathrm{Lind}(\eps, n) = 0
- \end{align*} --- \textit{условие Линденберга}. Тогда верно заключение ЦПТ:
- \begin{align*}
-  P \left( \frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x \right) \rightrightarrows \Phi(x).
+  P \left[ \frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x \right] \rightrightarrows \Phi(x).
  \end{align*}
 \end{thm}
 
-Доказывать не будем (много считать).
+Доказывать теорему \ref{theorem:central_limit_theorem_Linderberg} мы не будем, потому что там слишком много счёта.
 
-\begin{exercs*}
- Проверить условие Линденберга для независимых одинаково распределённых случайных величин с конечной дисперсией.
-\end{exercs*}
+\begin{remrk}
+ Покажем, что классическая версия ЦПТ (теорема \ref{theorem:central_limit_theorem_Levi}) является частным случаем ЦПТ в форме Линденберга. Для этого нам нужно проверить условие Линденберга \eqref{eq:lindenberg_condition} для независимых одинаково распределённых случайных величин с конечной дисперсией.
+
+ Пусть $ \xi_1, \xi_2, \ldots $ независимы, одинаково распределены, $ \mu = \E \xi_i $ и $ \sigma^{2} = \D \xi_i > 0 $. Тогда
+ \begin{align*}
+  D_n^{2} = \D S_n = n\sigma^{2}.
+ \end{align*} Для любого $ \eps > 0 $
+ \begin{align*}
+  \Lind(\eps,n) &= \frac{1}{n\sigma^{2}} \cdot \sum_{k=1}^{n}\E \left[ (\xi_k-\mu)^{2} \cdot \Ind_{\left\{ \left| \xi_k \right| \geqslant \eps \cdot \sigma \sqrt n \right\}} \right] = \frac{1}{\sigma^{2}} \E \left[ (\xi_1 - \mu)^{2} \cdot \Ind_{\left\{ \left| \xi_1 \right| \geqslant \eps\sigma \sqrt n \right\}} \right].
+ \end{align*} Тогда нам нужно показать, что
+ \begin{align*}
+  \int\limits_{\left\{ \left| \xi_1 \right| \geqslant \eps \sigma \sqrt n \right\}}  (\xi_1-\mu)^{2}\,dP \to 0.
+ \end{align*} Но это верно по абсолютной непрерывности интеграла Лебега, так как по неравенству Маркова \eqref{equation:markov_inequality}
+ \begin{align*}
+  P(\left| \xi_1 \right| \geqslant \eps \sigma \sqrt n) \leqslant \frac{\E \left| \xi_1 \right|}{\eps \sigma \sqrt n} \to 0.
+ \end{align*}
+\end{remrk}
 
 \begin{thm}[%
  ЦПТ в форме Ляпунова]
- Пусть $ \xi_1, \xi_2, \ldots $ независимы. $ a_k = \E \xi_k $, $ \sigma_k^{2} = \D \xi_k > 0 $, пусть
+ \label{theorem:central_limit_theorem_Lyapunov}
+ Пусть cлучайные величины $ \xi_1, \xi_2, \ldots $ независимы, имеют матожидание $ \mu_k = \E \xi_k $ и конечную дисперсию $ \sigma_k^{2} = \D \xi_k > 0 $. Предположим, что для некоторого $ \delta > 0 $ выполнено
  \begin{align*}
-  L(\delta, n) = \frac{1}{D_n^{2+\delta}} \sum_{k=1}^{n} \E \left| \xi_k - a_k \right|^{2 + \delta} \to 0
- \end{align*}, где $ D_n $ и $ S_n $ --- то же самое. для некоторого $ \delta  > 0 $. Тогда верно заключение ЦПТ:
+  L(\delta, n) = \frac{1}{D_n^{2+\delta}} \sum_{k=1}^{n} \E \left| \xi_k - a_k \right|^{2 + \delta} \to 0,
+ \end{align*} где $ D_n $ и $ S_n $ --- как в теореме \ref{theorem:central_limit_theorem_Linderberg}. Тогда верно заключение ЦПТ:
  \begin{align*}
-  P \left( \frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x \right) \rightrightarrows \Phi(x).
+  P \left[ \frac{S_n - \E S_n}{\sqrt{\D S_n}} \leqslant x \right] \rightrightarrows \Phi(x).
  \end{align*}
 \end{thm}
 \begin{proof}[\normalfont\textsc{Вывод из ЦПТ в форме Линденберга}]
+ Достаточно проверить условие Линденберга \eqref{eq:lindenberg_condition}.
+
+ Заметим неравенство
  \begin{align*}
-  \mathrm{Lind}(\eps, n) &= \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E \left( (x_k-a_k)^{2}\Ind_{\left\{ \left| x \right| \geqslant \eps D_n\right\}}(\xi_k - a_k) \right).
- \end{align*} Заметим, что $ \Ind_{\left\{ \left| x \right| \geqslant \eps D_n \right\}} \leqslant \left(\frac{\left| x \right|}{\eps D_n} \right)^{\delta} $. Подставим вместо индикатора эту дробь:
+  \Ind_{\left\{ \left| x \right| \geqslant \eps D_n \right\}} \leqslant \left( \frac{\left| x \right|}{\eps D_n} \right)^{\delta}.
+ \end{align*} Подставим его:
  \begin{align*}
-  \leqslant \frac{1}{D_n^{2}} \sum_{k=1}^{n} \E \left( (\xi_k-a_k)^{2} \cdot \frac{\left| \xi_k-a_k \right|^{\delta}}{\eps^{\delta} D_n^{\delta}} \right) = \frac{L(\delta, n)}{\eps^{\delta}}.
- \end{align*} 
+  \Lind(\eps,n) &= \frac{1}{D_n^{2}} \sum_{k=1}^{n}\E \left[ (\xi_k-\mu_k)^{2} \cdot \Ind_{\left\{ \left| \xi_k \right| \geqslant \eps D_n \right\}} \right] \leqslant\\
+  &\leqslant \frac{1}{D_n^{2}} \sum_{k=1}^{n}\E \left[ \frac{\left| \xi_k-\mu_k \right|^{2 + \delta}}{\eps^{\delta} D_n^{\delta}} \right] = \frac{L(\delta,n)}{\eps^{\delta}} \to 0.
+ \end{align*}
 \end{proof}
-\begin{thm}[Оценка для Ляпунова]
+
+\subsection{Скорость сходимости в ЦПТ.}
+
+Приведём без доказательства известные науке оценки на скорость сходимости в центральных предельных теоремах.
+
+\begin{thm}[оценка для ЦПТ в форме Ляпунова]
+ В условиях ЦПТ в форме Ляпунова (теорема \ref{theorem:central_limit_theorem_Lyapunov}) при $ 0 < \delta \leqslant 1 $ выполнено
  \begin{align*}
-  \left| P \left( \frac{S_n-\E S_n}{\sqrt{\D S_n}} \leqslant x\right) - \Phi(x) \right| \leqslant C_\delta L(\delta, n),
- \end{align*} где $ C_\delta $ --- константа, зависящая от $ \delta $, для любого $ \delta \in (0, 1] $.
+  \left| P \left[ \frac{S_n-\E S_n}{\sqrt{\D S_n}} \leqslant x\right] - \Phi(x) \right| \leqslant C_\delta \cdot L(\delta, n),
+ \end{align*} где $ C_\delta $ зависит лишь от $ \delta $.
 \end{thm}
-\begin{crly}
- Если $ \xi_1, \xi_2, \ldots $  одинаково распределены и независимы, то
+\begin{remrk}
+ Для одинаково распределённых случайных величин верно
  \begin{align*}
-  \left| P \left( \frac{S_n - na}{\sigma \sqrt n} \leqslant x \right) - \Phi(x) \right| \leqslant C_\delta,
- \end{align*} $ D_n^{2} = n\sigma^{2} $. Тогда
- \begin{align*}
-  L(\delta, n) = \frac{1}{n^{1 + \frac{\delta}{2}}} \cdot \frac{1}{\sigma^{2 + \delta}} n \E \left| \xi_1 - a \right|^{2 + \delta}
- \end{align*}
- \begin{align*}
-  \leqslant C_\delta \frac{\E \left| \xi_1 - a \right|^{2+\delta}}{n^{\delta / 2} \sigma^{2 + \delta}}.
- \end{align*}
-\end{crly}
+  L(\delta,n) &= \frac{1}{(n\sigma^{2})^{1 + \delta / 2}} \cdot n \E \left| \xi_1 - \mu \right|^{2 + \delta} = \frac{\E \left| \xi_1 - \mu \right|^{2 + \delta}}{n^{\delta / 2} \cdot \sigma^{2 + \delta}}.
+ \end{align*} Поэтому, здесь верно
+ \begin{align}
+  \label{eq:clt_velocity_ineq_2_plus_delta}
+  \left| P \left[ \frac{S_n- n\mu}{\sigma \sqrt{n}} \leqslant x \right] - \Phi(x) \right| \leqslant C_\delta \cdot \frac{\E \left| \xi_1 - \mu \right|^{2 + \delta}}{n^{\delta / 2} \cdot \sigma^{2 + \delta}}.
+ \end{align}
+\end{remrk}
+
+Неравенство \eqref{eq:clt_velocity_ineq_2_plus_delta} при $ \delta = 1 $ называется \textit{теоремой Берри-Эссеена}.
 
 \begin{thm}[Берри-Эссеена]
- Пусть $ \xi_1, \xi_2, \ldots $ независимы и одинаково распределены.  Тогда
+ Пусть случайные величины $ \xi_1, \xi_2, \ldots $ независимы и одинаково распределены.  Тогда
  \begin{align*}
-  \left| P \left( \frac{S_n - na}{\sigma \sqrt n} \leqslant x \right) - \Phi(x) \right| \leqslant C \frac{\E \left| \xi_1 - a \right|^{3}}{\sqrt n \cdot \sigma^{3}}.
+  \left| P \left[ \frac{S_n - na}{\sigma \sqrt n} \leqslant x \right] - \Phi(x) \right| \leqslant C \cdot \frac{\E \left| \xi_1 - a \right|^{3}}{\sqrt n \cdot \sigma^{3}}.
  \end{align*}
 \end{thm}
 
 Что известно про константы?
 
 \begin{itemize}
- \item Эссеен (1956): $ C \geqslant \frac{3 + \sqrt{10}}{6 \sqrt{2\pi}} \approx 0.4097 $.
+ \item Эссеен (1956): $ C \geqslant \frac{3 + \sqrt{10}}{6 \sqrt{2\pi}} \approx 0.40973 $.
  \item Шевцова (2014): $ C \leqslant 0.469 $.
+ \item 2018: для схем Бернулли $ C \leqslant 0.4009 $. До нижней оценки не хватает $ 0.002 $!
+ \item Для схем Бернулли с $ p = 1/2 $: $ C = \frac{1}{\sqrt{2\pi}} $.
+
+ \item Для общего случая (распределения могут быть разные)  известно $ C_1 \leqslant 0.5583 $.
 \end{itemize}
-
-Для общего случая известно $ C_1 \leqslant 0.5583 $.
-
-Для схемы Бернулли $ C \leqslant 0.4099 $ (не хватает $ 0.002 $ до нижней оценки!) (2018)
-
-Для схемы Бернулли  с $ p = \frac{1}{2} $: $ C = \frac{1}{\sqrt{2\pi}} $.
 
 Чисто для справки приведём ещё два результата.
 
 \begin{thm}[Хартмана-Винтнера, закон повторного логарифма]
- Пусть случайные величины $ \xi_1, \ldots $ независимы и одинаково распределены, $ \E \xi_i = 0 $, $ \sigma^{2} = \D \xi_i > 0 $. Тогда
+ \label{theorem:hartman_vinter}
+ Пусть случайные величины $ \xi_1, \xi_2, \ldots $ независимы и одинаково распределены, $ \E \xi_i = 0 $, $ \sigma^{2} = \D \xi_i > 0 $. Тогда
  \begin{align*}
-  \varlimsup_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = \sigma,
- \end{align*} и
- \begin{align*}
+  \varlimsup_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = \sigma,&&
   \varliminf_{n \to \infty} \frac{S_n}{\sqrt{2n \log\log n}} = -\sigma.
  \end{align*}
 \end{thm}
 
-\begin{thm}[Штрассена]
- Любая точка из $ [-\sigma, \sigma] $ является предельной точкой последовательности
+\begin{thm}[Штрассен]
+ В условиях теоремы \ref{theorem:hartman_vinter} любая точка из $ [-\sigma, \sigma] $ является предельной точкой последовательности
  \begin{align*}
-  \frac{S_n}{\sqrt{2 n \log \log n}}.
+  \left\{\frac{S_n}{\sqrt{2 n \log \log n}} \right\}_{n=1}^{\infty}.
  \end{align*}
 \end{thm}
 
