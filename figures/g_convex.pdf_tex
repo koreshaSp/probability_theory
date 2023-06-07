@@ -60,7 +60,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=3]{g_convex.pdf}}%
     \put(0.23619893,0.42582493){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$1$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{g_convex.pdf}}%
-    \put(0.50873038,0.38688374){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\color{blue}$m \leqslant 1$}\end{tabular}}}}%
+    \put(0.50873038,0.38688374){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\color{blue}$m < 1$}\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{g_convex.pdf}}%
     \put(0.55976842,0.22495721){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\color{red} $ m > 1 $}\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{g_convex.pdf}}%
