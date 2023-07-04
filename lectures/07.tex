@@ -148,58 +148,55 @@
 
 \subsection{Доказательство Бернштейна теоремы Вейерштрасса.}
 
-На лекциях этого не было.
+Данный раздел не появлялся на лекциях, но о нём шла речь на практике; поэтому приведём его для общего развития.
 
 \begin{thm}
- Пусть $a \in \R, \ f : \R \to \R$ --- ограничена и непрерывна в точке $a$.
-
- Пусть последовательность $\xi_1, \xi_2, \ldots$ сходятся к $a$ по вероятности.
- Тогда
- \begin{align*}
-  \E f(\xi_n) \to f(a).
- \end{align*}
+ Пусть функция~$ f \colon\,\R\to\R $ ограничена и непрерывна в точке~$ a\in\R $. Пусть последовательность случайных величин $ \xi_1,\xi_2,\ldots $ сходится к числу~$ a $ по вероятности: $ \xi_n \xrightarrow{P} a $. Тогда
+ \begin{align}
+  \label{eq:E f xi_n -> f a:Thm Conv E f}
+  \lim_{n \to \infty} \E f(\xi_n) = f(a).
+ \end{align}
 \end{thm}
-\begin{proof}[\normalfont{Доказательство}]
- Пусть $M: |f(x)| < M, \forall x$.
+\begin{proof}[\normalfont\textsc{Доказательство}]
+ Пусть число~$ M > 0 $ ограничивает функцию~$ f $. Тогда
  \begin{align*}
-  |E f(\xi_n) - f(a)| &\leqslant P(|\xi_n - a| < \eps) \cdot \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \leqslant \\
-  & \leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| + 2M \cdot P(|\xi_n - a| \geqslant \eps) \implies \\
-  \varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \varlimsup_{n \to \infty} \sup_{|a - x| < \eps} |f(x) - f(a)| + \varlimsup_{n \to \infty} \underbrace{2M \cdot P(|\xi_n - a| \geqslant \eps)}_{=0} \implies  \\
-  \varlimsup_{n \to \infty} |E(f(\xi_n)) - f(a)| &\leqslant \sup_{|a - x| < \eps} |f(x) - f(a)| \overset{\eps \to 0}{\to} 0
- \end{align*}
+  \left| \E f(\xi_n) - f(a) \right| &\leqslant\int\limits_{\left\{ \left| \xi_n-a \right| <\delta\right\}} \left| f(\xi_n)-f(a) \right|dP + \int\limits_{\left\{ \left| \xi_n-a \right| \geqslant \delta \right\}} \left| f(\xi_n)-f(a) \right|dP \leqslant \\
+  &\leqslant \sup_{\left| x-a \right| < \delta} \left| f(x)-f(a) \right| + 2M \cdot P(\left| \xi_n-a \right|\geqslant\delta).
+ \end{align*} Так как $ f $ непрерывна в точке~$ a $, то для всякого~$ \eps > 0 $ существует $ \delta > 0 $ такое, что $ \left| x-a \right| < \delta $ влечёт $ \left| f(x) - f(a) \right| < \eps / 2 $, то есть
+ \begin{align*}
+  \left| \E f(\xi_n)-f(a) \right| \leqslant \eps / 2 + 2M \cdot P(\left| \xi_n - a \right| \geqslant \delta). 
+ \end{align*} Так как $ \xi_n \xrightarrow P a$, то для числа~$ \delta $ при достаточно больших~$ n $:
+ \begin{align*}
+  \left| \E f(\xi_n) - f(a) \right| < \eps / 2 + \eps / 2 = \eps,
+ \end{align*} что и доказывает~\eqref{eq:E f xi_n -> f a:Thm Conv E f}.
 \end{proof}
 
 \begin{thm}[Вейерштрасса]
- Пусть $f \in C([a, b])$, тогда существует последовательность полиномов $ p_n \in R[x] : p_n \rightrightarrows f$ на $[a, b]$.  
+ \label{theorem:Weierstrass Polynoms}
+ Пусть функция~$ f \colon\,[a,b]\to\R $ непрерывна на отрезке~$ [a,b] $. Тогда существует такая последовательность многочленов $ p_1, p_2, \ldots \in \R[x] $, что
+ \begin{align*}
+  p_n \rightrightarrows f \quad \text{на отрезке~$ [a,b] $}.
+ \end{align*}
 \end{thm}
 
-\begin{proof}[\normalfont\textsc{Доказательство Бернштейна}]
- Без ограничений общности скажем что $a = 0, b = 1$. 
-
- Рассмотрим схему Бернулли с параметром $p \in [0,1]$.
- И положим $\xi_n = \frac {S_n} {n}$.
-
- Тогда по УЗБЧ для схем Бернулли \ref{strong_law_of_large_numbers_for_bernoulli_scheme}:
-
+\begin{proof}[\normalfont\textsc{Доказательство Бернштейна теоремы~\ref{theorem:Weierstrass Polynoms}}]
+ Не умаляя общности, скажем $ a = 0 $ и $ b=1 $. Рассмотрим схему Бернулли с параметром $ p \in [0,1] $ и положим $ \xi_n = S_n / n $ --- средний результат схемы после $ n $ шагов. Запишем
  \begin{align*}
-  \xi_n \to p
- \end{align*} почти наверное.
-
- Распишем $E f(\xi_n)$:
-
+  \E f(\xi_n) &= \sum_{k=0}^{n} f(k/n ) \cdot P(S_n = k) = \sum_{k=0}^{n} \binom n k  f ( k/n ) \cdot p^{k}(1-p)^{n-k} = p_n(p),
+ \end{align*} где $ p_n \in \R[x] $ --- многочлен степени не более $ n $, называемый \emph{многочленом Бернштейна}. Нам достаточно показать сходимость $ \E f(\xi_n) \rightrightarrows f(p) $, равномерную по $ p \in [0,1] $. Оценим разность:
  \begin{align*}
-  E f(\xi_n) = \sum_{k = 0}^{n} f\left(\frac k n\right) P(S_n = k) = \sum_{k = 0}^{n} f\left(\frac k n\right) p^{k} (1-p)^{n - k}
- \end{align*} --- многочлен Бернштейна.
-
- Т.к. у нас функция $f$ непрерывна, то она и ограничена на $[0, 1]$, пусть $f \leqslant M$, тогда:
-
+  \left| \E f(\xi_n) - f(p) \right| &\leqslant \int\limits_{\left\{ \left| \xi_n - p \right| < \delta \right\}} \left| f(\xi_n) - f(p) \right|dP + \int\limits_{\left\{ \left| \xi_n-p \right| \geqslant \delta \right\}} \left| f(\xi_n)-f(p) \right|dP \leqslant \\
+  &\leqslant \sup_{\left| x-p \right| < \delta} \left| f(x)-f(p) \right| + 2M \cdot P(\left| \xi_n-p \right| \geqslant \delta),
+ \end{align*} где число~$ M > 0 $ ограничивает непрерывную на отрезке функцию~$ f $. Так как функция~$ f $ равномерно непрерывна на отрезке~$ [0,1] $ (по теореме Кантора), то для любого наперёд заданного числа~$ \eps > 0 $ существует такое $ \delta > 0 $, не зависящее от $ p $, что $ \left| f(x)-f(p) \right| < \eps / 2 $ при $ \left| x - p \right| $. Тогда при таком $ \delta $
  \begin{align*}
-  |E f(\xi_n) - f(p)| &\leqslant P(|\xi_n - p| < \eps) \cdot \sup_{|p - x| < \eps} |f(x) - f(p)| + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \leqslant \\
-  &\leqslant \underbrace{\sup_{|p - x| < \eps} |f(x) - f(p)|}_{\to 0, f\text{ - непр. }} + 2 M \cdot P(|\xi_n - p| \geqslant \eps) \\
-  P(|\xi_n - p| \geqslant \eps) &= P(|\frac {S_n} n - p| \geqslant \eps) \leqslant \frac{D \frac {S_n} n} {\eps^2} = \frac{p \cdot (1 - p)}{n^2\eps^2} \leqslant \frac 1 {4 n^2 \eps^2} \to 0
- \end{align*}
-
- Т.е. $E f(\xi_n)$ очень близко к $f(p)$ и при этом является многочленом и при этом при $\eps = \frac{1}{\sqrt[3]{n}}$ сходимость будет равномерной. 
+  \left| \E f(\xi_n) - f(p) \right| \leqslant \eps / 2 + 2M  \cdot P (\left| \xi_n - p \right| \geqslant \delta).
+ \end{align*} Далее, по неравенству Чебышева~\eqref{equation:chebyshev_inequality}
+ \begin{align*}
+  P(\left| \xi_n-p \right| \geqslant \delta) \leqslant \frac{\D(S_n / n)}{\delta^{2}} = \frac{p(1-p)}{\delta^{2}n^{2}} \leqslant \frac{1}{4\delta^{2}n^{2}},
+ \end{align*} и тогда
+ \begin{align*}
+  \left| \E f(\xi_n)-f(p) \right| \leqslant \eps / 2 + \frac{M}{2\delta^{2}n^{2}} < \eps / 2 + \eps / 2 = \eps,
+ \end{align*} скажем, при $ n > N $, где $ N $ зависит лишь от $ p $. Равномерная сходимость доказана.
 \end{proof}
 
 \newpage
