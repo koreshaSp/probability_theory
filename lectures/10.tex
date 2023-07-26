@@ -32,14 +32,14 @@
 
 \begin{prop}[неравенство Чернова]
  \label{proposition:chernoff_bound}
- Пусть $ \xi_1,\xi_2, \ldots $ --- независимые одинаково распределённые случайные величины, удовлетворяющие условию Крамера при $ \lambda_0 > 0 $. Тогда для всякого $ r \in \R $ выполнено \textbf{неравенство Чернова}:
+ Пусть $ \xi_1,\xi_2, \ldots $ --- независимые одинаково распределённые случайные величины, удовлетворяющие условию Крамера при $ \lambda_0 > 0 $. Тогда для всякого $ r \in \R $ выполнено \emph{неравенство Чернова:}
  \begin{align}
   \label{eq:chernoff_bound}
   P \left[ \frac{S_n}{n} \geqslant r \right] \leqslant \exp \left[ -n \cdot I(r) \right],
  \end{align} где
  \begin{align*}
-  I(r) = \sup_{0 < \lambda < \lambda_0} \left\{ \lambda r - \log \E e^{\lambda\xi_1} \right\}
- \end{align*} --- \textbf{функция уклонения}.
+  I(r) = \sup_{0 < \lambda < \lambda_0} \left\{ \lambda r - \log \E e^{\lambda\xi_1} \right\}\text{ --- \emph{функция уклонения}.}
+ \end{align*}
 \end{prop}
 
 Неравенство Чернова \eqref{eq:chernoff_bound} для фиксированного $ r $ даёт экспоненциально малую оценку порядка $ \OO(e^{-cn}) $, в то время как оценка \eqref{eq:small_variance_law_of_large_numbers_chebyshev} из закона больших чисел в форме Чебышева даёт лишь оценку порядка $ \OO(1 / n) $.

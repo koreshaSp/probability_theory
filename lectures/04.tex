@@ -237,7 +237,7 @@
 \end{df}
 
 \begin{remrk}
- Пусть $ \vec\xi $, $ \vec\eta $ --- случайные вектора из $ n $ величин. По теореме Каратеодори равенство совместных распределений $ P_{\vec\xi} = P_{\vec\eta} $ равносильно равенству совместных функций распределения $ F_{\vec\xi} = F_{\vec\eta} $.
+ Пусть $ \vec{\mathstrut\xi}$, $\vec{\mathstrut\eta} $ --- случайные вектора из $ n $ величин. По теореме Каратеодори равенство совместных распределений $ P_{\vec\xi} = P_{\vec\eta} $ равносильно равенству совместных функций распределения $ F_{\vec\xi} = F_{\vec\eta} $.
 \end{remrk}
 
 \begin{prop}[cвойства совместной функции распределения]\
@@ -261,9 +261,9 @@
  \end{align} 
 \end{crly}
 \begin{proof}[\normalfont\textsc{Доказательство}]
- По теореме \ref{theorem:random_variable_independence_through_distribution_measure_eq} достаточно показать, что \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq} эквивалентно \eqref{equation:random_variable_independence_through_distribution_measure_eq}. Из \eqref{equation:random_variable_independence_through_distribution_measure_eq} в \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq} очевидно: нужно подставить множества $ A_i = \left(-\infty, x_i\right]   $.
+ По теореме \ref{theorem:random_variable_independence_through_distribution_measure_eq} достаточно показать, что \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq} эквивалентно~\eqref{equation:random_variable_independence_through_distribution_measure_eq}. Из \eqref{equation:random_variable_independence_through_distribution_measure_eq} в \eqref{equation:random_variable_indepencence_throught_distribtuion_function_eq} очевидно: нужно подставить множества $ A_i = \left(-\infty, x_i\right]   $.
 
- Докажем теперь в сложную сторону. Будем полагать $ n = 2 $ (для больших $ n $ доказывается абсолютно так же, но записи станут громоздкими, не добавляя понимания), пусть случайные величины обозначены как $ \xi $ и $ \eta $. По теореме Каратеодори равенство мер \eqref{equation:random_variable_independence_through_distribution_measure_eq} достаточно проверить на произвольной паре ячеек $ \left(a, b\right]   $, $ \left(c, d\right] $. Проверим:
+ Докажем теперь в сложную сторону. Будем полагать $ n = 2 $ (для больших $ n $ доказывается абсолютно так же, но записи станут громоздкими, не добавляя понимания), пусть случайные величины обозначены через $ \xi $ и $ \eta $. По теореме Каратеодори равенство мер \eqref{equation:random_variable_independence_through_distribution_measure_eq} достаточно проверить на произвольной паре ячеек $ \left(a, b\right]   $, $ \left(c, d\right] $. Проверим:
  \begin{align*}
   P_\xi \left(a, b\right] \cdot P_\eta \left(c, d\right] &= \left( F_\xi(b) - F_\xi(a) \right) \left( F_\eta(d) - F_\eta(c)  \right) = \\
   &= F_\xi(b)F_\eta(d) - F_\xi(b) F_\eta(c) - F_\xi(a) F_\eta(d) + F_\xi(a) F_\eta(c) = \\

@@ -6,14 +6,14 @@
 
 \begin{exmpl}[характеристическая функция нормального распределения]
  \label{example:char_func_of_normal_distribution}
- Найдём сначала характеристическую функцию стандартного нормального распределения $ \xi \sim \Norm(0,1) $:
+ Найдём сначала характеристическую функцию стандартного нормального распределения~$ \xi \sim \Norm(0,1) $:
  \begin{align*}
   \varphi_\xi(t) &= \E e^{it\xi}  = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{itx}  \cdot e^{-x^{2} / 2}\,dx = \frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx)}\,dx  = \\
   &=\frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{1}{2}(x^{2}-2itx - t^{2} + t^{2})}\,dx   = \frac{e^{-t^{2} / 2}}{\sqrt{2\pi} } \int_{\R} e^{-(x-it)^{2} / 2} \,dx.
  \end{align*} Вычислим интеграл
  \begin{align*}
   I = \int_{\R} e^{-(x-it)^{2} / 2}\,dx = \lim_{R \to +\infty}  \int_{-R-it}^{R-it} e^{-z^{2} / 2}\,dz
- \end{align*} методами комплексного анализа: проинтегрируем функцию $ f(z) = e^{-z^{2} / 2} $ по контуру $ \Gamma_R $ --- границе прямоугольника с вершинами в точках $ R, -R, -R - it, R - it $.
+ \end{align*} методами комплексного анализа: проинтегрируем функцию $ f(z) = e^{-z^{2} / 2} $ по контуру~$ \Gamma_R $ --- границе прямоугольника с вершинами в точках $ R, -R, -R - it, R - it $.
  \begin{figure}[ht]
   \centering
   \incfig[0.9]{characteristic_function_normall}
@@ -45,7 +45,7 @@
   \varphi_\xi(t) = e^{-t^{2} / 2}.
  \end{align*}
 
- Теперь пусть $ \eta \sim \Norm(\mu, \sigma^{2}) $. Тогда $ \eta = \sigma \xi + \mu $, где $ \xi \sim \Norm(0,1) $. По свойствам \ref{prop:char_func_plus_const} и \ref{prop:char_func_times_const} предложения \ref{prop:char_func_properties} получаем, что характеристическая функция нормального распределения $ \Norm(\mu,\sigma^{2}) $ равна
+ Теперь пусть $ \eta \sim \Norm(\mu, \sigma^{2}) $. Тогда $ \eta = \sigma \xi + \mu $, где $ \xi \sim \Norm(0,1) $. По свойствам~\ref{prop:char_func_plus_const} и \ref{prop:char_func_times_const} предложения \ref{prop:char_func_properties} получаем, что характеристическая функция нормального распределения $ \Norm(\mu,\sigma^{2}) $ равна
  \begin{align*}
   \varphi_\eta(t) = \varphi_{\sigma \xi + \mu}(t) = e^{i \mu t} \varphi_\xi(\sigma t) = e^{i \mu t - \frac{\sigma^{2}t^{2}}{2}}.
  \end{align*}
@@ -184,7 +184,7 @@
 
 \begin{thm}[формула обращения]
  \label{theorem:inversing_formula}
- Пусть $ \xi $ --- вещественнозначная случайная величина, а числа $ a < b $ --- точки непрерывности её функции распределения: $ P_\xi(\left\{ a \right\}) = P_\xi(\left\{ b \right\}) = 0 $. Тогда верна \textbf{формула обращения}
+ Пусть $ \xi $ --- вещественнозначная случайная величина, а числа $ a < b $ --- точки непрерывности её функции распределения: $ P_\xi(\left\{ a \right\}) = P_\xi(\left\{ b \right\}) = 0 $. Тогда верна \emph{формула обращения}
  \begin{align*}
   P(a \leqslant \xi \leqslant b) &= \frac{1}{2\pi} \lim_{T \to +\infty} \int_{-T}^{T}  \frac{e^{-iat}-e^{-ibt}}{it} \cdot \varphi_\xi(t)\,dt = \\
   &= \frac{1}{2\pi} \operatorname{p.\!v.} \int_{\R} \frac{e^{-iat}-e^{-ibt}}{it}\cdot\varphi_\xi(t)\,dt.

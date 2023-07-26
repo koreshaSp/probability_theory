@@ -19,7 +19,7 @@
  Оказывается, что пространство $ L^{2}_0 $ является гильбертовым пространством с ковариацией в качестве скалярного произведения. Действительно,
  \begin{enumerate}
   \item $ \cov(\xi,\xi) = \D\xi \geqslant 0 $.
-  \item Если $ \cov(\xi, \xi) = 0 $, то $ \D\xi = 0 $, и случайная величина равна нулю почти всюду ($ \E\xi = 0$).
+  \item Если $ \cov(\xi, \xi) = 0 $, то $ \D\xi = 0 $, и случайная величина равна нулю почти всюду (ведь $ \E\xi = 0$).
   \item $ \cov(\xi,\eta) = \cov(\eta,\xi) $.
   \item $ \cov(a \cdot \xi_1 + b \cdot \xi_2, \eta) = a \cdot \cov(\xi_1, \eta) + b \cdot \cov(\xi_2,\eta) $.
  \end{enumerate}
@@ -237,9 +237,12 @@
  \end{align*} Мы докажем $ P(B_n) \to 0 $, из этого уж точно последует $ P(\left| \xi_n-\xi \right| \geqslant \eps) \to 0 $. Рассмотрим событие
  \begin{align*}
   B = \bigcap_{n=1}^{\infty} B_n.
- \end{align*} В каждой точке $ \omega \in B $ не может быть сходимости $ \xi_n(\omega) \to \xi(\omega) $, ведь $ \left| \xi_k(\omega) - \xi(\omega) \right| \geqslant \eps $ для бесконечного многих $ k $. Раз так, то $ P(B) = 0 $. Но так как множества $ B_n $ убывают:
+ \end{align*} В каждой точке $ \omega \in B $ не может быть сходимости $ \xi_n(\omega) \to \xi(\omega) $, ведь
  \begin{align*}
-  B_1 \supset B_2 \supset \ldots
+  \left| \xi_k(\omega) - \xi(\omega) \right| \geqslant \eps
+ \end{align*} для бесконечного многих $ k $. Раз так, то $ P(B) = 0 $. Но так как множества $ B_n $ убывают:
+ \begin{align*}
+  B_1 \supset B_2 \supset \ldots,
  \end{align*} то по непрерывности конечной меры снизу имеем
  \begin{align*}
   \lim_{n \to \infty} P(B_n) = P(B) = 0.
@@ -262,7 +265,7 @@
 \begin{proof}[\normalfont\textsc{Доказательство}]
  Пусть $ x \in \R $ --- точка непрерывности $ F_\xi $. Докажем отдельно оценки для верхнего и нижнего пределов.
  \begin{itemize}
-  \item Возьмём любой $ \eps > 0 $. Заметим следующее включение событий:
+  \item Возьмём любое $ \eps > 0 $. Заметим следующее включение событий:
    \begin{align*}
     \left\{ \xi_n \leqslant x \right\} \subset \left\{ \xi \leqslant x + \eps \right\} \cup \left\{ \left| \xi_n-\xi \right| \geqslant \eps \right\}.
    \end{align*} Припишем с обеих сторон вероятности:
@@ -304,7 +307,7 @@
  Пусть нам дано число $ r \geqslant 1 $. Рассмотрим вероятностное пространство $ [0,1] $ с мерой Лебега. Рассмотрим случайные величины
  \begin{align*}
   \xi_n = n^{1 / r} \cdot \Ind_{[0,1 / n]}.
- \end{align*} Очевидно, есть сходимость к нулю почти всюду (на самом деле везде, кроме точки $ 0 $). Но сходимости в среднем порядка $ r $ нет:
+ \end{align*} Очевидно, есть сходимость к нулю почти всюду (на самом деле везде, кроме нуля). Но сходимости в среднем порядка $ r $ нет:
  \begin{align*}
   \E \left| \xi_n - 0 \right|^{r} = n \cdot \E\Ind_{[0, 1 / n]}^{r} = n \cdot \E\Ind_{[0,1 / n]} = 1 \not\rightarrow 0.
  \end{align*}
